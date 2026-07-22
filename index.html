@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Listing Wing - Real Estate Campaign Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem 1rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+
+    header { text-align: center; margin-bottom: 2.5rem; }
+    header .subtitle { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; font-weight: 700; color: var(--primary); }
+    header h1 { font-family: 'Outfit', sans-serif; font-size: 2.5rem; margin: 0.2rem 0; }
+    header p { color: var(--text-muted); font-size: 1.1rem; }
+
+    .step-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .step-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .step-number { background: #dbeafe; color: var(--primary); font-weight: 700; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .step-title { font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 600; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group.full { grid-column: span 2; }
+    label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    input, select, textarea { width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.95rem; }
+    textarea { resize: vertical; min-height: 80px; }
+
+    button, .btn { display: inline-flex; align-items: center; justify-content: center; background: var(--primary); color: white; border: none; padding: 0.75rem 1.25rem; font-weight: 600; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.95rem; transition: background 0.2s; }
+    button:hover, .btn:hover { background: var(--primary-hover); }
+    .btn-secondary { background: #e2e8f0; color: var(--text); }
+    .btn-secondary:hover { background: #cbd5e1; }
+
+    pre { background: #0f172a; color: #f8fafc; padding: 1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; font-size: 0.85rem; max-height: 250px; }
+
+    .tabs { display: flex; gap: 0.5rem; overflow-x: auto; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; padding-bottom: 0.5rem; }
+    .tab-btn { background: none; color: var(--text-muted); border: none; padding: 0.5rem 1rem; font-weight: 600; cursor: pointer; border-radius: 6px; }
+    .tab-btn.active { background: #dbeafe; color: var(--primary); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .card-output { background: #f1f5f9; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; position: relative; }
+    .copy-btn-small { position: absolute; top: 10px; right: 10px; padding: 0.25rem 0.5rem; font-size: 0.75rem; }
+
+    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } .form-group.full { grid-column: span 1; } }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="subtitle">Marketing Tool</div>
+      <h1>The Listing Wing</h1>
+      <p>One listing in. A full relationship-first marketing campaign out.</p>
+    </header>
+
+    <!-- STEP 1 -->
+    <section class="step-card">
+      <div class="step-header">
+        <div class="step-number">1</div>
+        <h2 class="step-title">Set up your listing details</h2>
+      </div>
+      
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Agent Name</label>
+          <input type="text" id="agentName" placeholder="e.g. Jane Smith">
+        </div>
+        <div class="form-group">
+          <label>Brokerage</label>
+          <input type="text" id="brokerage" placeholder="e.g. Compass / Keller Williams">
+        </div>
+        <div class="form-group">
+          <label>Tone of Voice</label>
+          <select id="tone">
+            <option value="Warm & Neighborly">Warm & Neighborly</option>
+            <option value="Polished & Luxurious">Polished & Luxurious</option>
+            <option value="Fun & Playful">Fun & Playful</option>
+            <option value="Calm & Reassuring">Calm & Reassuring</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Property Address</label>
+          <input type="text" id="address" placeholder="123 Maple Street, Austin TX">
+        </div>
+        <div class="form-group">
+          <label>Listing Price</label>
+          <input type="text" id="price" placeholder="$650,000">
+        </div>
+        <div class="form-group">
+          <label>Beds / Baths / SqFt</label>
+          <input type="text" id="specs" placeholder="4 Bed | 3 Bath | 2,400 SqFt">
+        </div>
+        <div class="form-group full">
+          <label>Standout Features & Character</label>
+          <textarea id="features" placeholder="Chef's kitchen, custom pool, floor-to-ceiling windows, walkable to downtown, sunlit primary suite..."></textarea>
+        </div>
+      </div>
+      <button onclick="generatePrompt()">Generate Master Prompt</button>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step-card">
+      <div class="step-header">
+        <div class="step-number">2</div>
+        <h2 class="step-title">Take it to Gemini / ChatGPT</h2>
+      </div>
+      <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">Copy the prompt below, paste it into Gemini, and copy Gemini's full response.</p>
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+        <button class="btn-secondary" onclick="copyPrompt()">Copy Prompt</button>
+        <a href="https://gemini.google.com" target="_blank" class="btn">Open Gemini ↗</a>
+      </div>
+      <pre id="promptOutput">Fill out Step 1 above to generate your custom prompt here...</pre>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step-card">
+      <div class="step-header">
+        <div class="step-number">3</div>
+        <h2 class="step-title">Bring it home</h2>
+      </div>
+      <div class="form-group">
+        <label>Paste AI Response Here</label>
+        <textarea id="aiResponse" style="min-height: 120px;" placeholder="Paste the entire reply from Gemini here..."></textarea>
+      </div>
+      <button onclick="parseAndRender()">Format Marketing Hub</button>
+    </section>
+
+    <!-- STEP 4: OUTPUT HUB -->
+    <section class="step-card" id="hubSection" style="display: none;">
+      <h2 class="step-title" style="margin-bottom: 1rem;">Your Generated Marketing Kit</h2>
+      <div class="tabs" id="tabContainer"></div>
+      <div id="tabContentContainer"></div>
+    </section>
+  </div>
+
+  <script>
+    let generatedPromptText = "";
+
+    function generatePrompt() {
+      const name = document.getElementById('agentName').value || 'Agent';
+      const brokerage = document.getElementById('brokerage').value || 'Brokerage';
+      const tone = document.getElementById('tone').value;
+      const address = document.getElementById('address').value || 'Property';
+      const price = document.getElementById('price').value || '';
+      const specs = document.getElementById('specs').value || '';
+      const features = document.getElementById('features').value || '';
+
+      generatedPromptText = `Act as an elite real estate marketing strategist for ${name} at ${brokerage}.
+Write a complete, high-converting real estate campaign using a "${tone}" tone of voice.
+
+PROPERTY DETAILS:
+- Address: ${address}
+- Price: ${price}
+- Specs: ${specs}
+- Standout Features: ${features}
+
+OUTPUT FORMAT REQUIREMENTS:
+Please format your output into 4 clear sections using these exact headers:
+
+### TAB: Social Media Posts
+Provide 3 distinct social media posts (Instagram/Facebook) with captions, emojis, and hashtags.
+
+### TAB: Email Newsletter
+Write a warm, non-salesy email update to send to client database announcing this listing.
+
+### TAB: Flyer & Listing Copy
+Write a compelling listing description for the MLS and flyer copy highlighting features.
+
+### TAB: Seller Update Report
+Write a weekly seller update draft reassuring the seller on current listing traction and next steps.`;
+
+      document.getElementById('promptOutput').innerText = generatedPromptText;
+    }
+
+    function copyPrompt() {
+      if(!generatedPromptText) generatePrompt();
+      navigator.clipboard.writeText(generatedPromptText);
+      alert("Prompt copied to clipboard!");
+    }
+
+    function parseAndRender() {
+      const rawText = document.getElementById('aiResponse').value;
+      if (!rawText.trim()) {
+        alert("Please paste the AI response first!");
+        return;
+      }
+
+      const sections = rawText.split(/### TAB:/g).filter(s => s.trim().length > 0);
+      const tabContainer = document.getElementById('tabContainer');
+      const contentContainer = document.getElementById('tabContentContainer');
+
+      tabContainer.innerHTML = '';
+      contentContainer.innerHTML = '';
+
+      sections.forEach((sec, idx) => {
+        const lines = sec.trim().split('\n');
+        const title = lines[0].trim();
+        const content = lines.slice(1).join('\n').trim();
+
+        // Create Tab Button
+        const btn = document.createElement('button');
+        btn.className = `tab-btn ${idx === 0 ? 'active' : ''}`;
+        btn.innerText = title;
+        btn.onclick = () => switchTab(idx);
+        tabContainer.appendChild(btn);
+
+        // Create Content Section
+        const div = document.createElement('div');
+        div.className = `tab-content ${idx === 0 ? 'active' : ''}`;
+        div.id = `tab-content-${idx}`;
+        div.innerHTML = `
+          <div class="card-output">
+            <button class="btn-secondary copy-btn-small" onclick="copyContent(${idx})">Copy Section</button>
+            <div id="text-to-copy-${idx}" style="white-space: pre-wrap;">${content}</div>
+          </div>
+        `;
+        contentContainer.appendChild(div);
+      });
+
+      document.getElementById('hubSection').style.display = 'block';
+    }
+
+    function switchTab(index) {
+      document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+      document.querySelectorAll('.tab-content').forEach((c, i) => c.classList.toggle('active', i === index));
+    }
+
+    function copyContent(index) {
+      const text = document.getElementById(`text-to-copy-${index}`).innerText;
+      navigator.clipboard.writeText(text);
+      alert("Copied to clipboard!");
+    }
+  </script>
+</body>
+</html>
