@@ -3,34 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Listing Wing - Real Estate Campaign Hub</title>
+  <title>The Listing Wing - Campaign Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #f8fafc;
       --card-bg: #ffffff;
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
+      --primary: #2d3748;
+      --accent: #657e2a;
       --text: #0f172a;
       --text-muted: #64748b;
       --border: #e2e8f0;
+      --navy-banner: #1e293b;
       --radius: 12px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem 1rem; }
-    .container { max-width: 900px; margin: 0 auto; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 4rem; }
+    
+    .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1rem; }
 
-    header { text-align: center; margin-bottom: 2.5rem; }
-    header .subtitle { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; font-weight: 700; color: var(--primary); }
-    header h1 { font-family: 'Outfit', sans-serif; font-size: 2.5rem; margin: 0.2rem 0; }
-    header p { color: var(--text-muted); font-size: 1.1rem; }
+    header { text-align: center; margin-bottom: 2rem; }
+    header .subtitle { text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+    header h1 { font-family: 'Outfit', sans-serif; font-size: 2.5rem; margin: 0.2rem 0; color: #1e293b; }
+    header p { color: var(--text-muted); font-size: 1.05rem; }
 
     .step-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
     .step-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
-    .step-number { background: #dbeafe; color: var(--primary); font-weight: 700; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .step-number { background: #f0fdf4; color: var(--accent); border: 1px solid #bbf7d0; font-weight: 700; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .step-title { font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 600; }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -40,21 +42,45 @@
     input, select, textarea { width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.95rem; }
     textarea { resize: vertical; min-height: 80px; }
 
-    button, .btn { display: inline-flex; align-items: center; justify-content: center; background: var(--primary); color: white; border: none; padding: 0.75rem 1.25rem; font-weight: 600; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.95rem; transition: background 0.2s; }
-    button:hover, .btn:hover { background: var(--primary-hover); }
-    .btn-secondary { background: #e2e8f0; color: var(--text); }
-    .btn-secondary:hover { background: #cbd5e1; }
+    button, .btn { display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: white; border: none; padding: 0.75rem 1.25rem; font-weight: 600; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.95rem; transition: all 0.2s; }
+    button:hover, .btn:hover { opacity: 0.9; }
+    .btn-secondary { background: #f1f5f9; color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: #e2e8f0; }
 
-    pre { background: #0f172a; color: #f8fafc; padding: 1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; font-size: 0.85rem; max-height: 250px; }
+    pre { background: #0f172a; color: #f8fafc; padding: 1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; font-size: 0.85rem; max-height: 200px; }
 
-    .tabs { display: flex; gap: 0.5rem; overflow-x: auto; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; padding-bottom: 0.5rem; }
-    .tab-btn { background: none; color: var(--text-muted); border: none; padding: 0.5rem 1rem; font-weight: 600; cursor: pointer; border-radius: 6px; }
-    .tab-btn.active { background: #dbeafe; color: var(--primary); }
+    /* CAMPAIGN BANNER */
+    .campaign-header { background: var(--navy-banner); color: white; text-align: center; padding: 2.5rem 1rem; border-radius: 12px 12px 0 0; }
+    .campaign-header .badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 0.2rem 0.8rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; color: #a3e635; margin-bottom: 0.5rem; text-transform: uppercase; }
+    .campaign-header h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 600; }
+    .campaign-header p { opacity: 0.8; font-size: 0.95rem; }
+
+    /* TABS SYSTEM */
+    .tabs-wrapper { background: #ffffff; border-left: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0.5rem 1rem; }
+    .tabs { display: flex; flex-wrap: wrap; gap: 0.25rem; border-bottom: 1px solid var(--border); }
+    .tab-btn { background: none; border: none; padding: 0.75rem 1rem; font-weight: 600; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; font-size: 0.9rem; transition: all 0.2s; }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); background: #f8fafc; }
+
+    .hub-body { background: #ffffff; border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; padding: 1.5rem; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    .card-output { background: #f1f5f9; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; position: relative; }
-    .copy-btn-small { position: absolute; top: 10px; right: 10px; padding: 0.25rem 0.5rem; font-size: 0.75rem; }
+    /* CARD FORMATTING */
+    .output-card { background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin-bottom: 1.25rem; position: relative; }
+    .output-card .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+    .output-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #1e293b; }
+    .output-card .subtitle-tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .output-card .content-body { white-space: pre-wrap; font-size: 0.95rem; color: #334155; }
+
+    .copy-btn { padding: 0.35rem 0.85rem; font-size: 0.8rem; background: #ffffff; border: 1px solid var(--border); color: var(--text); border-radius: 6px; cursor: pointer; }
+    .copy-btn:hover { background: #f1f5f9; }
+
+    /* STORY STUDIO MOCKUP */
+    .story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .story-card-preview { background: #1e293b; color: white; border-radius: 12px; overflow: hidden; height: 420px; position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; background-size: cover; background-position: center; }
+    .story-card-preview::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); }
+    .story-text { position: relative; z-index: 2; font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; line-height: 1.3; }
 
     @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } .form-group.full { grid-column: span 1; } }
   </style>
@@ -63,7 +89,7 @@
 
   <div class="container">
     <header>
-      <div class="subtitle">Marketing Tool</div>
+      <div class="subtitle">A Marketing Tool</div>
       <h1>The Listing Wing</h1>
       <p>One listing in. A full relationship-first marketing campaign out.</p>
     </header>
@@ -78,36 +104,36 @@
       <div class="grid-2">
         <div class="form-group">
           <label>Agent Name</label>
-          <input type="text" id="agentName" placeholder="e.g. Jane Smith">
+          <input type="text" id="agentName" placeholder="e.g. Kari Cross">
         </div>
         <div class="form-group">
           <label>Brokerage</label>
-          <input type="text" id="brokerage" placeholder="e.g. Compass / Keller Williams">
+          <input type="text" id="brokerage" placeholder="e.g. Corcoran Icon Properties">
         </div>
         <div class="form-group">
           <label>Tone of Voice</label>
           <select id="tone">
             <option value="Warm & Neighborly">Warm & Neighborly</option>
-            <option value="Polished & Luxurious">Polished & Luxurious</option>
+            <option value="Polished & Luxurious">Polished & Luxe</option>
             <option value="Fun & Playful">Fun & Playful</option>
             <option value="Calm & Reassuring">Calm & Reassuring</option>
           </select>
         </div>
         <div class="form-group">
           <label>Property Address</label>
-          <input type="text" id="address" placeholder="123 Maple Street, Austin TX">
+          <input type="text" id="address" placeholder="e.g. 2147 Saint Andrews Ct.">
         </div>
         <div class="form-group">
           <label>Listing Price</label>
-          <input type="text" id="price" placeholder="$650,000">
+          <input type="text" id="price" placeholder="e.g. $899,000">
         </div>
         <div class="form-group">
           <label>Beds / Baths / SqFt</label>
-          <input type="text" id="specs" placeholder="4 Bed | 3 Bath | 2,400 SqFt">
+          <input type="text" id="specs" placeholder="e.g. 4 Beds | 3 Baths | 2,585 SqFt">
         </div>
         <div class="form-group full">
           <label>Standout Features & Character</label>
-          <textarea id="features" placeholder="Chef's kitchen, custom pool, floor-to-ceiling windows, walkable to downtown, sunlit primary suite..."></textarea>
+          <textarea id="features" placeholder="Gated Discovery Bay Golf Course community, primary suite with fireplace and private balcony overlooking fairways, backyard pool with palm trees, 3-car garage..."></textarea>
         </div>
       </div>
       <button onclick="generatePrompt()">Generate Master Prompt</button>
@@ -119,7 +145,7 @@
         <div class="step-number">2</div>
         <h2 class="step-title">Take it to Gemini / ChatGPT</h2>
       </div>
-      <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">Copy the prompt below, paste it into Gemini, and copy Gemini's full response.</p>
+      <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">Copy the prompt below, paste it into Gemini, and copy Gemini's full reply.</p>
       <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
         <button class="btn-secondary" onclick="copyPrompt()">Copy Prompt</button>
         <a href="https://gemini.google.com" target="_blank" class="btn">Open Gemini ↗</a>
@@ -137,14 +163,55 @@
         <label>Paste AI Response Here</label>
         <textarea id="aiResponse" style="min-height: 120px;" placeholder="Paste the entire reply from Gemini here..."></textarea>
       </div>
-      <button onclick="parseAndRender()">Format Marketing Hub</button>
+      <button onclick="parseAndRender()">Format Campaign Hub</button>
     </section>
 
     <!-- STEP 4: OUTPUT HUB -->
-    <section class="step-card" id="hubSection" style="display: none;">
-      <h2 class="step-title" style="margin-bottom: 1rem;">Your Generated Marketing Kit</h2>
-      <div class="tabs" id="tabContainer"></div>
-      <div id="tabContentContainer"></div>
+    <section id="hubSection" style="display: none;">
+      <div class="campaign-header">
+        <div class="badge">YOUR CAMPAIGN</div>
+        <h2 id="bannerAddress">2147 Saint Andrews Ct.</h2>
+        <p id="bannerAgent">Kari Cross · Corcoran Icon Properties</p>
+      </div>
+
+      <div class="tabs-wrapper">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('Description')">Description</button>
+          <button class="tab-btn" onclick="switchTab('Captions')">Captions</button>
+          <button class="tab-btn" onclick="switchTab('Stories')">Stories</button>
+          <button class="tab-btn" onclick="switchTab('StoryStudio')">Story Studio</button>
+          <button class="tab-btn" onclick="switchTab('SellerUpdates')">Seller Updates</button>
+          <button class="tab-btn" onclick="switchTab('OpenHouse')">Open House</button>
+          <button class="tab-btn" onclick="switchTab('DMsTexts')">DMs & Texts</button>
+          <button class="tab-btn" onclick="switchTab('Facebook')">Facebook</button>
+          <button class="tab-btn" onclick="switchTab('Blog')">Blog</button>
+          <button class="tab-btn" onclick="switchTab('Sold')">Sold</button>
+        </div>
+      </div>
+
+      <div class="hub-body">
+        <div id="tab-Description" class="tab-content active"></div>
+        <div id="tab-Captions" class="tab-content"></div>
+        <div id="tab-Stories" class="tab-content"></div>
+        
+        <!-- Story Studio Tab -->
+        <div id="tab-StoryStudio" class="tab-content">
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom: 1rem;">Done-for-you story graphics (1080x1920). Upload a photo to preview post-ready graphics.</p>
+          <input type="file" id="imageUploader" accept="image/*" onchange="loadStoryBg(event)" style="margin-bottom:1rem;">
+          <div class="story-grid" id="storyStudioGrid">
+            <div class="story-card-preview" id="story1"><div class="story-text">Welcome to 2147 Saint Andrews Ct in Discovery Bay ⛳</div></div>
+            <div class="story-card-preview" id="story2"><div class="story-text">Step inside to see 2,585 sq ft of updated space.</div></div>
+            <div class="story-card-preview" id="story3"><div class="story-text">Outside, your personal pool overlooks the fairways. 🌴</div></div>
+          </div>
+        </div>
+
+        <div id="tab-SellerUpdates" class="tab-content"></div>
+        <div id="tab-OpenHouse" class="tab-content"></div>
+        <div id="tab-DMsTexts" class="tab-content"></div>
+        <div id="tab-Facebook" class="tab-content"></div>
+        <div id="tab-Blog" class="tab-content"></div>
+        <div id="tab-Sold" class="tab-content"></div>
+      </div>
     </section>
   </div>
 
@@ -152,37 +219,90 @@
     let generatedPromptText = "";
 
     function generatePrompt() {
-      const name = document.getElementById('agentName').value || 'Agent';
-      const brokerage = document.getElementById('brokerage').value || 'Brokerage';
+      const name = document.getElementById('agentName').value || 'Kari Cross';
+      const brokerage = document.getElementById('brokerage').value || 'Corcoran Icon Properties';
       const tone = document.getElementById('tone').value;
-      const address = document.getElementById('address').value || 'Property';
-      const price = document.getElementById('price').value || '';
-      const specs = document.getElementById('specs').value || '';
-      const features = document.getElementById('features').value || '';
+      const address = document.getElementById('address').value || '2147 Saint Andrews Ct.';
+      const price = document.getElementById('price').value || '$899,000';
+      const specs = document.getElementById('specs').value || '4 Bed | 3 Bath | 2,585 SqFt';
+      const features = document.getElementById('features').value || 'Pool, Golf Course Views, Gated Community';
 
-      generatedPromptText = `Act as an elite real estate marketing strategist for ${name} at ${brokerage}.
-Write a complete, high-converting real estate campaign using a "${tone}" tone of voice.
+      generatedPromptText = `Act as an elite real estate copywriter and marketing director for ${name} at ${brokerage}.
+Create a full real estate campaign in a "${tone}" tone.
 
-PROPERTY DETAILS:
+PROPERTY:
 - Address: ${address}
 - Price: ${price}
 - Specs: ${specs}
-- Standout Features: ${features}
+- Features: ${features}
 
-OUTPUT FORMAT REQUIREMENTS:
-Please format your output into 4 clear sections using these exact headers:
+Please output the content in these exact 9 TAB SECTIONS:
 
-### TAB: Social Media Posts
-Provide 3 distinct social media posts (Instagram/Facebook) with captions, emojis, and hashtags.
+### TAB: Description
+[CARD: MLS Description | 250-300 WORDS]
+(Write a full narrative description)
 
-### TAB: Email Newsletter
-Write a warm, non-salesy email update to send to client database announcing this listing.
+[CARD: Short Version | PORTALS & FLYERS]
+(Write a condensed 2-sentence summary)
 
-### TAB: Flyer & Listing Copy
-Write a compelling listing description for the MLS and flyer copy highlighting features.
+### TAB: Captions
+[CARD: Just Listed | SOCIAL CAPTION]
+(Caption highlighting overall home launch)
 
-### TAB: Seller Update Report
-Write a weekly seller update draft reassuring the seller on current listing traction and next steps.`;
+[CARD: Feature Spotlight | SOCIAL CAPTION]
+(Caption highlighting primary suite/balcony/pool)
+
+[CARD: Neighborhood Love | SOCIAL CAPTION]
+(Caption highlighting golf course lifestyle)
+
+### TAB: Stories
+[CARD: Walk-Through Story | STORY SCRIPT]
+Slide 1: ...
+Slide 2: ...
+Slide 3: ...
+
+[CARD: Countdown Story | STORY SCRIPT]
+Slide 1: ...
+Slide 2: ...
+
+### TAB: Seller Updates
+[CARD: Week 1 — Market Update | EMAIL TO YOUR SELLER]
+Hi [Seller Name], ...
+
+[CARD: Week 2 — Feedback & Activity | EMAIL TO YOUR SELLER]
+Hi [Seller Name], ...
+
+### TAB: Open House
+[CARD: Open House Announcement | EMAIL]
+(Open house broadcast email)
+
+[CARD: Neighbor Invite | TEXT / DM]
+(Text message invite for neighbors)
+
+### TAB: DMsTexts
+[CARD: Sphere DM | DM / TEXT]
+(Friendly personal check-in text)
+
+[CARD: Neighbor Letter | PRINT / DM]
+(Letter to surrounding neighbors)
+
+### TAB: Facebook
+[CARD: Hot Home Post | FACEBOOK]
+(Facebook post with property link placeholding)
+
+### TAB: Blog
+[CARD: Blog Title | PAGE TITLE / H1]
+(SEO Title)
+
+[CARD: Blog Post | ARTICLE]
+(600+ word local community and listing article)
+
+### TAB: Sold
+[CARD: Under Contract Postcard — Front | PRINT]
+(Postcard copy)
+
+[CARD: Closing Day Caption | SOCIAL]
+(Celebration post caption)`;
 
       document.getElementById('promptOutput').innerText = generatedPromptText;
     }
@@ -195,55 +315,84 @@ Write a weekly seller update draft reassuring the seller on current listing trac
 
     function parseAndRender() {
       const rawText = document.getElementById('aiResponse').value;
-      if (!rawText.trim()) {
-        alert("Please paste the AI response first!");
-        return;
-      }
+      if (!rawText.trim()) { alert("Please paste the AI response first!"); return; }
 
-      const sections = rawText.split(/### TAB:/g).filter(s => s.trim().length > 0);
-      const tabContainer = document.getElementById('tabContainer');
-      const contentContainer = document.getElementById('tabContentContainer');
+      // Update Top Banner
+      document.getElementById('bannerAddress').innerText = document.getElementById('address').value || '2147 Saint Andrews Ct.';
+      document.getElementById('bannerAgent').innerText = (document.getElementById('agentName').value || 'Kari Cross') + ' · ' + (document.getElementById('brokerage').value || 'Corcoran Icon Properties');
 
-      tabContainer.innerHTML = '';
-      contentContainer.innerHTML = '';
+      const tabs = ['Description', 'Captions', 'Stories', 'SellerUpdates', 'OpenHouse', 'DMsTexts', 'Facebook', 'Blog', 'Sold'];
+      
+      tabs.forEach(tab => {
+        const tabEl = document.getElementById(`tab-${tab}`);
+        if(tabEl && tab !== 'StoryStudio') tabEl.innerHTML = '';
+      });
 
-      sections.forEach((sec, idx) => {
+      const sections = rawText.split(/### TAB:/g);
+
+      sections.forEach(sec => {
+        if(!sec.trim()) return;
         const lines = sec.trim().split('\n');
-        const title = lines[0].trim();
-        const content = lines.slice(1).join('\n').trim();
+        const tabName = lines[0].trim().replace(/\s+/g, '');
+        const content = lines.slice(1).join('\n');
 
-        // Create Tab Button
-        const btn = document.createElement('button');
-        btn.className = `tab-btn ${idx === 0 ? 'active' : ''}`;
-        btn.innerText = title;
-        btn.onclick = () => switchTab(idx);
-        tabContainer.appendChild(btn);
+        const tabTarget = document.getElementById(`tab-${tabName}`);
+        if (tabTarget) {
+          const cards = content.split(/\[CARD:/g);
+          cards.forEach(card => {
+            if(!card.trim()) return;
+            const parts = card.split(']');
+            const metaHeader = parts[0];
+            const bodyText = parts.slice(1).join(']').trim();
 
-        // Create Content Section
-        const div = document.createElement('div');
-        div.className = `tab-content ${idx === 0 ? 'active' : ''}`;
-        div.id = `tab-content-${idx}`;
-        div.innerHTML = `
-          <div class="card-output">
-            <button class="btn-secondary copy-btn-small" onclick="copyContent(${idx})">Copy Section</button>
-            <div id="text-to-copy-${idx}" style="white-space: pre-wrap;">${content}</div>
-          </div>
-        `;
-        contentContainer.appendChild(div);
+            const headerParts = metaHeader.split('|');
+            const title = headerParts[0] ? headerParts[0].trim() : 'Content';
+            const subtitle = headerParts[1] ? headerParts[1].trim() : 'MARKETING COPY';
+
+            const cardHtml = `
+              <div class="output-card">
+                <div class="subtitle-tag">${subtitle}</div>
+                <div class="card-head">
+                  <h3>${title}</h3>
+                  <button class="copy-btn" onclick="copyCardText(this)">Copy</button>
+                </div>
+                <div class="content-body">${bodyText}</div>
+              </div>
+            `;
+            tabTarget.insertAdjacentHTML('beforeend', cardHtml);
+          });
+        }
       });
 
       document.getElementById('hubSection').style.display = 'block';
+      document.getElementById('hubSection').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function switchTab(index) {
-      document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === index));
-      document.querySelectorAll('.tab-content').forEach((c, i) => c.classList.toggle('active', i === index));
+    function switchTab(tabKey) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      const selected = document.getElementById(`tab-${tabKey}`);
+      if(selected) selected.classList.add('active');
     }
 
-    function copyContent(index) {
-      const text = document.getElementById(`text-to-copy-${index}`).innerText;
+    function copyCardText(btn) {
+      const text = btn.parentElement.nextElementSibling.innerText;
       navigator.clipboard.writeText(text);
-      alert("Copied to clipboard!");
+      btn.innerText = 'Copied!';
+      setTimeout(() => btn.innerText = 'Copy', 2000);
+    }
+
+    function loadStoryBg(event) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        const url = reader.result;
+        document.getElementById('story1').style.backgroundImage = `url(${url})`;
+        document.getElementById('story2').style.backgroundImage = `url(${url})`;
+        document.getElementById('story3').style.backgroundImage = `url(${url})`;
+      }
+      reader.readAsDataURL(event.target.files[0]);
     }
   </script>
 </body>
