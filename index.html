@@ -13,8 +13,8 @@
     :root {
       --bg: #f8fafc;
       --card-bg: #ffffff;
-      --primary: #2d3748;
-      --accent: #657e2a;
+      --primary: #1e293b;
+      --accent: #657e2a; /* Dynamic Brand Color */
       --text: #0f172a;
       --text-muted: #64748b;
       --border: #e2e8f0;
@@ -34,15 +34,21 @@
 
     .step-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
     .step-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
-    .step-number { background: #f0fdf4; color: var(--accent); border: 1px solid #bbf7d0; font-weight: 700; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .step-number { background: #f0fdf4; color: var(--accent); border: 1px solid var(--border); font-weight: 700; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .step-title { font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 600; }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-group { margin-bottom: 1rem; }
     .form-group.full { grid-column: span 2; }
-    label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
     input, select, textarea { width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.95rem; }
     textarea { resize: vertical; min-height: 80px; }
+
+    /* COLOR PICKER INPUT STYLING */
+    .color-picker-wrapper { display: flex; align-items: center; gap: 0.75rem; border: 1px solid var(--border); padding: 0.35rem 0.65rem; border-radius: 8px; background: white; }
+    input[type="color"] { -webkit-appearance: none; border: none; width: 36px; height: 32px; border-radius: 6px; cursor: pointer; padding: 0; background: none; }
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"]::-webkit-color-swatch { border: 1px solid var(--border); border-radius: 6px; }
 
     button, .btn { display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: white; border: none; padding: 0.75rem 1.25rem; font-weight: 600; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.95rem; transition: all 0.2s; }
     button:hover, .btn:hover { opacity: 0.9; }
@@ -56,7 +62,7 @@
 
     /* CAMPAIGN BANNER */
     .campaign-header { background: var(--navy-banner); color: white; text-align: center; padding: 2.5rem 1rem; border-radius: 12px 12px 0 0; }
-    .campaign-header .badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 0.2rem 0.8rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; color: #a3e635; margin-bottom: 0.5rem; text-transform: uppercase; }
+    .campaign-header .badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 0.2rem 0.8rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
     .campaign-header h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 600; }
     .campaign-header p { opacity: 0.8; font-size: 0.95rem; }
 
@@ -140,7 +146,7 @@
     .story-card-preview.style-estate .accent-line {
       width: 30px;
       height: 3px;
-      background: #a3e635;
+      background: var(--accent);
       margin-bottom: 0.5rem;
     }
     .story-card-preview.style-estate .story-text-main {
@@ -187,7 +193,7 @@
       font-size: 0.6rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: #657e2a;
+      color: var(--accent);
       font-weight: 700;
       margin-bottom: 0.4rem;
     }
@@ -206,7 +212,7 @@
     }
 
     .btn-download-slide {
-      background: #657e2a;
+      background: var(--accent);
       color: white;
       border: none;
       padding: 0.65rem;
@@ -215,9 +221,9 @@
       font-size: 0.85rem;
       cursor: pointer;
       text-align: center;
-      transition: background 0.2s;
+      transition: opacity 0.2s;
     }
-    .btn-download-slide:hover { background: #526721; }
+    .btn-download-slide:hover { opacity: 0.9; }
 
     @media print {
       body * { visibility: hidden; }
@@ -259,32 +265,68 @@
           <input type="text" id="brokerage" placeholder="e.g. Corcoran Icon Properties">
         </div>
         <div class="form-group">
-          <label>Tone of Voice</label>
-          <select id="tone">
-            <option value="Warm & Neighborly">Warm & Neighborly</option>
-            <option value="Polished & Luxurious">Polished & Luxe</option>
-            <option value="Fun & Playful">Fun & Playful</option>
-            <option value="Calm & Reassuring">Calm & Reassuring</option>
-          </select>
+          <label>Phone</label>
+          <input type="text" id="phone" placeholder="e.g. 9255841640">
         </div>
         <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="e.g. kcross@crossgrouphomes.com">
+        </div>
+        <div class="form-group">
+          <label>Brand Color</label>
+          <div class="color-picker-wrapper">
+            <input type="color" id="brandColor" value="#657e2a" onchange="updateBrandColor()">
+            <span id="colorHexCode" style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">#657e2a</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Voice / Tone</label>
+          <select id="tone">
+            <option value="Warm & Neighborly">Warm & neighborly</option>
+            <option value="Polished & Luxurious">Polished & luxe</option>
+            <option value="Fun & Playful">Fun & playful</option>
+            <option value="Calm & Reassuring">Calm & reassuring</option>
+          </select>
+        </div>
+
+        <div class="form-group full" style="border-top:1px dashed var(--border); padding-top:1rem; margin-top:0.5rem;">
+          <h3 style="font-family:'Outfit', sans-serif; font-size:1.1rem; margin-bottom:0.75rem;">The Listing</h3>
+        </div>
+
+        <div class="form-group full">
           <label>Property Address</label>
           <input type="text" id="address" placeholder="e.g. 2147 Saint Andrews Ct.">
         </div>
         <div class="form-group">
-          <label>Listing Price</label>
-          <input type="text" id="price" placeholder="e.g. $899,000">
+          <label>List Price</label>
+          <input type="text" id="price" placeholder="e.g. 899000">
         </div>
         <div class="form-group">
-          <label>Beds / Baths / SqFt</label>
-          <input type="text" id="specs" placeholder="e.g. 4 Beds | 3 Baths | 2,585 SqFt">
+          <label>Beds / Baths / Sq Ft</label>
+          <input type="text" id="specs" placeholder="e.g. 4 bed / 3 bath / 2,585">
         </div>
+
         <div class="form-group full">
-          <label>Standout Features & Character</label>
-          <textarea id="features" placeholder="Gated Discovery Bay Golf Course community, primary suite with fireplace and private balcony overlooking fairways, backyard pool with palm trees, 3-car garage..."></textarea>
+          <label>Standout Features — <span style="text-transform:none; font-weight:normal;">what would you point at during a showing?</span></label>
+          <textarea id="features" placeholder="Paradise with a pool and palm trees overlooking the golf course, covered patio, Large primary suite with fireplace and balcony, 3 car garage, updates throughout the house."></textarea>
+        </div>
+
+        <div class="form-group full">
+          <label>Neighborhood & Lifestyle — <span style="text-transform:none; font-weight:normal;">schools, parks, coffee, commute, community feel</span></label>
+          <textarea id="neighborhood" placeholder="On the Discovery Bay Golf Course gated community"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Seller First Name(s) <span style="text-transform:none; font-weight:normal; opacity:0.7;">optional</span></label>
+          <input type="text" id="sellerName" placeholder="e.g. Ernie">
+        </div>
+        <div class="form-group">
+          <label>Open House Date & Time <span style="text-transform:none; font-weight:normal; opacity:0.7;">optional</span></label>
+          <input type="text" id="openHouseTime" placeholder="e.g. Saturday, July 25th from 1:00 PM to 4:00 PM">
         </div>
       </div>
-      <button onclick="generatePrompt()">Generate Master Prompt</button>
+
+      <button onclick="generatePrompt()" style="margin-top:1rem;">Write my Gemini prompt</button>
     </section>
 
     <!-- STEP 2 -->
@@ -438,25 +480,46 @@
     let generatedPromptText = "";
     let currentStyle = 'estate';
 
+    function updateBrandColor() {
+      const hex = document.getElementById('brandColor').value;
+      document.getElementById('colorHexCode').innerText = hex;
+      document.documentElement.style.setProperty('--accent', hex);
+    }
+
     function generatePrompt() {
       const name = document.getElementById('agentName').value || 'Kari Cross';
       const brokerage = document.getElementById('brokerage').value || 'Corcoran Icon Properties';
+      const phone = document.getElementById('phone').value || '';
+      const email = document.getElementById('email').value || '';
       const tone = document.getElementById('tone').value;
+
       const address = document.getElementById('address').value || '2147 Saint Andrews Ct.';
       const price = document.getElementById('price').value || '$899,000';
       const specs = document.getElementById('specs').value || '4 Bed | 3 Bath | 2,585 SqFt';
-      const features = document.getElementById('features').value || 'Pool, Golf Course Views, Gated Community';
+      const features = document.getElementById('features').value || '';
+      const neighborhood = document.getElementById('neighborhood').value || '';
+      const seller = document.getElementById('sellerName').value || 'Ernie';
+      const openHouse = document.getElementById('openHouseTime').value || 'Saturday, July 25th from 1:00 PM to 4:00 PM';
 
       generatedPromptText = `Act as an elite real estate copywriter for ${name} at ${brokerage}.
 Create a full real estate marketing campaign in a "${tone}" tone of voice.
+
+AGENT DETAILS:
+- Name: ${name}
+- Brokerage: ${brokerage}
+- Phone: ${phone}
+- Email: ${email}
 
 PROPERTY DETAILS:
 - Address: ${address}
 - Price: ${price}
 - Specs: ${specs}
 - Features: ${features}
+- Neighborhood & Lifestyle: ${neighborhood}
+- Seller First Name: ${seller}
+- Open House Schedule: ${openHouse}
 
-Formatting instructions: Break your answer into sections using headers like "### Description", "### Captions", "### Stories", "### Seller Updates", "### Open House", "### DMs & Texts", "### Facebook", "### Blog", and "### Sold". Inside each section, use headers like "#### MLS Description" or "#### Just Listed" for individual content cards.
+Formatting instructions: Break your answer into sections using headers like "### Description", "### Captions", "### Stories", "### Seller Updates", "### Open House", "### DMs & Texts", "### Facebook", "### Blog", and "### Sold". Inside each section, use headers like "#### MLS Description" or "#### Sphere DM" for individual content cards.
 
 ### Description
 #### MLS Description
@@ -479,7 +542,7 @@ Formatting instructions: Break your answer into sections using headers like "###
 (Preparation/photoshoot caption)
 
 #### Open House Invite
-(Open house social invite)
+(Open house social invite mentioning ${openHouse})
 
 #### Under Contract / Just Sold
 (Milestone celebration caption)
@@ -497,29 +560,107 @@ Slide 3: Option B: Under the covered patio by the pool.
 
 #### Countdown Story
 Slide 1: Open House Countdown!
-Slide 2: Join us this Saturday from 1-4pm.
+Slide 2: Join us on ${openHouse}.
 Slide 3: Come check out the pool and golf course views!
 
 ### Seller Updates
-#### Week 1 Market Update
-Hi [Seller], ...
+#### Week 1 — Week 1 Market Update: ${address}
+EMAIL TO YOUR SELLER
+Hi ${seller},
 
-#### Week 2 Activity Update
-Hi [Seller], ...
+I hope you're having a great week! Now that we are officially launched, I wanted to share our first weekly update.
+
+We had [number of showings] total showings over the past few days, and the feedback on the updates and the pool area has been wonderfully positive. The open house brought in [number of visitors] neighbors and interested buyers.
+
+Online engagement is off to a solid start, with [number of views] views on our listing portal. I will keep monitoring inquiries closely and will let you know as soon as any formal offers come through.
+
+Warmly,
+${name}
+
+#### Week 2 — Week 2 Feedback & Activity: ${address}
+EMAIL TO YOUR SELLER
+Hi ${seller},
+
+Here is a quick look at how things progressed during our second week on the market.
+
+We hosted [number of showings] private tours this week. Overall, agents are noting that buyers really love the primary suite fireplace and balcony view. A few recurring notes from feedback include [buyer feedback point].
+
+We currently have [number of repeat visits] buyers considering a second look. I will keep following up with their agents directly to address any questions and keep the momentum going.
+
+Best,
+${name}
+
+#### Week 3 — Week 3 Market Context: ${address}
+EMAIL TO YOUR SELLER
+Hi ${seller},
+
+I wanted to check in with our Week 3 update and share a quick pulse on the broader market.
+
+This past week brought [number of showings] additional showings. Across our area, we saw [number of new listings] new properties come up for sale, while [number of pending homes] went under contract, showing that buyers are still active in the community.
+
+We are continuing to reach out to active buyers in our network. Let's touch base over the phone in a couple of days to review our positioning and make sure we're set up for success.
+
+Warmly,
+${name}
+
+#### Week 4 — Week 4 Strategy Update: ${address}
+EMAIL TO YOUR SELLER
+Hi ${seller},
+
+Hard to believe we are at the end of four weeks! Here is where we stand as of today.
+
+We recorded [number of showings] showings this week, bringing our total to [total showings]. The interest in the location remains steady.
+
+I am actively pursuing follow-ups with two specific agents whose clients expressed strong interest recently. I'll reach out directly as soon as I have a concrete update for you.
+
+Best,
+${name}
 
 ### Open House
-#### Open House Email
-...
+#### Open House Saturday: ${address} ⛳
+EMAIL
+Hi friends,
 
-#### Neighbor Text Invite
-...
+I'm hosting an open house ${openHouse} at ${address}, and I'd love to see you there!
+
+It's a wonderful home with a great pool, covered patio, and tons of thoughtful updates throughout. Whether you are curious about the current local market, looking for a new place, or just want to pop in and say hello, please feel free to drop by.
+
+Hope to see you Saturday!
+
+Warmly,
+${name}
+
+#### Neighbor Invite
+TEXT / DM
+Hi there! Just wanted to let you know I'm hosting an open house at ${address} ${openHouse}. If you or anyone you know might be interested in the neighborhood, feel free to pop in! - ${name}
+
+#### Golf Course Living in Discovery Bay
+PRINT
+Welcome to ${address}! This updated home offers comfortable space in a quiet, gated golf course setting. Enjoy quiet afternoons by the backyard pool, stunning fairway views, and a spacious primary suite complete with a cozy fireplace and balcony. Join us for our Open House ${openHouse}—we'd love to show you around!
 
 ### DMs & Texts
 #### Sphere DM
-...
+DM / TEXT / PRINT
+Hey! Hope you're doing great 😊 Just listed a sweet home right on the golf course here in Discovery Bay (${address}). It has an awesome pool and fairway views—let me know if you know anyone looking in the area!
 
-#### Neighbor Print Letter
-...
+#### Neighbor Letter (print)
+DM / TEXT / PRINT
+Hello Neighbor,
+
+I wanted to share that your neighbors at ${address} have officially placed their home on the market. As active community members, you know better than anyone how wonderful it is to live in this gated neighborhood.
+
+If you have friends or family who have been looking to move closer to you, please feel free to share the news! We will be hosting an open house ${openHouse}, and you are always welcome to stop by.
+
+Warmly,
+${name}
+
+#### Buyer Lead Reply
+DM / TEXT / PRINT
+Hi! Thanks for reaching out about ${address}. It's a wonderful ${specs} home right on the golf course with a backyard pool and great updates. We're hosting an open house ${openHouse} if you'd like to tour, or I'd be happy to schedule a private walkthrough. What day works best for you?
+
+#### Vendor / Partner Shout-Out
+DM / TEXT / PRINT
+Huge thank you to our amazing media team for capturing ${address} so beautifully! That pool view over the golf course turned out incredible 📸 Sunset tours start this week!
 
 ### Facebook
 #### Hot Home Post
@@ -542,7 +683,6 @@ Hi [Seller], ...
       alert("Prompt copied to clipboard!");
     }
 
-    /* SMART PARSER THAT HANDLES ANY AI HEADER FORMAT */
     function parseAndRender() {
       const rawText = document.getElementById('aiResponse').value;
       if (!rawText.trim()) { alert("Please paste the AI response first!"); return; }
@@ -566,13 +706,11 @@ Hi [Seller], ...
         'sold': 'Sold'
       };
 
-      // Clear existing tab contents except Story Studio
       Object.values(tabMap).forEach(tabId => {
         const el = document.getElementById(`tab-${tabId}`);
         if(el) el.innerHTML = '';
       });
 
-      // Split AI output by markdown headers (### or ##)
       const sections = rawText.split(/(?=\n?###?\s+)/gi);
 
       let currentTabKey = 'Description';
@@ -582,7 +720,6 @@ Hi [Seller], ...
 
         const firstLine = sec.trim().split('\n')[0].toLowerCase();
         
-        // Check if this section belongs to a tab
         let matchedTab = false;
         for (let key in tabMap) {
           if (firstLine.includes(key)) {
@@ -595,7 +732,6 @@ Hi [Seller], ...
         const tabTarget = document.getElementById(`tab-${currentTabKey}`);
         if (!tabTarget) return;
 
-        // If it's a specific card inside a tab (#### or card tag)
         const cards = sec.split(/(?=\n?####?\s+|\[CARD:)/gi);
 
         cards.forEach(cardStr => {
@@ -611,13 +747,31 @@ Hi [Seller], ...
 
           if(title.toLowerCase().startsWith('tab:')) return;
 
+          let subtitleTag = 'MARKETING COPY';
+          if(body.startsWith('EMAIL TO YOUR SELLER')) {
+            subtitleTag = 'EMAIL TO YOUR SELLER';
+            body = body.replace('EMAIL TO YOUR SELLER', '').trim();
+          } else if(body.startsWith('EMAIL')) {
+            subtitleTag = 'EMAIL';
+            body = body.replace(/^EMAIL\n?/, '').trim();
+          } else if(body.startsWith('TEXT / DM')) {
+            subtitleTag = 'TEXT / DM';
+            body = body.replace(/^TEXT \/ DM\n?/, '').trim();
+          } else if(body.startsWith('PRINT')) {
+            subtitleTag = 'PRINT';
+            body = body.replace(/^PRINT\n?/, '').trim();
+          } else if(body.startsWith('DM / TEXT / PRINT')) {
+            subtitleTag = 'DM / TEXT / PRINT';
+            body = body.replace(/^DM \/ TEXT \/ PRINT\n?/, '').trim();
+          }
+
           const cardHtml = `
             <div class="output-card">
               <div class="card-head">
                 <h3>${title}</h3>
                 <button class="copy-btn" onclick="copyCardText(this)">Copy</button>
               </div>
-              <div class="subtitle-tag">MARKETING COPY</div>
+              <div class="subtitle-tag">${subtitleTag}</div>
               <div class="content-body">${body || cardStr.trim()}</div>
             </div>
           `;
@@ -645,7 +799,6 @@ Hi [Seller], ...
       setTimeout(() => btn.innerText = 'Copy', 2000);
     }
 
-    /* STORY STUDIO INTERACTIVE LOGIC */
     function loadStoryBg(event) {
       const reader = new FileReader();
       reader.onload = function() {
@@ -705,6 +858,7 @@ Hi [Seller], ...
     function updateStudioConcept() {
       const concept = document.getElementById('storyConceptSelect').value;
       const addr = document.getElementById('address').value || '2147 Saint Andrews Ct.';
+      const openHouse = document.getElementById('openHouseTime').value || 'Saturday 1-4pm';
 
       if (concept === 'walkthrough') {
         document.getElementById('inputSlide1').value = `Welcome to ${addr} in Discovery Bay ⛳`;
@@ -716,7 +870,7 @@ Hi [Seller], ...
         document.getElementById('inputSlide3').value = `Option B: Under the covered patio right by the pool. Which would you pick?`;
       } else if (concept === 'countdown') {
         document.getElementById('inputSlide1').value = `Open House Countdown! 🗓️`;
-        document.getElementById('inputSlide2').value = `Join us this Saturday from 1-4pm at ${addr}.`;
+        document.getElementById('inputSlide2').value = `Join us on ${openHouse} at ${addr}.`;
         document.getElementById('inputSlide3').value = `Come check out the pool and golf course views! 👋`;
       }
 
