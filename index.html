@@ -109,7 +109,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    /* TOP BADGE */
     .story-badge {
       align-self: center;
       background: rgba(255, 255, 255, 0.25);
@@ -125,7 +124,7 @@
       z-index: 2;
     }
 
-    /* STYLE 1: ESTATE STYLE */
+    /* ESTATE STYLE */
     .story-card-preview.style-estate::before {
       content: '';
       position: absolute;
@@ -157,7 +156,7 @@
       font-weight: 500;
     }
 
-    /* STYLE 2: MANOR CARD STYLE */
+    /* MANOR CARD STYLE */
     .story-card-preview.style-manorcard {
       justify-content: center;
       align-items: center;
@@ -349,7 +348,7 @@
           
           <div class="studio-controls">
             <label class="style-pill photo-btn" style="cursor:pointer;">
-              <span id="photoStatusText">PHOTO ADDED ✓</span>
+              <span id="photoStatusText">UPLOAD PHOTO 📷</span>
               <input type="file" id="imageUploader" accept="image/*" onchange="loadStoryBg(event)" style="display:none;">
             </label>
 
@@ -438,7 +437,6 @@
   <script>
     let generatedPromptText = "";
     let currentStyle = 'estate';
-    let uploadedImgUrl = '';
 
     function generatePrompt() {
       const name = document.getElementById('agentName').value || 'Kari Cross';
@@ -449,97 +447,91 @@
       const specs = document.getElementById('specs').value || '4 Bed | 3 Bath | 2,585 SqFt';
       const features = document.getElementById('features').value || 'Pool, Golf Course Views, Gated Community';
 
-      generatedPromptText = `Act as an elite real estate copywriter and marketing director for ${name} at ${brokerage}.
-Create a full real estate campaign in a "${tone}" tone.
+      generatedPromptText = `Act as an elite real estate copywriter for ${name} at ${brokerage}.
+Create a full real estate marketing campaign in a "${tone}" tone of voice.
 
-PROPERTY:
+PROPERTY DETAILS:
 - Address: ${address}
 - Price: ${price}
 - Specs: ${specs}
 - Features: ${features}
 
-Please output the content in these exact 9 TAB SECTIONS:
+Formatting instructions: Break your answer into sections using headers like "### Description", "### Captions", "### Stories", "### Seller Updates", "### Open House", "### DMs & Texts", "### Facebook", "### Blog", and "### Sold". Inside each section, use headers like "#### MLS Description" or "#### Just Listed" for individual content cards.
 
-### TAB: Description
-[CARD: MLS Description | 250–300 WORDS]
-(Write a compelling, full narrative description of 250-300 words)
+### Description
+#### MLS Description
+(Write 250-300 words MLS narrative)
 
-[CARD: Short Version | PORTALS & FLYERS]
-(Write a concise 2-sentence summary version for print flyers and quick portal posts)
+#### Short Version
+(Write a 2-sentence summary version for portals and flyers)
 
-### TAB: Captions
-[CARD: Just Listed | SOCIAL CAPTION]
-(Caption celebrating the official launch of the property)
+### Captions
+#### Just Listed
+(Launch social caption)
 
-[CARD: Feature Spotlight | SOCIAL CAPTION]
-(Caption focusing on standout features like the primary suite balcony or private backyard pool)
+#### Feature Spotlight
+(Spotlight feature caption)
 
-[CARD: Neighborhood Love | SOCIAL CAPTION]
-(Caption highlighting lifestyle benefits of living in this specific community/area)
+#### Neighborhood Love
+(Neighborhood lifestyle caption)
 
-[CARD: Behind the Scenes | SOCIAL CAPTION]
-(Caption about prep work, photo shoots, and getting the listing market-ready)
+#### Behind the Scenes
+(Preparation/photoshoot caption)
 
-[CARD: Open House Invite | SOCIAL CAPTION]
-(Caption inviting neighbors and buyers to the upcoming open house)
+#### Open House Invite
+(Open house social invite)
 
-[CARD: Under Contract / Just Sold | SOCIAL CAPTION]
-(Caption celebrating contract milestone or successful closing and thanking sellers)
+#### Under Contract / Just Sold
+(Milestone celebration caption)
 
-### TAB: Stories
-[CARD: Walk-Through Story | STORY SCRIPT]
+### Stories
+#### Walk-Through Story
 Slide 1: Welcome to ${address}...
 Slide 2: Step inside to see ${specs}...
 Slide 3: Outside, your personal pool overlooks the fairways. DM me for details!
 
-[CARD: This or That | STORY SCRIPT]
+#### This or That
 Slide 1: Morning coffee choice at ${address}...
-Slide 2: Option A: On the primary suite balcony overlooking the fairways.
-Slide 3: Option B: Under the covered patio right by the pool. Which would you pick?
+Slide 2: Option A: On the primary suite balcony.
+Slide 3: Option B: Under the covered patio by the pool.
 
-[CARD: Countdown Story | STORY SCRIPT]
+#### Countdown Story
 Slide 1: Open House Countdown!
 Slide 2: Join us this Saturday from 1-4pm.
-Slide 3: Come check out the pool and golf course views at ${address}!
+Slide 3: Come check out the pool and golf course views!
 
-### TAB: Seller Updates
-[CARD: Week 1 — Market Update | EMAIL TO YOUR SELLER]
-Hi [Seller Name], ...
+### Seller Updates
+#### Week 1 Market Update
+Hi [Seller], ...
 
-[CARD: Week 2 — Feedback & Activity | EMAIL TO YOUR SELLER]
-Hi [Seller Name], ...
+#### Week 2 Activity Update
+Hi [Seller], ...
 
-### TAB: Open House
-[CARD: Open House Announcement | EMAIL]
-(Open house broadcast email)
+### Open House
+#### Open House Email
+...
 
-[CARD: Neighbor Invite | TEXT / DM]
-(Text message invite for neighbors)
+#### Neighbor Text Invite
+...
 
-### TAB: DMsTexts
-[CARD: Sphere DM | DM / TEXT]
-(Friendly personal check-in text)
+### DMs & Texts
+#### Sphere DM
+...
 
-[CARD: Neighbor Letter | PRINT / DM]
-(Letter to surrounding neighbors)
+#### Neighbor Print Letter
+...
 
-### TAB: Facebook
-[CARD: Hot Home Post | FACEBOOK]
-(Facebook post with property link placeholder)
+### Facebook
+#### Hot Home Post
+...
 
-### TAB: Blog
-[CARD: Blog Title | PAGE TITLE / H1]
-(SEO Title)
+### Blog
+#### Blog Title & Article
+...
 
-[CARD: Blog Post | ARTICLE]
-(600+ word local community and listing article)
-
-### TAB: Sold
-[CARD: Under Contract Postcard — Front | PRINT]
-(Postcard copy)
-
-[CARD: Closing Day Caption | SOCIAL]
-(Celebration post caption)`;
+### Sold
+#### Just Sold Postcard
+...`;
 
       document.getElementById('promptOutput').innerText = generatedPromptText;
     }
@@ -550,6 +542,7 @@ Hi [Seller Name], ...
       alert("Prompt copied to clipboard!");
     }
 
+    /* SMART PARSER THAT HANDLES ANY AI HEADER FORMAT */
     function parseAndRender() {
       const rawText = document.getElementById('aiResponse').value;
       if (!rawText.trim()) { alert("Please paste the AI response first!"); return; }
@@ -557,55 +550,79 @@ Hi [Seller Name], ...
       const addr = document.getElementById('address').value || '2147 Saint Andrews Ct.';
       const agent = (document.getElementById('agentName').value || 'Kari Cross') + ' · ' + (document.getElementById('brokerage').value || 'Corcoran Icon Properties');
 
-      // Update Top Banner
       document.getElementById('bannerAddress').innerText = addr;
       document.getElementById('bannerAgent').innerText = agent;
 
-      // Update Story Studio Defaults
-      document.querySelectorAll('.story-badge').forEach(el => el.innerText = addr.toUpperCase());
-      document.querySelectorAll('.story-footer-text').forEach(el => el.innerText = agent);
+      const tabMap = {
+        'description': 'Description',
+        'captions': 'Captions',
+        'stories': 'Stories',
+        'seller': 'SellerUpdates',
+        'open': 'OpenHouse',
+        'dm': 'DMsTexts',
+        'text': 'DMsTexts',
+        'facebook': 'Facebook',
+        'blog': 'Blog',
+        'sold': 'Sold'
+      };
 
-      const tabs = ['Description', 'Captions', 'Stories', 'SellerUpdates', 'OpenHouse', 'DMsTexts', 'Facebook', 'Blog', 'Sold'];
-      
-      tabs.forEach(tab => {
-        const tabEl = document.getElementById(`tab-${tab}`);
-        if(tabEl && tab !== 'StoryStudio') tabEl.innerHTML = '';
+      // Clear existing tab contents except Story Studio
+      Object.values(tabMap).forEach(tabId => {
+        const el = document.getElementById(`tab-${tabId}`);
+        if(el) el.innerHTML = '';
       });
 
-      const sections = rawText.split(/### TAB:/g);
+      // Split AI output by markdown headers (### or ##)
+      const sections = rawText.split(/(?=\n?###?\s+)/gi);
+
+      let currentTabKey = 'Description';
 
       sections.forEach(sec => {
         if(!sec.trim()) return;
-        const lines = sec.trim().split('\n');
-        const tabName = lines[0].trim().replace(/\s+/g, '');
-        const content = lines.slice(1).join('\n');
 
-        const tabTarget = document.getElementById(`tab-${tabName}`);
-        if (tabTarget) {
-          const cards = content.split(/\[CARD:/g);
-          cards.forEach(card => {
-            if(!card.trim()) return;
-            const parts = card.split(']');
-            const metaHeader = parts[0];
-            const bodyText = parts.slice(1).join(']').trim();
-
-            const headerParts = metaHeader.split('|');
-            const title = headerParts[0] ? headerParts[0].trim() : 'Content';
-            const subtitle = headerParts[1] ? headerParts[1].trim() : 'MARKETING COPY';
-
-            const cardHtml = `
-              <div class="output-card">
-                <div class="card-head">
-                  <h3>${title}</h3>
-                  <button class="copy-btn" onclick="copyCardText(this)">Copy</button>
-                </div>
-                <div class="subtitle-tag">${subtitle}</div>
-                <div class="content-body">${bodyText}</div>
-              </div>
-            `;
-            tabTarget.insertAdjacentHTML('beforeend', cardHtml);
-          });
+        const firstLine = sec.trim().split('\n')[0].toLowerCase();
+        
+        // Check if this section belongs to a tab
+        let matchedTab = false;
+        for (let key in tabMap) {
+          if (firstLine.includes(key)) {
+            currentTabKey = tabMap[key];
+            matchedTab = true;
+            break;
+          }
         }
+
+        const tabTarget = document.getElementById(`tab-${currentTabKey}`);
+        if (!tabTarget) return;
+
+        // If it's a specific card inside a tab (#### or card tag)
+        const cards = sec.split(/(?=\n?####?\s+|\[CARD:)/gi);
+
+        cards.forEach(cardStr => {
+          if(!cardStr.trim()) return;
+          const lines = cardStr.trim().split('\n');
+          let title = lines[0].replace(/^#+\s*/, '').replace(/\[CARD:\s*/, '').replace(/\]/, '').trim();
+          let body = lines.slice(1).join('\n').trim();
+
+          if(!body && lines.length === 1) {
+            body = title;
+            title = "Marketing Copy";
+          }
+
+          if(title.toLowerCase().startsWith('tab:')) return;
+
+          const cardHtml = `
+            <div class="output-card">
+              <div class="card-head">
+                <h3>${title}</h3>
+                <button class="copy-btn" onclick="copyCardText(this)">Copy</button>
+              </div>
+              <div class="subtitle-tag">MARKETING COPY</div>
+              <div class="content-body">${body || cardStr.trim()}</div>
+            </div>
+          `;
+          tabTarget.insertAdjacentHTML('beforeend', cardHtml);
+        });
       });
 
       document.getElementById('hubSection').style.display = 'block';
@@ -616,7 +633,7 @@ Hi [Seller Name], ...
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       
-      event.target.classList.add('active');
+      if(event && event.target) event.target.classList.add('active');
       const selected = document.getElementById(`tab-${tabKey}`);
       if(selected) selected.classList.add('active');
     }
@@ -632,7 +649,7 @@ Hi [Seller Name], ...
     function loadStoryBg(event) {
       const reader = new FileReader();
       reader.onload = function() {
-        uploadedImgUrl = reader.result;
+        const uploadedImgUrl = reader.result;
         ['previewCard1', 'previewCard2', 'previewCard3'].forEach(id => {
           document.getElementById(id).style.backgroundImage = `url(${uploadedImgUrl})`;
         });
