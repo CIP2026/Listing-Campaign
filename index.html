@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <!-- HTML2CANVAS FOR PNG DOWNLOADS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
       --bg: #f8fafc;
@@ -47,6 +49,9 @@
     .btn-secondary { background: #f1f5f9; color: var(--text); border: 1px solid var(--border); }
     .btn-secondary:hover { background: #e2e8f0; }
 
+    .btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--text); font-weight: 600; border-radius: 8px; padding: 0.6rem 1.2rem; cursor: pointer; transition: all 0.2s; margin-top: 1rem; }
+    .btn-outline:hover { background: var(--text); color: white; }
+
     pre { background: #0f172a; color: #f8fafc; padding: 1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; font-size: 0.85rem; max-height: 200px; }
 
     /* CAMPAIGN BANNER */
@@ -68,21 +73,165 @@
 
     /* CARD FORMATTING */
     .output-card { background: #ffffff; border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin-bottom: 1.25rem; position: relative; }
-    .output-card .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
-    .output-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #1e293b; }
-    .output-card .subtitle-tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; }
-    .output-card .content-body { white-space: pre-wrap; font-size: 0.95rem; color: #334155; }
+    .output-card .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem; }
+    .output-card h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: #1e293b; font-weight: 600; }
+    .output-card .subtitle-tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .output-card .content-body { white-space: pre-wrap; font-size: 0.95rem; color: #334155; line-height: 1.6; }
 
-    .copy-btn { padding: 0.35rem 0.85rem; font-size: 0.8rem; background: #ffffff; border: 1px solid var(--border); color: var(--text); border-radius: 6px; cursor: pointer; }
+    .copy-btn { padding: 0.35rem 0.85rem; font-size: 0.85rem; background: #ffffff; border: 1px solid var(--border); color: var(--text); border-radius: 6px; cursor: pointer; font-weight: 500; }
     .copy-btn:hover { background: #f1f5f9; }
 
-    /* STORY STUDIO MOCKUP */
-    .story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .story-card-preview { background: #1e293b; color: white; border-radius: 12px; overflow: hidden; height: 420px; position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; background-size: cover; background-position: center; }
-    .story-card-preview::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); }
-    .story-text { position: relative; z-index: 2; font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; line-height: 1.3; }
+    /* STORY STUDIO CONTROLS */
+    .studio-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-bottom: 1.5rem; }
+    .style-pill { background: #ffffff; border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+    .style-pill.active { background: #1e293b; color: white; border-color: #1e293b; }
+    .style-pill.photo-btn { border-color: #1e293b; }
 
-    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } .form-group.full { grid-column: span 1; } }
+    .story-inputs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+    .story-inputs-grid textarea { height: 75px; min-height: 75px; font-size: 0.85rem; }
+
+    .story-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 1.5rem; }
+    .story-col { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    /* STORY CANVAS PREVIEWS */
+    .story-card-preview { 
+      background: #2b384e; 
+      border-radius: 12px; 
+      overflow: hidden; 
+      height: 480px; 
+      position: relative; 
+      background-size: cover; 
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.25rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* TOP BADGE */
+    .story-badge {
+      align-self: center;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    /* STYLE 1: ESTATE STYLE */
+    .story-card-preview.style-estate::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.4) 50%, transparent 100%);
+      z-index: 1;
+    }
+    .story-card-preview.style-estate .story-body-content {
+      position: relative;
+      z-index: 2;
+      color: white;
+    }
+    .story-card-preview.style-estate .accent-line {
+      width: 30px;
+      height: 3px;
+      background: #a3e635;
+      margin-bottom: 0.5rem;
+    }
+    .story-card-preview.style-estate .story-text-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 0.75rem;
+    }
+    .story-card-preview.style-estate .story-footer-text {
+      font-size: 0.65rem;
+      opacity: 0.8;
+      font-weight: 500;
+    }
+
+    /* STYLE 2: MANOR CARD STYLE */
+    .story-card-preview.style-manorcard {
+      justify-content: center;
+      align-items: center;
+    }
+    .story-card-preview.style-manorcard::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.25);
+      z-index: 1;
+    }
+    .story-card-preview.style-manorcard .story-badge {
+      position: absolute;
+      top: 1.25rem;
+    }
+    .story-card-preview.style-manorcard .manor-inner-card {
+      position: relative;
+      z-index: 2;
+      background: #faf8f5;
+      border: 1px solid #786c55;
+      padding: 1.25rem 1rem;
+      border-radius: 4px;
+      width: 90%;
+      text-align: left;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .story-card-preview.style-manorcard .manor-badge {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #657e2a;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .story-card-preview.style-manorcard .story-text-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: #1e293b;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 0.75rem;
+    }
+    .story-card-preview.style-manorcard .story-footer-text {
+      font-size: 0.6rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .btn-download-slide {
+      background: #657e2a;
+      color: white;
+      border: none;
+      padding: 0.65rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .btn-download-slide:hover { background: #526721; }
+
+    @media print {
+      body * { visibility: hidden; }
+      #hubSection, #hubSection * { visibility: visible; }
+      #hubSection { position: absolute; left: 0; top: 0; width: 100%; }
+      .tabs-wrapper, .btn-outline, .copy-btn { display: none !important; }
+      .tab-content { display: block !important; }
+    }
+
+    @media (max-width: 768px) {
+      .grid-2, .story-grid, .story-inputs-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+    }
   </style>
 </head>
 <body>
@@ -194,14 +343,82 @@
         <div id="tab-Captions" class="tab-content"></div>
         <div id="tab-Stories" class="tab-content"></div>
         
-        <!-- Story Studio Tab -->
+        <!-- STORY STUDIO TAB -->
         <div id="tab-StoryStudio" class="tab-content">
-          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom: 1rem;">Done-for-you story graphics (1080x1920). Upload a photo to preview post-ready graphics.</p>
-          <input type="file" id="imageUploader" accept="image/*" onchange="loadStoryBg(event)" style="margin-bottom:1rem;">
-          <div class="story-grid" id="storyStudioGrid">
-            <div class="story-card-preview" id="story1"><div class="story-text">Welcome to 2147 Saint Andrews Ct in Discovery Bay ⛳</div></div>
-            <div class="story-card-preview" id="story2"><div class="story-text">Step inside to see 2,585 sq ft of updated space.</div></div>
-            <div class="story-card-preview" id="story3"><div class="story-text">Outside, your personal pool overlooks the fairways. 🌴</div></div>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom: 1.25rem;">Done-for-you story graphics (1080×1920). Upload a listing photo, pick a look, tweak any text — the preview updates live — then download post-ready PNGs.</p>
+          
+          <div class="studio-controls">
+            <label class="style-pill photo-btn" style="cursor:pointer;">
+              <span id="photoStatusText">PHOTO ADDED ✓</span>
+              <input type="file" id="imageUploader" accept="image/*" onchange="loadStoryBg(event)" style="display:none;">
+            </label>
+
+            <button class="style-pill active" id="btnStyleEstate" onclick="setStudioStyle('estate')">Estate</button>
+            <button class="style-pill" id="btnStyleManor" onclick="setStudioStyle('manorcard')">Manor Card</button>
+
+            <select id="storyConceptSelect" onchange="updateStudioConcept()" style="width: auto; padding: 0.45rem 0.85rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
+              <option value="walkthrough">Walk-Through Story</option>
+              <option value="thisorthat">This or That</option>
+              <option value="countdown">Countdown Story</option>
+            </select>
+          </div>
+
+          <!-- EDITABLE TEXT INPUTS FOR THE 3 SLIDES -->
+          <div class="story-inputs-grid">
+            <div>
+              <label>Slide 1 Text</label>
+              <textarea id="inputSlide1" oninput="syncStoryText()">Welcome to 2147 Saint Andrews Ct in Discovery Bay ⛳</textarea>
+            </div>
+            <div>
+              <label>Slide 2 Text</label>
+              <textarea id="inputSlide2" oninput="syncStoryText()">Step inside to see 2,585 sq ft of updated space, 4 beds, and 3 full baths.</textarea>
+            </div>
+            <div>
+              <label>Slide 3 Text</label>
+              <textarea id="inputSlide3" oninput="syncStoryText()">Outside, your personal pool and palm trees overlook the fairways. DM me for details! 🌴</textarea>
+            </div>
+          </div>
+
+          <!-- PREVIEW CARDS GRID -->
+          <div class="story-grid">
+            <!-- SLIDE 1 -->
+            <div class="story-col">
+              <div class="story-card-preview style-estate" id="previewCard1">
+                <div class="story-badge" id="cardBadge1">2147 SAINT ANDREWS CT.</div>
+                <div class="story-body-content" id="cardBodyContainer1">
+                  <div class="accent-line"></div>
+                  <div class="story-text-main" id="renderText1">Welcome to 2147 Saint Andrews Ct in Discovery Bay ⛳</div>
+                  <div class="story-footer-text" id="renderFooter1">Kari Cross · Corcoran Icon Properties</div>
+                </div>
+              </div>
+              <button class="btn-download-slide" onclick="downloadSlide('previewCard1', 'Slide_1.png')">Download slide 1</button>
+            </div>
+
+            <!-- SLIDE 2 -->
+            <div class="story-col">
+              <div class="story-card-preview style-estate" id="previewCard2">
+                <div class="story-badge" id="cardBadge2">2147 SAINT ANDREWS CT.</div>
+                <div class="story-body-content" id="cardBodyContainer2">
+                  <div class="accent-line"></div>
+                  <div class="story-text-main" id="renderText2">Step inside to see 2,585 sq ft of updated space, 4 beds, and 3 full baths.</div>
+                  <div class="story-footer-text" id="renderFooter2">Kari Cross · Corcoran Icon Properties</div>
+                </div>
+              </div>
+              <button class="btn-download-slide" onclick="downloadSlide('previewCard2', 'Slide_2.png')">Download slide 2</button>
+            </div>
+
+            <!-- SLIDE 3 -->
+            <div class="story-col">
+              <div class="story-card-preview style-estate" id="previewCard3">
+                <div class="story-badge" id="cardBadge3">2147 SAINT ANDREWS CT.</div>
+                <div class="story-body-content" id="cardBodyContainer3">
+                  <div class="accent-line"></div>
+                  <div class="story-text-main" id="renderText3">Outside, your personal pool and palm trees overlook the fairways. DM me for details! 🌴</div>
+                  <div class="story-footer-text" id="renderFooter3">Kari Cross · Corcoran Icon Properties</div>
+                </div>
+              </div>
+              <button class="btn-download-slide" onclick="downloadSlide('previewCard3', 'Slide_3.png')">Download slide 3</button>
+            </div>
           </div>
         </div>
 
@@ -211,12 +428,17 @@
         <div id="tab-Facebook" class="tab-content"></div>
         <div id="tab-Blog" class="tab-content"></div>
         <div id="tab-Sold" class="tab-content"></div>
+
+        <!-- PRINT BUTTON -->
+        <button class="btn-outline" onclick="window.print()">Print / save as PDF</button>
       </div>
     </section>
   </div>
 
   <script>
     let generatedPromptText = "";
+    let currentStyle = 'estate';
+    let uploadedImgUrl = '';
 
     function generatePrompt() {
       const name = document.getElementById('agentName').value || 'Kari Cross';
@@ -239,31 +461,46 @@ PROPERTY:
 Please output the content in these exact 9 TAB SECTIONS:
 
 ### TAB: Description
-[CARD: MLS Description | 250-300 WORDS]
-(Write a full narrative description)
+[CARD: MLS Description | 250–300 WORDS]
+(Write a compelling, full narrative description of 250-300 words)
 
 [CARD: Short Version | PORTALS & FLYERS]
-(Write a condensed 2-sentence summary)
+(Write a concise 2-sentence summary version for print flyers and quick portal posts)
 
 ### TAB: Captions
 [CARD: Just Listed | SOCIAL CAPTION]
-(Caption highlighting overall home launch)
+(Caption celebrating the official launch of the property)
 
 [CARD: Feature Spotlight | SOCIAL CAPTION]
-(Caption highlighting primary suite/balcony/pool)
+(Caption focusing on standout features like the primary suite balcony or private backyard pool)
 
 [CARD: Neighborhood Love | SOCIAL CAPTION]
-(Caption highlighting golf course lifestyle)
+(Caption highlighting lifestyle benefits of living in this specific community/area)
+
+[CARD: Behind the Scenes | SOCIAL CAPTION]
+(Caption about prep work, photo shoots, and getting the listing market-ready)
+
+[CARD: Open House Invite | SOCIAL CAPTION]
+(Caption inviting neighbors and buyers to the upcoming open house)
+
+[CARD: Under Contract / Just Sold | SOCIAL CAPTION]
+(Caption celebrating contract milestone or successful closing and thanking sellers)
 
 ### TAB: Stories
 [CARD: Walk-Through Story | STORY SCRIPT]
-Slide 1: ...
-Slide 2: ...
-Slide 3: ...
+Slide 1: Welcome to ${address}...
+Slide 2: Step inside to see ${specs}...
+Slide 3: Outside, your personal pool overlooks the fairways. DM me for details!
+
+[CARD: This or That | STORY SCRIPT]
+Slide 1: Morning coffee choice at ${address}...
+Slide 2: Option A: On the primary suite balcony overlooking the fairways.
+Slide 3: Option B: Under the covered patio right by the pool. Which would you pick?
 
 [CARD: Countdown Story | STORY SCRIPT]
-Slide 1: ...
-Slide 2: ...
+Slide 1: Open House Countdown!
+Slide 2: Join us this Saturday from 1-4pm.
+Slide 3: Come check out the pool and golf course views at ${address}!
 
 ### TAB: Seller Updates
 [CARD: Week 1 — Market Update | EMAIL TO YOUR SELLER]
@@ -288,7 +525,7 @@ Hi [Seller Name], ...
 
 ### TAB: Facebook
 [CARD: Hot Home Post | FACEBOOK]
-(Facebook post with property link placeholding)
+(Facebook post with property link placeholder)
 
 ### TAB: Blog
 [CARD: Blog Title | PAGE TITLE / H1]
@@ -317,9 +554,16 @@ Hi [Seller Name], ...
       const rawText = document.getElementById('aiResponse').value;
       if (!rawText.trim()) { alert("Please paste the AI response first!"); return; }
 
+      const addr = document.getElementById('address').value || '2147 Saint Andrews Ct.';
+      const agent = (document.getElementById('agentName').value || 'Kari Cross') + ' · ' + (document.getElementById('brokerage').value || 'Corcoran Icon Properties');
+
       // Update Top Banner
-      document.getElementById('bannerAddress').innerText = document.getElementById('address').value || '2147 Saint Andrews Ct.';
-      document.getElementById('bannerAgent').innerText = (document.getElementById('agentName').value || 'Kari Cross') + ' · ' + (document.getElementById('brokerage').value || 'Corcoran Icon Properties');
+      document.getElementById('bannerAddress').innerText = addr;
+      document.getElementById('bannerAgent').innerText = agent;
+
+      // Update Story Studio Defaults
+      document.querySelectorAll('.story-badge').forEach(el => el.innerText = addr.toUpperCase());
+      document.querySelectorAll('.story-footer-text').forEach(el => el.innerText = agent);
 
       const tabs = ['Description', 'Captions', 'Stories', 'SellerUpdates', 'OpenHouse', 'DMsTexts', 'Facebook', 'Blog', 'Sold'];
       
@@ -351,11 +595,11 @@ Hi [Seller Name], ...
 
             const cardHtml = `
               <div class="output-card">
-                <div class="subtitle-tag">${subtitle}</div>
                 <div class="card-head">
                   <h3>${title}</h3>
                   <button class="copy-btn" onclick="copyCardText(this)">Copy</button>
                 </div>
+                <div class="subtitle-tag">${subtitle}</div>
                 <div class="content-body">${bodyText}</div>
               </div>
             `;
@@ -378,21 +622,98 @@ Hi [Seller Name], ...
     }
 
     function copyCardText(btn) {
-      const text = btn.parentElement.nextElementSibling.innerText;
+      const text = btn.parentElement.nextElementSibling.nextElementSibling.innerText;
       navigator.clipboard.writeText(text);
       btn.innerText = 'Copied!';
       setTimeout(() => btn.innerText = 'Copy', 2000);
     }
 
+    /* STORY STUDIO INTERACTIVE LOGIC */
     function loadStoryBg(event) {
       const reader = new FileReader();
       reader.onload = function() {
-        const url = reader.result;
-        document.getElementById('story1').style.backgroundImage = `url(${url})`;
-        document.getElementById('story2').style.backgroundImage = `url(${url})`;
-        document.getElementById('story3').style.backgroundImage = `url(${url})`;
+        uploadedImgUrl = reader.result;
+        ['previewCard1', 'previewCard2', 'previewCard3'].forEach(id => {
+          document.getElementById(id).style.backgroundImage = `url(${uploadedImgUrl})`;
+        });
+        document.getElementById('photoStatusText').innerText = 'PHOTO ADDED ✓';
       }
       reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function setStudioStyle(style) {
+      currentStyle = style;
+      document.getElementById('btnStyleEstate').classList.toggle('active', style === 'estate');
+      document.getElementById('btnStyleManor').classList.toggle('active', style === 'manorcard');
+
+      for (let i = 1; i <= 3; i++) {
+        const card = document.getElementById(`previewCard${i}`);
+        card.className = `story-card-preview style-${style}`;
+        renderCardDOM(i);
+      }
+    }
+
+    function renderCardDOM(idx) {
+      const text = document.getElementById(`inputSlide${idx}`).value;
+      const addr = (document.getElementById('address').value || '2147 Saint Andrews Ct.').toUpperCase();
+      const agent = (document.getElementById('agentName').value || 'Kari Cross') + ' · ' + (document.getElementById('brokerage').value || 'Corcoran Icon Properties');
+
+      const card = document.getElementById(`previewCard${idx}`);
+
+      if (currentStyle === 'estate') {
+        card.innerHTML = `
+          <div class="story-badge">${addr}</div>
+          <div class="story-body-content">
+            <div class="accent-line"></div>
+            <div class="story-text-main">${text}</div>
+            <div class="story-footer-text">${agent}</div>
+          </div>
+        `;
+      } else if (currentStyle === 'manorcard') {
+        card.innerHTML = `
+          <div class="story-badge">${addr}</div>
+          <div class="manor-inner-card">
+            <div class="manor-badge">${addr}</div>
+            <div class="story-text-main">${text}</div>
+            <div class="story-footer-text">${agent}</div>
+          </div>
+        `;
+      }
+    }
+
+    function syncStoryText() {
+      for(let i=1; i<=3; i++) renderCardDOM(i);
+    }
+
+    function updateStudioConcept() {
+      const concept = document.getElementById('storyConceptSelect').value;
+      const addr = document.getElementById('address').value || '2147 Saint Andrews Ct.';
+
+      if (concept === 'walkthrough') {
+        document.getElementById('inputSlide1').value = `Welcome to ${addr} in Discovery Bay ⛳`;
+        document.getElementById('inputSlide2').value = `Step inside to see 2,585 sq ft of updated space, 4 beds, and 3 full baths.`;
+        document.getElementById('inputSlide3').value = `Outside, your personal pool and palm trees overlook the fairways. DM me for details! 🌴`;
+      } else if (concept === 'thisorthat') {
+        document.getElementById('inputSlide1').value = `Morning coffee choice at ${addr}... ☕`;
+        document.getElementById('inputSlide2').value = `Option A: On the primary suite balcony overlooking the fairways.`;
+        document.getElementById('inputSlide3').value = `Option B: Under the covered patio right by the pool. Which would you pick?`;
+      } else if (concept === 'countdown') {
+        document.getElementById('inputSlide1').value = `Open House Countdown! 🗓️`;
+        document.getElementById('inputSlide2').value = `Join us this Saturday from 1-4pm at ${addr}.`;
+        document.getElementById('inputSlide3').value = `Come check out the pool and golf course views! 👋`;
+      }
+
+      syncStoryText();
+    }
+
+    function downloadSlide(cardId, fileName) {
+      const card = document.getElementById(cardId);
+      html2canvas(card, { scale: 2 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = fileName;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
     }
   </script>
 </body>
