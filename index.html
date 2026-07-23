@@ -9,8 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <!-- HTML2CANVAS FOR PNG DOWNLOADS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <!-- LZ-STRING FOR HIGH-EFFICIENCY URL COMPRESSION -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
   <style>
     :root {
       --bg: #f8fafc;
@@ -369,7 +367,8 @@
       </div>
       <div style="display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center;">
         <button onclick="parseAndRender()">Format Campaign Hub</button>
-        <button class="btn-secondary" id="shareCampaignBtnStep3" onclick="copyShareableLink()">🔗 Share Campaign with Realtor</button>
+        <button class="btn-secondary" onclick="copyShareableLink()">🔗 Copy Agent Campaign Link</button>
+        <button class="btn-secondary" onclick="downloadCampaignJSON()">💾 Download Campaign File</button>
       </div>
     </section>
 
@@ -379,7 +378,10 @@
         <div class="badge">YOUR CAMPAIGN</div>
         <h2 id="bannerAddress">2147 Saint Andrews Ct.</h2>
         <p id="bannerAgent">Kari Cross · Corcoran Icon Properties</p>
-        <button class="header-share-btn" onclick="copyShareableLink()" style="margin-top:0.8rem; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:white; padding:0.4rem 1rem; border-radius:20px; font-size:0.8rem; font-weight:600; cursor:pointer;">🔗 Share Campaign with Realtor</button>
+        <div style="display:flex; gap:0.5rem; justify-content:center; margin-top:0.8rem;">
+          <button onclick="copyShareableLink()" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:white; padding:0.4rem 1rem; border-radius:20px; font-size:0.8rem; font-weight:600; cursor:pointer;">🔗 Copy Agent Link</button>
+          <button onclick="downloadCampaignJSON()" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:white; padding:0.4rem 1rem; border-radius:20px; font-size:0.8rem; font-weight:600; cursor:pointer;">💾 Download JSON File</button>
+        </div>
       </div>
 
       <div class="tabs-wrapper">
@@ -494,7 +496,8 @@
 
         <!-- BOTTOM ACTION BUTTONS -->
         <div class="bottom-actions">
-          <button class="btn" id="shareCampaignBtn" onclick="copyShareableLink()">🔗 Share Campaign with Realtor</button>
+          <button class="btn" onclick="copyShareableLink()">🔗 Copy Agent Campaign Link</button>
+          <button class="btn-secondary" onclick="downloadCampaignJSON()">💾 Download Campaign File</button>
           <button class="btn-outline" onclick="window.print()">Print / save as PDF</button>
         </div>
       </div>
@@ -509,6 +512,11 @@
       const hex = document.getElementById('brandColor').value;
       document.getElementById('colorHexCode').innerText = hex;
       document.documentElement.style.setProperty('--accent', hex);
+    }
+
+    function getSlug() {
+      const addr = document.getElementById('address').value || 'listing';
+      return addr.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
     }
 
     function generatePrompt() {
@@ -890,9 +898,8 @@ Market Snapshot for Zip Code ${zip}:
       setTimeout(() => btn.innerText = 'Copy', 2000);
     }
 
-    /* LZ-STRING COMPRESSION & SHARING ENGINE */
-    function saveCampaignState() {
-      const stateData = {
+    function getCampaignDataJSON() {
+      return {
         agentName: document.getElementById('agentName').value,
         brokerage: document.getElementById('brokerage').value,
         phone: document.getElementById('phone').value,
@@ -909,107 +916,93 @@ Market Snapshot for Zip Code ${zip}:
         openHouseTime: document.getElementById('openHouseTime').value,
         aiResponse: document.getElementById('aiResponse').value
       };
+    }
 
-      const campaignSlug = (document.getElementById('address').value || 'listing').toLowerCase().replace(/[^a-z0-9]/g, '-');
-      const storageKey = 'listing_campaign_' + campaignSlug;
-
-      localStorage.setItem(storageKey, JSON.stringify(stateData));
+    function saveCampaignState() {
+      const stateData = getCampaignDataJSON();
+      const slug = getSlug();
+      localStorage.setItem('listing_campaign_' + slug, JSON.stringify(stateData));
       localStorage.setItem('listing_campaign_latest', JSON.stringify(stateData));
-
-      return stateData;
+      return slug;
     }
 
-    async function copyShareableLink() {
-      const stateData = saveCampaignState();
-      
-      // Compress JSON using LZString URI safe mode (removes ~70% of characters)
-      const compressedStr = LZString.compressToEncodedURIComponent(JSON.stringify(stateData));
-      const shareUrl = window.location.origin + window.location.pathname + '#z=' + compressedStr;
-
-      const addr = document.getElementById('address').value || 'Listing';
-
-      // Use Native Device Share Sheet if available (iOS / Android / macOS)
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: `${addr} — Campaign Hub`,
-            text: `Here is your full marketing campaign hub for ${addr}:`,
-            url: shareUrl
-          });
-          return;
-        } catch (e) {
-          // User cancelled share or fallback needed
-        }
-      }
-
-      // Fallback: Copy compressed link directly to clipboard
-      await navigator.clipboard.writeText(shareUrl);
-      alert("Campaign Share Link copied to clipboard! Anyone who opens this link will see their full Campaign Hub instantly.");
+    function copyShareableLink() {
+      const slug = saveCampaignState();
+      const cleanUrl = window.location.origin + window.location.pathname + '#campaign=' + slug;
+      navigator.clipboard.writeText(cleanUrl);
+      alert(`Clean Link copied to clipboard!\n\nLink: ${cleanUrl}\n\nMake sure to upload your '${slug}.json' file to the 'campaigns' folder on GitHub so anyone can view it!`);
     }
 
-    /* DECODES COMPRESSED URL PAYLOAD OR LOCAL STORAGE */
-    window.addEventListener('DOMContentLoaded', () => {
+    function downloadCampaignJSON() {
+      const data = getCampaignDataJSON();
+      const slug = getSlug();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${slug}.json`;
+      link.click();
+    }
+
+    /* FETCHES PROPERTY JSON FILE FROM GITHUB "campaigns/" FOLDER */
+    window.addEventListener('DOMContentLoaded', async () => {
       const hash = window.location.hash;
-      let data = null;
+      let slug = "";
 
-      if (hash.startsWith('#z=')) {
-        try {
-          const compressedStr = hash.replace('#z=', '');
-          const decompressedJson = LZString.decompressFromEncodedURIComponent(compressedStr);
-          if (decompressedJson) data = JSON.parse(decompressedJson);
-
-          // Hide creator setup steps for clean agent view
-          document.getElementById('step1Card').style.display = 'none';
-          document.getElementById('step2Card').style.display = 'none';
-          document.getElementById('step3Card').style.display = 'none';
-        } catch (e) {
-          console.error("Could not decompress link payload", e);
-        }
-      } else if (hash.startsWith('#data=')) {
-        try {
-          const rawEncoded = hash.replace('#data=', '');
-          const decodedJson = decodeURIComponent(escape(atob(decodeURIComponent(rawEncoded))));
-          data = JSON.parse(decodedJson);
-
-          document.getElementById('step1Card').style.display = 'none';
-          document.getElementById('step2Card').style.display = 'none';
-          document.getElementById('step3Card').style.display = 'none';
-        } catch (e) {
-          console.error("Could not parse raw data payload", e);
-        }
+      if (hash.startsWith('#campaign=')) {
+        slug = hash.replace('#campaign=', '');
       } else if (hash.startsWith('#campaign-')) {
-        const slug = hash.replace('#campaign-', '');
-        const storedStr = localStorage.getItem('listing_campaign_' + slug) || localStorage.getItem('listing_campaign_latest');
-        if (storedStr) {
-          data = JSON.parse(storedStr);
-          document.getElementById('step1Card').style.display = 'none';
-          document.getElementById('step2Card').style.display = 'none';
-          document.getElementById('step3Card').style.display = 'none';
-        }
+        slug = hash.replace('#campaign-', '');
       }
 
-      if (data) {
-        if(data.agentName) document.getElementById('agentName').value = data.agentName;
-        if(data.brokerage) document.getElementById('brokerage').value = data.brokerage;
-        if(data.phone) document.getElementById('phone').value = data.phone;
-        if(data.email) document.getElementById('email').value = data.email;
-        if(data.brandColor) {
-          document.getElementById('brandColor').value = data.brandColor;
-          updateBrandColor();
+      if (slug) {
+        // Hide creator controls for clean agent view
+        document.getElementById('step1Card').style.display = 'none';
+        document.getElementById('step2Card').style.display = 'none';
+        document.getElementById('step3Card').style.display = 'none';
+
+        let data = null;
+
+        // Try pulling JSON directly from GitHub campaigns folder
+        try {
+          const res = await fetch(`campaigns/${slug}.json`);
+          if (res.ok) {
+            data = await res.json();
+          }
+        } catch (e) {
+          console.log("Not found on server, trying local cache...");
         }
-        if(data.tone) document.getElementById('tone').value = data.tone;
-        if(data.address) document.getElementById('address').value = data.address;
-        if(data.zipCode) document.getElementById('zipCode').value = data.zipCode;
-        if(data.price) document.getElementById('price').value = data.price;
-        if(data.specs) document.getElementById('specs').value = data.specs;
-        if(data.features) document.getElementById('features').value = data.features;
-        if(data.neighborhood) document.getElementById('neighborhood').value = data.neighborhood;
-        if(data.sellerName) document.getElementById('sellerName').value = data.sellerName;
-        if(data.openHouseTime) document.getElementById('openHouseTime').value = data.openHouseTime;
-        
-        if(data.aiResponse) {
-          document.getElementById('aiResponse').value = data.aiResponse;
-          parseAndRender();
+
+        // Fallback to local storage
+        if (!data) {
+          const storedStr = localStorage.getItem('listing_campaign_' + slug) || localStorage.getItem('listing_campaign_latest');
+          if (storedStr) data = JSON.parse(storedStr);
+        }
+
+        if (data) {
+          if(data.agentName) document.getElementById('agentName').value = data.agentName;
+          if(data.brokerage) document.getElementById('brokerage').value = data.brokerage;
+          if(data.phone) document.getElementById('phone').value = data.phone;
+          if(data.email) document.getElementById('email').value = data.email;
+          if(data.brandColor) {
+            document.getElementById('brandColor').value = data.brandColor;
+            updateBrandColor();
+          }
+          if(data.tone) document.getElementById('tone').value = data.tone;
+          if(data.address) document.getElementById('address').value = data.address;
+          if(data.zipCode) document.getElementById('zipCode').value = data.zipCode;
+          if(data.price) document.getElementById('price').value = data.price;
+          if(data.specs) document.getElementById('specs').value = data.specs;
+          if(data.features) document.getElementById('features').value = data.features;
+          if(data.neighborhood) document.getElementById('neighborhood').value = data.neighborhood;
+          if(data.sellerName) document.getElementById('sellerName').value = data.sellerName;
+          if(data.openHouseTime) document.getElementById('openHouseTime').value = data.openHouseTime;
+          
+          if(data.aiResponse) {
+            document.getElementById('aiResponse').value = data.aiResponse;
+            parseAndRender();
+          }
+        } else {
+          alert("Campaign file not found. Make sure you uploaded the JSON file to your GitHub repository's 'campaigns' folder.");
         }
       }
     });
