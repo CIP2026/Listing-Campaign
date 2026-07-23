@@ -888,7 +888,7 @@ Market Snapshot for Zip Code ${zip}:
       setTimeout(() => btn.innerText = 'Copy', 2000);
     }
 
-    /* SHORT CLEAN URL & PERSISTENT LOCAL STORAGE SYSTEM */
+    /* SHORT CLEAN URL & PERSISTENT DATA ENCODING */
     function saveCampaignState() {
       const stateData = {
         agentName: document.getElementById('agentName').value,
@@ -914,55 +914,71 @@ Market Snapshot for Zip Code ${zip}:
       localStorage.setItem(storageKey, JSON.stringify(stateData));
       localStorage.setItem('listing_campaign_latest', JSON.stringify(stateData));
 
-      return campaignSlug;
+      return { campaignSlug, stateData };
     }
 
     function copyShareableLink() {
-      const slug = saveCampaignState();
-      const cleanUrl = window.location.origin + window.location.pathname + '#campaign-' + slug;
+      const { campaignSlug, stateData } = saveCampaignState();
+      
+      // Encode the JSON data into URL-safe Base64 so anyone on any device can open it!
+      const encodedData = encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(stateData)))));
+      const shareableUrl = window.location.origin + window.location.pathname + '#data=' + encodedData;
 
-      navigator.clipboard.writeText(cleanUrl);
-      alert("Short Shareable Link copied to clipboard! Send this link to your Realtor—it will hide all builder controls and open straight to their campaign.");
+      navigator.clipboard.writeText(shareableUrl);
+      alert("Shareable Link copied to clipboard! Anyone who opens this link on any computer or phone will view the full Campaign Hub directly.");
     }
 
-    /* LOADS CAMPAIGNS ONLY WHEN A HASH IS PRESENT (#campaign-slug) */
+    /* DECODES SHAREABLE LINK DATA OR LOCAL STORAGE */
     window.addEventListener('DOMContentLoaded', () => {
       const hash = window.location.hash;
+      let data = null;
 
-      if (hash.startsWith('#campaign-')) {
-        const slug = hash.replace('#campaign-', '');
-        const storedStr = localStorage.getItem('listing_campaign_' + slug) || localStorage.getItem('listing_campaign_latest');
-        
-        if (storedStr) {
-          const data = JSON.parse(storedStr);
+      if (hash.startsWith('#data=')) {
+        try {
+          const rawEncoded = hash.replace('#data=', '');
+          const decodedJson = decodeURIComponent(escape(atob(decodeURIComponent(rawEncoded))));
+          data = JSON.parse(decodedJson);
 
           // Hide creator setup steps for clean agent view
           document.getElementById('step1Card').style.display = 'none';
           document.getElementById('step2Card').style.display = 'none';
           document.getElementById('step3Card').style.display = 'none';
+        } catch (e) {
+          console.error("Could not parse share link payload", e);
+        }
+      } else if (hash.startsWith('#campaign-')) {
+        const slug = hash.replace('#campaign-', '');
+        const storedStr = localStorage.getItem('listing_campaign_' + slug) || localStorage.getItem('listing_campaign_latest');
+        if (storedStr) {
+          data = JSON.parse(storedStr);
+          document.getElementById('step1Card').style.display = 'none';
+          document.getElementById('step2Card').style.display = 'none';
+          document.getElementById('step3Card').style.display = 'none';
+        }
+      }
 
-          if(data.agentName) document.getElementById('agentName').value = data.agentName;
-          if(data.brokerage) document.getElementById('brokerage').value = data.brokerage;
-          if(data.phone) document.getElementById('phone').value = data.phone;
-          if(data.email) document.getElementById('email').value = data.email;
-          if(data.brandColor) {
-            document.getElementById('brandColor').value = data.brandColor;
-            updateBrandColor();
-          }
-          if(data.tone) document.getElementById('tone').value = data.tone;
-          if(data.address) document.getElementById('address').value = data.address;
-          if(data.zipCode) document.getElementById('zipCode').value = data.zipCode;
-          if(data.price) document.getElementById('price').value = data.price;
-          if(data.specs) document.getElementById('specs').value = data.specs;
-          if(data.features) document.getElementById('features').value = data.features;
-          if(data.neighborhood) document.getElementById('neighborhood').value = data.neighborhood;
-          if(data.sellerName) document.getElementById('sellerName').value = data.sellerName;
-          if(data.openHouseTime) document.getElementById('openHouseTime').value = data.openHouseTime;
-          
-          if(data.aiResponse) {
-            document.getElementById('aiResponse').value = data.aiResponse;
-            parseAndRender();
-          }
+      if (data) {
+        if(data.agentName) document.getElementById('agentName').value = data.agentName;
+        if(data.brokerage) document.getElementById('brokerage').value = data.brokerage;
+        if(data.phone) document.getElementById('phone').value = data.phone;
+        if(data.email) document.getElementById('email').value = data.email;
+        if(data.brandColor) {
+          document.getElementById('brandColor').value = data.brandColor;
+          updateBrandColor();
+        }
+        if(data.tone) document.getElementById('tone').value = data.tone;
+        if(data.address) document.getElementById('address').value = data.address;
+        if(data.zipCode) document.getElementById('zipCode').value = data.zipCode;
+        if(data.price) document.getElementById('price').value = data.price;
+        if(data.specs) document.getElementById('specs').value = data.specs;
+        if(data.features) document.getElementById('features').value = data.features;
+        if(data.neighborhood) document.getElementById('neighborhood').value = data.neighborhood;
+        if(data.sellerName) document.getElementById('sellerName').value = data.sellerName;
+        if(data.openHouseTime) document.getElementById('openHouseTime').value = data.openHouseTime;
+        
+        if(data.aiResponse) {
+          document.getElementById('aiResponse').value = data.aiResponse;
+          parseAndRender();
         }
       }
     });
