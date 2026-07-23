@@ -61,7 +61,7 @@
     pre { background: #0f172a; color: #f8fafc; padding: 1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; font-size: 0.85rem; max-height: 200px; }
 
     /* CAMPAIGN BANNER */
-    .campaign-header { background: var(--navy-banner); color: white; text-align: center; padding: 2.5rem 1rem; border-radius: 12px 12px 0 0; }
+    .campaign-header { background: var(--navy-banner); color: white; text-align: center; padding: 2rem 1rem; border-radius: 12px 12px 0 0; position: relative; }
     .campaign-header .badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 0.2rem 0.8rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; }
     .campaign-header h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 600; }
     .campaign-header p { opacity: 0.8; font-size: 0.95rem; }
@@ -231,7 +231,7 @@
       body * { visibility: hidden; }
       #hubSection, #hubSection * { visibility: visible; }
       #hubSection { position: absolute; left: 0; top: 0; width: 100%; }
-      .tabs-wrapper, .btn-outline, .copy-btn, .bottom-actions { display: none !important; }
+      .tabs-wrapper, .btn-outline, .copy-btn, .bottom-actions, .header-share-btn { display: none !important; }
       .tab-content { display: block !important; }
     }
 
@@ -355,7 +355,10 @@
         <label>Paste AI Response Here</label>
         <textarea id="aiResponse" style="min-height: 120px;" placeholder="Paste the entire reply from Gemini here..."></textarea>
       </div>
-      <button onclick="parseAndRender()">Format Campaign Hub</button>
+      <div style="display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center;">
+        <button onclick="parseAndRender()">Format Campaign Hub</button>
+        <button class="btn-secondary" id="shareCampaignBtnStep3" onclick="copyShareableLink()">🔗 Copy Shareable Link for Realtor</button>
+      </div>
     </section>
 
     <!-- STEP 4: OUTPUT HUB -->
@@ -364,6 +367,7 @@
         <div class="badge">YOUR CAMPAIGN</div>
         <h2 id="bannerAddress">2147 Saint Andrews Ct.</h2>
         <p id="bannerAgent">Kari Cross · Corcoran Icon Properties</p>
+        <button class="header-share-btn" onclick="copyShareableLink()" style="margin-top:0.8rem; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:white; padding:0.4rem 1rem; border-radius:20px; font-size:0.8rem; font-weight:600; cursor:pointer;">🔗 Copy Agent Campaign Link</button>
       </div>
 
       <div class="tabs-wrapper">
@@ -556,7 +560,7 @@ SECTION: Stories
 CARD: Walk-Through Story
 Slide 1: Welcome to ${address}...
 Slide 2: Step inside to see ${specs}...
-Slide 3: Outside, your personal pool overlooks the fairways. DM me for details!
+Slide 3: Outside, ${features.slice(0, 80) || 'your personal pool overlooks the fairways'}. DM me for details!
 
 CARD: This or That
 Slide 1: Morning coffee choice at ${address}...
@@ -699,6 +703,9 @@ CARD: Just Sold Postcard
       document.getElementById('bannerAddress').innerText = addr;
       document.getElementById('bannerAgent').innerText = agent;
 
+      // Dynamically populate Story Studio slides with current home inputs
+      updateStudioConcept();
+
       const tabMap = {
         'description': 'Description',
         'captions': 'Captions',
@@ -830,9 +837,7 @@ CARD: Just Sold Postcard
       const shareableUrl = window.location.origin + window.location.pathname + '?campaign=' + encoded;
 
       navigator.clipboard.writeText(shareableUrl);
-      const btn = document.getElementById('shareCampaignBtn');
-      btn.innerText = 'Link Copied to Clipboard! ✓';
-      setTimeout(() => btn.innerText = '🔗 Copy Shareable Link for Realtor', 3000);
+      alert("Shareable Campaign Link copied to clipboard! You can send this link to your Realtor.");
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -934,20 +939,27 @@ CARD: Just Sold Postcard
     function updateStudioConcept() {
       const concept = document.getElementById('storyConceptSelect').value;
       const addr = document.getElementById('address').value || '2147 Saint Andrews Ct.';
+      const specs = document.getElementById('specs').value || '4 Beds | 3 Baths | 2,585 SqFt';
+      const features = document.getElementById('features').value || 'updated space, private pool, and golf course views';
       const openHouse = document.getElementById('openHouseTime').value || 'Saturday 1-4pm';
 
+      // First feature point extracted from prompt inputs
+      const featureList = features.split(',');
+      const f1 = featureList[0] || features;
+      const f2 = featureList[1] || 'great amenities and custom updates';
+
       if (concept === 'walkthrough') {
-        document.getElementById('inputSlide1').value = `Welcome to ${addr} in Discovery Bay ⛳`;
-        document.getElementById('inputSlide2').value = `Step inside to see 2,585 sq ft of updated space, 4 beds, and 3 full baths.`;
-        document.getElementById('inputSlide3').value = `Outside, your personal pool and palm trees overlook the fairways. DM me for details! 🌴`;
+        document.getElementById('inputSlide1').value = `Welcome to ${addr}! ⛳`;
+        document.getElementById('inputSlide2').value = `Step inside to experience ${specs} of beautiful space.`;
+        document.getElementById('inputSlide3').value = `Outside: ${f1.trim()}. DM me for details! 🌴`;
       } else if (concept === 'thisorthat') {
         document.getElementById('inputSlide1').value = `Morning coffee choice at ${addr}... ☕`;
-        document.getElementById('inputSlide2').value = `Option A: On the primary suite balcony overlooking the fairways.`;
-        document.getElementById('inputSlide3').value = `Option B: Under the covered patio right by the pool. Which would you pick?`;
+        document.getElementById('inputSlide2').value = `Option A: ${f1.trim()}`;
+        document.getElementById('inputSlide3').value = `Option B: ${f2.trim()}. Which would you pick?`;
       } else if (concept === 'countdown') {
         document.getElementById('inputSlide1').value = `Open House Countdown! 🗓️`;
         document.getElementById('inputSlide2').value = `Join us on ${openHouse} at ${addr}.`;
-        document.getElementById('inputSlide3').value = `Come check out the pool and golf course views! 👋`;
+        document.getElementById('inputSlide3').value = `Come tour ${specs} and check out ${f1.trim()}! 👋`;
       }
 
       syncStoryText();
