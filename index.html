@@ -851,46 +851,43 @@ CARD: Just Sold Postcard
       alert("Short Shareable Link copied to clipboard! Send this link to your Realtor—it will hide all builder controls and open straight to their campaign.");
     }
 
-    /* AUTOMATIC VIEW FILTER: HIDES STEPS 1-3 WHEN OPENED VIA AGENT LINK */
+    /* LOADS CAMPAIGNS ONLY WHEN A HASH IS PRESENT (#campaign-slug) */
     window.addEventListener('DOMContentLoaded', () => {
       const hash = window.location.hash;
-      let data = null;
 
       if (hash.startsWith('#campaign-')) {
         const slug = hash.replace('#campaign-', '');
         const storedStr = localStorage.getItem('listing_campaign_' + slug) || localStorage.getItem('listing_campaign_latest');
-        if (storedStr) data = JSON.parse(storedStr);
-
-        // HIDE CREATOR BUILDER STEPS FOR CLEAN AGENT VIEW
-        document.getElementById('step1Card').style.display = 'none';
-        document.getElementById('step2Card').style.display = 'none';
-        document.getElementById('step3Card').style.display = 'none';
-      } else {
-        const storedStr = localStorage.getItem('listing_campaign_latest');
-        if (storedStr) data = JSON.parse(storedStr);
-      }
-
-      if (data) {
-        if(data.agentName) document.getElementById('agentName').value = data.agentName;
-        if(data.brokerage) document.getElementById('brokerage').value = data.brokerage;
-        if(data.phone) document.getElementById('phone').value = data.phone;
-        if(data.email) document.getElementById('email').value = data.email;
-        if(data.brandColor) {
-          document.getElementById('brandColor').value = data.brandColor;
-          updateBrandColor();
-        }
-        if(data.tone) document.getElementById('tone').value = data.tone;
-        if(data.address) document.getElementById('address').value = data.address;
-        if(data.price) document.getElementById('price').value = data.price;
-        if(data.specs) document.getElementById('specs').value = data.specs;
-        if(data.features) document.getElementById('features').value = data.features;
-        if(data.neighborhood) document.getElementById('neighborhood').value = data.neighborhood;
-        if(data.sellerName) document.getElementById('sellerName').value = data.sellerName;
-        if(data.openHouseTime) document.getElementById('openHouseTime').value = data.openHouseTime;
         
-        if(data.aiResponse) {
-          document.getElementById('aiResponse').value = data.aiResponse;
-          parseAndRender();
+        if (storedStr) {
+          const data = JSON.parse(storedStr);
+
+          // Hide creator setup steps for clean agent view
+          document.getElementById('step1Card').style.display = 'none';
+          document.getElementById('step2Card').style.display = 'none';
+          document.getElementById('step3Card').style.display = 'none';
+
+          if(data.agentName) document.getElementById('agentName').value = data.agentName;
+          if(data.brokerage) document.getElementById('brokerage').value = data.brokerage;
+          if(data.phone) document.getElementById('phone').value = data.phone;
+          if(data.email) document.getElementById('email').value = data.email;
+          if(data.brandColor) {
+            document.getElementById('brandColor').value = data.brandColor;
+            updateBrandColor();
+          }
+          if(data.tone) document.getElementById('tone').value = data.tone;
+          if(data.address) document.getElementById('address').value = data.address;
+          if(data.price) document.getElementById('price').value = data.price;
+          if(data.specs) document.getElementById('specs').value = data.specs;
+          if(data.features) document.getElementById('features').value = data.features;
+          if(data.neighborhood) document.getElementById('neighborhood').value = data.neighborhood;
+          if(data.sellerName) document.getElementById('sellerName').value = data.sellerName;
+          if(data.openHouseTime) document.getElementById('openHouseTime').value = data.openHouseTime;
+          
+          if(data.aiResponse) {
+            document.getElementById('aiResponse').value = data.aiResponse;
+            parseAndRender();
+          }
         }
       }
     });
