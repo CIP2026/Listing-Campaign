@@ -307,7 +307,7 @@
         </div>
         <div class="form-group">
           <label>Home Zip Code</label>
-          <input type="text" id="zipCode" value="94505" placeholder="e.g. 94505">
+          <input type="text" id="zipCode" placeholder="e.g. 94505">
         </div>
         <div class="form-group">
           <label>List Price</label>
@@ -708,7 +708,7 @@ CARD: Just Sold Postcard
       alert("Prompt copied to clipboard!");
     }
 
-    /* RENDER MARKET STATS TAB CONTENT FOR ZIP 94505 */
+    /* RENDER MARKET STATS TAB CONTENT FOR SPECIFIED ZIP CODE */
     function renderMarketStatsTab() {
       const zip = document.getElementById('zipCode').value || '94505';
       const statsTab = document.getElementById('tab-MarketStats');
@@ -721,7 +721,7 @@ CARD: Just Sold Postcard
             <button class="copy-btn" onclick="copyCardText(this)">Copy Summary</button>
           </div>
           <div class="subtitle-tag">LOCAL MARKET METRICS</div>
-          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1rem;">Current real estate market activity and pricing trends for zip code ${zip} (Discovery Bay area).</p>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:1rem;">Current real estate market activity and pricing trends for zip code ${zip}.</p>
           
           <div class="stats-dashboard">
             <div class="stat-box">
