@@ -703,7 +703,6 @@ CARD: Just Sold Postcard
       document.getElementById('bannerAddress').innerText = addr;
       document.getElementById('bannerAgent').innerText = agent;
 
-      // Dynamically populate Story Studio slides with current home inputs
       updateStudioConcept();
 
       const tabMap = {
@@ -796,6 +795,9 @@ CARD: Just Sold Postcard
 
       document.getElementById('hubSection').style.display = 'block';
       document.getElementById('hubSection').scrollIntoView({ behavior: 'smooth' });
+
+      // Save locally automatically on render
+      saveCampaignState();
     }
 
     function switchTab(tabKey) {
@@ -814,8 +816,8 @@ CARD: Just Sold Postcard
       setTimeout(() => btn.innerText = 'Copy', 2000);
     }
 
-    /* URL LINK GENERATION AND AUTO-LOAD LOGIC */
-    function copyShareableLink() {
+    /* SHORT CLEAN URL & PERSISTENT LOCAL STORAGE SYSTEM */
+    function saveCampaignState() {
       const stateData = {
         agentName: document.getElementById('agentName').value,
         brokerage: document.getElementById('brokerage').value,
@@ -833,49 +835,57 @@ CARD: Just Sold Postcard
         aiResponse: document.getElementById('aiResponse').value
       };
 
-      const encoded = encodeURIComponent(JSON.stringify(stateData));
-      const shareableUrl = window.location.origin + window.location.pathname + '?campaign=' + encoded;
+      const campaignSlug = (document.getElementById('address').value || 'listing').toLowerCase().replace(/[^a-z0-9]/g, '-');
+      const storageKey = 'listing_campaign_' + campaignSlug;
 
-      navigator.clipboard.writeText(shareableUrl);
-      alert("Shareable Campaign Link copied to clipboard! You can send this link to your Realtor.");
+      localStorage.setItem(storageKey, JSON.stringify(stateData));
+      localStorage.setItem('listing_campaign_latest', JSON.stringify(stateData));
+
+      return campaignSlug;
+    }
+
+    function copyShareableLink() {
+      const slug = saveCampaignState();
+      const cleanUrl = window.location.origin + window.location.pathname + '#campaign-' + slug;
+
+      navigator.clipboard.writeText(cleanUrl);
+      alert("Short Shareable Link copied to clipboard! You can send this link or bookmark it to revisit your campaign anytime.");
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const campaignDataStr = urlParams.get('campaign');
+      const hash = window.location.hash;
+      let data = null;
 
-      if (campaignDataStr) {
-        try {
-          const data = JSON.parse(decodeURIComponent(campaignDataStr));
-          
-          if(data.agentName) document.getElementById('agentName').value = data.agentName;
-          if(data.brokerage) document.getElementById('brokerage').value = data.brokerage;
-          if(data.phone) document.getElementById('phone').value = data.phone;
-          if(data.email) document.getElementById('email').value = data.email;
-          if(data.brandColor) {
-            document.getElementById('brandColor').value = data.brandColor;
-            updateBrandColor();
-          }
-          if(data.tone) document.getElementById('tone').value = data.tone;
-          if(data.address) document.getElementById('address').value = data.address;
-          if(data.price) document.getElementById('price').value = data.price;
-          if(data.specs) document.getElementById('specs').value = data.specs;
-          if(data.features) document.getElementById('features').value = data.features;
-          if(data.neighborhood) document.getElementById('neighborhood').value = data.neighborhood;
-          if(data.sellerName) document.getElementById('sellerName').value = data.sellerName;
-          if(data.openHouseTime) document.getElementById('openHouseTime').value = data.openHouseTime;
-          
-          if(data.aiResponse) {
-            document.getElementById('aiResponse').value = data.aiResponse;
-            parseAndRender();
-            
-            // Hide setup steps for a cleaner experience when opening directly
-            document.getElementById('step1Card').style.display = 'none';
-            document.getElementById('step2Card').style.display = 'none';
-            document.getElementById('step3Card').style.display = 'none';
-          }
-        } catch (e) {
-          console.error("Could not parse campaign link data", e);
+      if (hash.startsWith('#campaign-')) {
+        const slug = hash.replace('#campaign-', '');
+        const storedStr = localStorage.getItem('listing_campaign_' + slug) || localStorage.getItem('listing_campaign_latest');
+        if (storedStr) data = JSON.parse(storedStr);
+      } else {
+        const storedStr = localStorage.getItem('listing_campaign_latest');
+        if (storedStr) data = JSON.parse(storedStr);
+      }
+
+      if (data) {
+        if(data.agentName) document.getElementById('agentName').value = data.agentName;
+        if(data.brokerage) document.getElementById('brokerage').value = data.brokerage;
+        if(data.phone) document.getElementById('phone').value = data.phone;
+        if(data.email) document.getElementById('email').value = data.email;
+        if(data.brandColor) {
+          document.getElementById('brandColor').value = data.brandColor;
+          updateBrandColor();
+        }
+        if(data.tone) document.getElementById('tone').value = data.tone;
+        if(data.address) document.getElementById('address').value = data.address;
+        if(data.price) document.getElementById('price').value = data.price;
+        if(data.specs) document.getElementById('specs').value = data.specs;
+        if(data.features) document.getElementById('features').value = data.features;
+        if(data.neighborhood) document.getElementById('neighborhood').value = data.neighborhood;
+        if(data.sellerName) document.getElementById('sellerName').value = data.sellerName;
+        if(data.openHouseTime) document.getElementById('openHouseTime').value = data.openHouseTime;
+        
+        if(data.aiResponse) {
+          document.getElementById('aiResponse').value = data.aiResponse;
+          parseAndRender();
         }
       }
     });
@@ -943,7 +953,6 @@ CARD: Just Sold Postcard
       const features = document.getElementById('features').value || 'updated space, private pool, and golf course views';
       const openHouse = document.getElementById('openHouseTime').value || 'Saturday 1-4pm';
 
-      // First feature point extracted from prompt inputs
       const featureList = features.split(',');
       const f1 = featureList[0] || features;
       const f2 = featureList[1] || 'great amenities and custom updates';
