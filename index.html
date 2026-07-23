@@ -237,7 +237,7 @@
       body * { visibility: hidden; }
       #hubSection, #hubSection * { visibility: visible; }
       #hubSection { position: absolute; left: 0; top: 0; width: 100%; }
-      .tabs-wrapper, .btn-outline, .copy-btn, .bottom-actions, .header-share-btn { display: none !important; }
+      .tabs-wrapper, .btn-outline, .copy-btn, .bottom-actions { display: none !important; }
       .tab-content { display: block !important; }
     }
 
@@ -250,7 +250,7 @@
 <body>
 
   <div class="container">
-    <header>
+    <header id="mainHeader">
       <div class="subtitle">A Marketing Tool</div>
       <h1>The Listing Wing</h1>
       <p>One listing in. A full relationship-first marketing campaign out.</p>
@@ -365,7 +365,7 @@
         <label>Paste AI Response Here</label>
         <textarea id="aiResponse" style="min-height: 120px;" placeholder="Paste the entire reply from Gemini here..."></textarea>
       </div>
-      <button onclick="parseAndRender()">Format Campaign Hub</button>
+      <button onclick="parseAndRender()">Process Campaign Data</button>
     </section>
 
     <!-- STEP 4: CREATOR PUBLISH CONTROLS -->
@@ -374,14 +374,15 @@
         <div class="step-number">4</div>
         <h2 class="step-title">Publish & Share</h2>
       </div>
-      <p style="margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.9rem;">Download your property JSON file and save it to your GitHub <code style="background:#f1f5f9; padding:0.15rem 0.4rem; border-radius:4px;">campaigns/</code> folder, then copy the short link to email your agent.</p>
+      <p style="margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.9rem;">1. Download the JSON file and upload it to your GitHub <code style="background:#f1f5f9; padding:0.15rem 0.4rem; border-radius:4px;">campaigns/</code> folder.<br>2. Copy the agent link to text or email your realtor.<br>3. Click <strong>Preview Agent View</strong> to see the exact hub your agent will see!</p>
       <div style="display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center;">
         <button onclick="downloadCampaignJSON()">💾 Download JSON File</button>
-        <button class="btn-secondary" onclick="copyShareableLink()">🔗 Copy Agent Campaign Link</button>
+        <button class="btn-secondary" onclick="copyShareableLink()">🔗 Copy Agent Link</button>
+        <button class="btn-secondary" onclick="previewAgentHub()">👁️ Preview Agent View</button>
       </div>
     </section>
 
-    <!-- AGENT CAMPAIGN HUB (CLEAN AGENT VIEW) -->
+    <!-- AGENT CAMPAIGN HUB (CLEAN AGENT VIEW ONLY) -->
     <section id="hubSection" style="display: none;">
       <div class="campaign-header">
         <div class="badge">YOUR CAMPAIGN</div>
@@ -879,12 +880,16 @@ Market Snapshot for Zip Code ${zip}:
 
       commitCard();
 
-      // Show Step 4 (Publish) & Campaign Hub, then scroll to Step 4
+      // Show Step 4 (Publish) block and scroll to it
       document.getElementById('step4Card').style.display = 'block';
-      document.getElementById('hubSection').style.display = 'block';
       document.getElementById('step4Card').scrollIntoView({ behavior: 'smooth' });
 
       saveCampaignState();
+    }
+
+    function previewAgentHub() {
+      document.getElementById('hubSection').style.display = 'block';
+      document.getElementById('hubSection').scrollIntoView({ behavior: 'smooth' });
     }
 
     function switchTab(tabKey) {
@@ -960,7 +965,8 @@ Market Snapshot for Zip Code ${zip}:
       }
 
       if (slug) {
-        // Hide ALL builder steps for clean agent view
+        // Hide main header and builder steps for clean agent view
+        document.getElementById('mainHeader').style.display = 'none';
         document.getElementById('step1Card').style.display = 'none';
         document.getElementById('step2Card').style.display = 'none';
         document.getElementById('step3Card').style.display = 'none';
@@ -1006,6 +1012,9 @@ Market Snapshot for Zip Code ${zip}:
           if(data.aiResponse) {
             document.getElementById('aiResponse').value = data.aiResponse;
             parseAndRender();
+            // Automatically reveal the hub for clean agent links
+            document.getElementById('hubSection').style.display = 'block';
+            document.getElementById('step4Card').style.display = 'none';
           }
         } else {
           alert("Campaign file not found. Make sure you uploaded the JSON file to your GitHub repository's 'campaigns' folder.");
