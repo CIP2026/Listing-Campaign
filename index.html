@@ -519,53 +519,53 @@ PROPERTY DETAILS:
 - Seller First Name: ${seller}
 - Open House Schedule: ${openHouse}
 
-Formatting instructions: Break your answer into sections using headers like "### Description", "### Captions", "### Stories", "### Seller Updates", "### Open House", "### DMs & Texts", "### Facebook", "### Blog", and "### Sold". Inside each section, use headers like "#### MLS Description" or "#### Sphere DM" for individual content cards.
+Please format your response clearly using section titles starting with "SECTION: [Tab Name]" and cards starting with "CARD: [Card Title]".
 
-### Description
-#### MLS Description
+SECTION: Description
+CARD: MLS Description
 (Write 250-300 words MLS narrative)
 
-#### Short Version
+CARD: Short Version
 (Write a 2-sentence summary version for portals and flyers)
 
-### Captions
-#### Just Listed
+SECTION: Captions
+CARD: Just Listed
 (Launch social caption)
 
-#### Feature Spotlight
+CARD: Feature Spotlight
 (Spotlight feature caption)
 
-#### Neighborhood Love
+CARD: Neighborhood Love
 (Neighborhood lifestyle caption)
 
-#### Behind the Scenes
+CARD: Behind the Scenes
 (Preparation/photoshoot caption)
 
-#### Open House Invite
+CARD: Open House Invite
 (Open house social invite mentioning ${openHouse})
 
-#### Under Contract / Just Sold
+CARD: Under Contract / Just Sold
 (Milestone celebration caption)
 
-### Stories
-#### Walk-Through Story
+SECTION: Stories
+CARD: Walk-Through Story
 Slide 1: Welcome to ${address}...
 Slide 2: Step inside to see ${specs}...
 Slide 3: Outside, your personal pool overlooks the fairways. DM me for details!
 
-#### This or That
+CARD: This or That
 Slide 1: Morning coffee choice at ${address}...
 Slide 2: Option A: On the primary suite balcony.
 Slide 3: Option B: Under the covered patio by the pool.
 
-#### Countdown Story
+CARD: Countdown Story
 Slide 1: Open House Countdown!
 Slide 2: Join us on ${openHouse}.
 Slide 3: Come check out the pool and golf course views!
 
-### Seller Updates
-#### Week 1 — Week 1 Market Update: ${address}
-EMAIL TO YOUR SELLER
+SECTION: Seller Updates
+CARD: Week 1 — Week 1 Market Update: ${address}
+TAG: EMAIL TO YOUR SELLER
 Hi ${seller},
 
 I hope you're having a great week! Now that we are officially launched, I wanted to share our first weekly update.
@@ -577,8 +577,8 @@ Online engagement is off to a solid start, with [number of views] views on our l
 Warmly,
 ${name}
 
-#### Week 2 — Week 2 Feedback & Activity: ${address}
-EMAIL TO YOUR SELLER
+CARD: Week 2 — Week 2 Feedback & Activity: ${address}
+TAG: EMAIL TO YOUR SELLER
 Hi ${seller},
 
 Here is a quick look at how things progressed during our second week on the market.
@@ -590,8 +590,8 @@ We currently have [number of repeat visits] buyers considering a second look. I 
 Best,
 ${name}
 
-#### Week 3 — Week 3 Market Context: ${address}
-EMAIL TO YOUR SELLER
+CARD: Week 3 — Week 3 Market Context: ${address}
+TAG: EMAIL TO YOUR SELLER
 Hi ${seller},
 
 I wanted to check in with our Week 3 update and share a quick pulse on the broader market.
@@ -603,8 +603,8 @@ We are continuing to reach out to active buyers in our network. Let's touch base
 Warmly,
 ${name}
 
-#### Week 4 — Week 4 Strategy Update: ${address}
-EMAIL TO YOUR SELLER
+CARD: Week 4 — Week 4 Strategy Update: ${address}
+TAG: EMAIL TO YOUR SELLER
 Hi ${seller},
 
 Hard to believe we are at the end of four weeks! Here is where we stand as of today.
@@ -616,9 +616,9 @@ I am actively pursuing follow-ups with two specific agents whose clients express
 Best,
 ${name}
 
-### Open House
-#### Open House Saturday: ${address} ⛳
-EMAIL
+SECTION: Open House
+CARD: Open House Saturday: ${address} ⛳
+TAG: EMAIL
 Hi friends,
 
 I'm hosting an open house ${openHouse} at ${address}, and I'd love to see you there!
@@ -630,21 +630,21 @@ Hope to see you Saturday!
 Warmly,
 ${name}
 
-#### Neighbor Invite
-TEXT / DM
+CARD: Neighbor Invite
+TAG: TEXT / DM
 Hi there! Just wanted to let you know I'm hosting an open house at ${address} ${openHouse}. If you or anyone you know might be interested in the neighborhood, feel free to pop in! - ${name}
 
-#### Golf Course Living in Discovery Bay
-PRINT
+CARD: Golf Course Living in Discovery Bay
+TAG: PRINT
 Welcome to ${address}! This updated home offers comfortable space in a quiet, gated golf course setting. Enjoy quiet afternoons by the backyard pool, stunning fairway views, and a spacious primary suite complete with a cozy fireplace and balcony. Join us for our Open House ${openHouse}—we'd love to show you around!
 
-### DMs & Texts
-#### Sphere DM
-DM / TEXT / PRINT
+SECTION: DMs & Texts
+CARD: Sphere DM
+TAG: DM / TEXT / PRINT
 Hey! Hope you're doing great 😊 Just listed a sweet home right on the golf course here in Discovery Bay (${address}). It has an awesome pool and fairway views—let me know if you know anyone looking in the area!
 
-#### Neighbor Letter (print)
-DM / TEXT / PRINT
+CARD: Neighbor Letter (print)
+TAG: DM / TEXT / PRINT
 Hello Neighbor,
 
 I wanted to share that your neighbors at ${address} have officially placed their home on the market. As active community members, you know better than anyone how wonderful it is to live in this gated neighborhood.
@@ -654,24 +654,24 @@ If you have friends or family who have been looking to move closer to you, pleas
 Warmly,
 ${name}
 
-#### Buyer Lead Reply
-DM / TEXT / PRINT
+CARD: Buyer Lead Reply
+TAG: DM / TEXT / PRINT
 Hi! Thanks for reaching out about ${address}. It's a wonderful ${specs} home right on the golf course with a backyard pool and great updates. We're hosting an open house ${openHouse} if you'd like to tour, or I'd be happy to schedule a private walkthrough. What day works best for you?
 
-#### Vendor / Partner Shout-Out
-DM / TEXT / PRINT
+CARD: Vendor / Partner Shout-Out
+TAG: DM / TEXT / PRINT
 Huge thank you to our amazing media team for capturing ${address} so beautifully! That pool view over the golf course turned out incredible 📸 Sunset tours start this week!
 
-### Facebook
-#### Hot Home Post
+SECTION: Facebook
+CARD: Hot Home Post
 ...
 
-### Blog
-#### Blog Title & Article
+SECTION: Blog
+CARD: Blog Title & Article
 ...
 
-### Sold
-#### Just Sold Postcard
+SECTION: Sold
+CARD: Just Sold Postcard
 ...`;
 
       document.getElementById('promptOutput').innerText = generatedPromptText;
@@ -683,6 +683,7 @@ Huge thank you to our amazing media team for capturing ${address} so beautifully
       alert("Prompt copied to clipboard!");
     }
 
+    /* ROBUST LINE-BY-LINE PARSER ENGINE */
     function parseAndRender() {
       const rawText = document.getElementById('aiResponse').value;
       if (!rawText.trim()) { alert("Please paste the AI response first!"); return; }
@@ -697,87 +698,96 @@ Huge thank you to our amazing media team for capturing ${address} so beautifully
         'description': 'Description',
         'captions': 'Captions',
         'stories': 'Stories',
+        'seller updates': 'SellerUpdates',
         'seller': 'SellerUpdates',
-        'open': 'OpenHouse',
-        'dm': 'DMsTexts',
-        'text': 'DMsTexts',
+        'open house': 'OpenHouse',
+        'dms & texts': 'DMsTexts',
+        'dms': 'DMsTexts',
+        'texts': 'DMsTexts',
         'facebook': 'Facebook',
         'blog': 'Blog',
         'sold': 'Sold'
       };
 
+      // Clear all tab contents except Story Studio
       Object.values(tabMap).forEach(tabId => {
         const el = document.getElementById(`tab-${tabId}`);
         if(el) el.innerHTML = '';
       });
 
-      const sections = rawText.split(/(?=\n?###?\s+)/gi);
+      const lines = rawText.split('\n');
 
-      let currentTabKey = 'Description';
+      let currentTabId = 'Description';
+      let currentCardTitle = '';
+      let currentCardTag = 'MARKETING COPY';
+      let currentCardBody = [];
 
-      sections.forEach(sec => {
-        if(!sec.trim()) return;
+      function commitCard() {
+        if (!currentCardTitle && currentCardBody.length === 0) return;
 
-        const firstLine = sec.trim().split('\n')[0].toLowerCase();
-        
-        let matchedTab = false;
-        for (let key in tabMap) {
-          if (firstLine.includes(key)) {
-            currentTabKey = tabMap[key];
-            matchedTab = true;
-            break;
-          }
-        }
-
-        const tabTarget = document.getElementById(`tab-${currentTabKey}`);
-        if (!tabTarget) return;
-
-        const cards = sec.split(/(?=\n?####?\s+|\[CARD:)/gi);
-
-        cards.forEach(cardStr => {
-          if(!cardStr.trim()) return;
-          const lines = cardStr.trim().split('\n');
-          let title = lines[0].replace(/^#+\s*/, '').replace(/\[CARD:\s*/, '').replace(/\]/, '').trim();
-          let body = lines.slice(1).join('\n').trim();
-
-          if(!body && lines.length === 1) {
-            body = title;
-            title = "Marketing Copy";
-          }
-
-          if(title.toLowerCase().startsWith('tab:')) return;
-
-          let subtitleTag = 'MARKETING COPY';
-          if(body.startsWith('EMAIL TO YOUR SELLER')) {
-            subtitleTag = 'EMAIL TO YOUR SELLER';
-            body = body.replace('EMAIL TO YOUR SELLER', '').trim();
-          } else if(body.startsWith('EMAIL')) {
-            subtitleTag = 'EMAIL';
-            body = body.replace(/^EMAIL\n?/, '').trim();
-          } else if(body.startsWith('TEXT / DM')) {
-            subtitleTag = 'TEXT / DM';
-            body = body.replace(/^TEXT \/ DM\n?/, '').trim();
-          } else if(body.startsWith('PRINT')) {
-            subtitleTag = 'PRINT';
-            body = body.replace(/^PRINT\n?/, '').trim();
-          } else if(body.startsWith('DM / TEXT / PRINT')) {
-            subtitleTag = 'DM / TEXT / PRINT';
-            body = body.replace(/^DM \/ TEXT \/ PRINT\n?/, '').trim();
-          }
-
+        const targetTab = document.getElementById(`tab-${currentTabId}`);
+        if (targetTab) {
+          const bodyText = currentCardBody.join('\n').trim();
           const cardHtml = `
             <div class="output-card">
               <div class="card-head">
-                <h3>${title}</h3>
+                <h3>${currentCardTitle || 'Marketing Copy'}</h3>
                 <button class="copy-btn" onclick="copyCardText(this)">Copy</button>
               </div>
-              <div class="subtitle-tag">${subtitleTag}</div>
-              <div class="content-body">${body || cardStr.trim()}</div>
+              <div class="subtitle-tag">${currentCardTag}</div>
+              <div class="content-body">${bodyText}</div>
             </div>
           `;
-          tabTarget.insertAdjacentHTML('beforeend', cardHtml);
-        });
-      });
+          targetTab.insertAdjacentHTML('beforeend', cardHtml);
+        }
+
+        currentCardTitle = '';
+        currentCardTag = 'MARKETING COPY';
+        currentCardBody = [];
+      }
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        const lower = line.toLowerCase();
+
+        // 1. Detect Section / Tab Header
+        if (lower.startsWith('section:') || lower.startsWith('###')) {
+          commitCard();
+          const secName = lower.replace(/^section:\s*/, '').replace(/^#+\s*/, '').trim();
+          for (let key in tabMap) {
+            if (secName.includes(key)) {
+              currentTabId = tabMap[key];
+              break;
+            }
+          }
+          continue;
+        }
+
+        // 2. Detect Card Header
+        if (lower.startsWith('card:') || lower.startsWith('####') || lower.startsWith('[card:')) {
+          commitCard();
+          currentCardTitle = line.replace(/^card:\s*/i, '').replace(/^#+\s*/, '').replace(/^\[card:\s*/i, '').replace(/\]$/, '').trim();
+          continue;
+        }
+
+        // 3. Detect Subtitle Tag
+        if (lower.startsWith('tag:')) {
+          currentCardTag = line.replace(/^tag:\s*/i, '').trim();
+          continue;
+        }
+
+        // Catch explicit tags at top of body
+        if (line === 'EMAIL TO YOUR SELLER' || line === 'EMAIL' || line === 'TEXT / DM' || line === 'PRINT' || line === 'DM / TEXT / PRINT') {
+          currentCardTag = line;
+          continue;
+        }
+
+        // Regular content line
+        currentCardBody.push(lines[i]);
+      }
+
+      // Commit final card
+      commitCard();
 
       document.getElementById('hubSection').style.display = 'block';
       document.getElementById('hubSection').scrollIntoView({ behavior: 'smooth' });
