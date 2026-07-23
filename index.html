@@ -225,11 +225,13 @@
     }
     .btn-download-slide:hover { opacity: 0.9; }
 
+    .bottom-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.25rem; }
+
     @media print {
       body * { visibility: hidden; }
       #hubSection, #hubSection * { visibility: visible; }
       #hubSection { position: absolute; left: 0; top: 0; width: 100%; }
-      .tabs-wrapper, .btn-outline, .copy-btn { display: none !important; }
+      .tabs-wrapper, .btn-outline, .copy-btn, .bottom-actions { display: none !important; }
       .tab-content { display: block !important; }
     }
 
@@ -249,7 +251,7 @@
     </header>
 
     <!-- STEP 1 -->
-    <section class="step-card">
+    <section class="step-card" id="step1Card">
       <div class="step-header">
         <div class="step-number">1</div>
         <h2 class="step-title">Set up your listing details</h2>
@@ -330,7 +332,7 @@
     </section>
 
     <!-- STEP 2 -->
-    <section class="step-card">
+    <section class="step-card" id="step2Card">
       <div class="step-header">
         <div class="step-number">2</div>
         <h2 class="step-title">Take it to Gemini / ChatGPT</h2>
@@ -344,7 +346,7 @@
     </section>
 
     <!-- STEP 3 -->
-    <section class="step-card">
+    <section class="step-card" id="step3Card">
       <div class="step-header">
         <div class="step-number">3</div>
         <h2 class="step-title">Bring it home</h2>
@@ -470,8 +472,11 @@
         <div id="tab-Blog" class="tab-content"></div>
         <div id="tab-Sold" class="tab-content"></div>
 
-        <!-- PRINT BUTTON -->
-        <button class="btn-outline" onclick="window.print()">Print / save as PDF</button>
+        <!-- BOTTOM ACTION BUTTONS -->
+        <div class="bottom-actions">
+          <button class="btn" id="shareCampaignBtn" onclick="copyShareableLink()">🔗 Copy Shareable Link for Realtor</button>
+          <button class="btn-outline" onclick="window.print()">Print / save as PDF</button>
+        </div>
       </div>
     </section>
   </div>
@@ -709,7 +714,6 @@ CARD: Just Sold Postcard
         'sold': 'Sold'
       };
 
-      // Clear all tab contents except Story Studio
       Object.values(tabMap).forEach(tabId => {
         const el = document.getElementById(`tab-${tabId}`);
         if(el) el.innerHTML = '';
@@ -750,7 +754,6 @@ CARD: Just Sold Postcard
         const line = lines[i].trim();
         const lower = line.toLowerCase();
 
-        // 1. Detect Section / Tab Header
         if (lower.startsWith('section:') || lower.startsWith('###')) {
           commitCard();
           const secName = lower.replace(/^section:\s*/, '').replace(/^#+\s*/, '').trim();
@@ -763,30 +766,25 @@ CARD: Just Sold Postcard
           continue;
         }
 
-        // 2. Detect Card Header
         if (lower.startsWith('card:') || lower.startsWith('####') || lower.startsWith('[card:')) {
           commitCard();
           currentCardTitle = line.replace(/^card:\s*/i, '').replace(/^#+\s*/, '').replace(/^\[card:\s*/i, '').replace(/\]$/, '').trim();
           continue;
         }
 
-        // 3. Detect Subtitle Tag
         if (lower.startsWith('tag:')) {
           currentCardTag = line.replace(/^tag:\s*/i, '').trim();
           continue;
         }
 
-        // Catch explicit tags at top of body
         if (line === 'EMAIL TO YOUR SELLER' || line === 'EMAIL' || line === 'TEXT / DM' || line === 'PRINT' || line === 'DM / TEXT / PRINT') {
           currentCardTag = line;
           continue;
         }
 
-        // Regular content line
         currentCardBody.push(lines[i]);
       }
 
-      // Commit final card
       commitCard();
 
       document.getElementById('hubSection').style.display = 'block';
@@ -808,6 +806,74 @@ CARD: Just Sold Postcard
       btn.innerText = 'Copied!';
       setTimeout(() => btn.innerText = 'Copy', 2000);
     }
+
+    /* URL LINK GENERATION AND AUTO-LOAD LOGIC */
+    function copyShareableLink() {
+      const stateData = {
+        agentName: document.getElementById('agentName').value,
+        brokerage: document.getElementById('brokerage').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        brandColor: document.getElementById('brandColor').value,
+        tone: document.getElementById('tone').value,
+        address: document.getElementById('address').value,
+        price: document.getElementById('price').value,
+        specs: document.getElementById('specs').value,
+        features: document.getElementById('features').value,
+        neighborhood: document.getElementById('neighborhood').value,
+        sellerName: document.getElementById('sellerName').value,
+        openHouseTime: document.getElementById('openHouseTime').value,
+        aiResponse: document.getElementById('aiResponse').value
+      };
+
+      const encoded = encodeURIComponent(JSON.stringify(stateData));
+      const shareableUrl = window.location.origin + window.location.pathname + '?campaign=' + encoded;
+
+      navigator.clipboard.writeText(shareableUrl);
+      const btn = document.getElementById('shareCampaignBtn');
+      btn.innerText = 'Link Copied to Clipboard! ✓';
+      setTimeout(() => btn.innerText = '🔗 Copy Shareable Link for Realtor', 3000);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const campaignDataStr = urlParams.get('campaign');
+
+      if (campaignDataStr) {
+        try {
+          const data = JSON.parse(decodeURIComponent(campaignDataStr));
+          
+          if(data.agentName) document.getElementById('agentName').value = data.agentName;
+          if(data.brokerage) document.getElementById('brokerage').value = data.brokerage;
+          if(data.phone) document.getElementById('phone').value = data.phone;
+          if(data.email) document.getElementById('email').value = data.email;
+          if(data.brandColor) {
+            document.getElementById('brandColor').value = data.brandColor;
+            updateBrandColor();
+          }
+          if(data.tone) document.getElementById('tone').value = data.tone;
+          if(data.address) document.getElementById('address').value = data.address;
+          if(data.price) document.getElementById('price').value = data.price;
+          if(data.specs) document.getElementById('specs').value = data.specs;
+          if(data.features) document.getElementById('features').value = data.features;
+          if(data.neighborhood) document.getElementById('neighborhood').value = data.neighborhood;
+          if(data.sellerName) document.getElementById('sellerName').value = data.sellerName;
+          if(data.openHouseTime) document.getElementById('openHouseTime').value = data.openHouseTime;
+          
+          if(data.aiResponse) {
+            document.getElementById('aiResponse').value = data.aiResponse;
+            parseAndRender();
+            
+            // Hide setup steps for a cleaner experience when opening directly
+            document.getElementById('step1Card').style.display = 'none';
+            document.getElementById('step2Card').style.display = 'none';
+            document.getElementById('step3Card').style.display = 'none';
+          }
+        } catch (e) {
+          console.error("Could not parse campaign link data", e);
+        }
+      }
+    });
 
     function loadStoryBg(event) {
       const reader = new FileReader();
