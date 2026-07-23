@@ -365,23 +365,28 @@
         <label>Paste AI Response Here</label>
         <textarea id="aiResponse" style="min-height: 120px;" placeholder="Paste the entire reply from Gemini here..."></textarea>
       </div>
+      <button onclick="parseAndRender()">Format Campaign Hub</button>
+    </section>
+
+    <!-- STEP 4: CREATOR PUBLISH CONTROLS -->
+    <section class="step-card" id="step4Card" style="display: none;">
+      <div class="step-header">
+        <div class="step-number">4</div>
+        <h2 class="step-title">Publish & Share</h2>
+      </div>
+      <p style="margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.9rem;">Download your property JSON file and save it to your GitHub <code style="background:#f1f5f9; padding:0.15rem 0.4rem; border-radius:4px;">campaigns/</code> folder, then copy the short link to email your agent.</p>
       <div style="display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center;">
-        <button onclick="parseAndRender()">Format Campaign Hub</button>
+        <button onclick="downloadCampaignJSON()">💾 Download JSON File</button>
         <button class="btn-secondary" onclick="copyShareableLink()">🔗 Copy Agent Campaign Link</button>
-        <button class="btn-secondary" onclick="downloadCampaignJSON()">💾 Download Campaign File</button>
       </div>
     </section>
 
-    <!-- STEP 4: OUTPUT HUB -->
+    <!-- AGENT CAMPAIGN HUB (CLEAN AGENT VIEW) -->
     <section id="hubSection" style="display: none;">
       <div class="campaign-header">
         <div class="badge">YOUR CAMPAIGN</div>
         <h2 id="bannerAddress">2147 Saint Andrews Ct.</h2>
         <p id="bannerAgent">Kari Cross · Corcoran Icon Properties</p>
-        <div style="display:flex; gap:0.5rem; justify-content:center; margin-top:0.8rem;">
-          <button onclick="copyShareableLink()" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:white; padding:0.4rem 1rem; border-radius:20px; font-size:0.8rem; font-weight:600; cursor:pointer;">🔗 Copy Agent Link</button>
-          <button onclick="downloadCampaignJSON()" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:white; padding:0.4rem 1rem; border-radius:20px; font-size:0.8rem; font-weight:600; cursor:pointer;">💾 Download JSON File</button>
-        </div>
       </div>
 
       <div class="tabs-wrapper">
@@ -494,10 +499,8 @@
         <div id="tab-Blog" class="tab-content"></div>
         <div id="tab-Sold" class="tab-content"></div>
 
-        <!-- BOTTOM ACTION BUTTONS -->
+        <!-- BOTTOM ACTION BUTTON (AGENT VIEW ONLY) -->
         <div class="bottom-actions">
-          <button class="btn" onclick="copyShareableLink()">🔗 Copy Agent Campaign Link</button>
-          <button class="btn-secondary" onclick="downloadCampaignJSON()">💾 Download Campaign File</button>
           <button class="btn-outline" onclick="window.print()">Print / save as PDF</button>
         </div>
       </div>
@@ -876,8 +879,10 @@ Market Snapshot for Zip Code ${zip}:
 
       commitCard();
 
+      // Show Step 4 (Publish) & Campaign Hub, then scroll to Step 4
+      document.getElementById('step4Card').style.display = 'block';
       document.getElementById('hubSection').style.display = 'block';
-      document.getElementById('hubSection').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('step4Card').scrollIntoView({ behavior: 'smooth' });
 
       saveCampaignState();
     }
@@ -930,7 +935,7 @@ Market Snapshot for Zip Code ${zip}:
       const slug = saveCampaignState();
       const cleanUrl = window.location.origin + window.location.pathname + '#campaign=' + slug;
       navigator.clipboard.writeText(cleanUrl);
-      alert(`Clean Link copied to clipboard!\n\nLink: ${cleanUrl}\n\nMake sure to upload your '${slug}.json' file to the 'campaigns' folder on GitHub so anyone can view it!`);
+      alert(`Clean Link copied to clipboard!\n\nLink: ${cleanUrl}\n\nMake sure to upload your '${slug}.json' file to the 'campaigns/' folder on GitHub so anyone can view it!`);
     }
 
     function downloadCampaignJSON() {
@@ -955,10 +960,11 @@ Market Snapshot for Zip Code ${zip}:
       }
 
       if (slug) {
-        // Hide creator controls for clean agent view
+        // Hide ALL builder steps for clean agent view
         document.getElementById('step1Card').style.display = 'none';
         document.getElementById('step2Card').style.display = 'none';
         document.getElementById('step3Card').style.display = 'none';
+        document.getElementById('step4Card').style.display = 'none';
 
         let data = null;
 
