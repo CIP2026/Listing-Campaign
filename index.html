@@ -796,7 +796,6 @@ CARD: Just Sold Postcard
       document.getElementById('hubSection').style.display = 'block';
       document.getElementById('hubSection').scrollIntoView({ behavior: 'smooth' });
 
-      // Save locally automatically on render
       saveCampaignState();
     }
 
@@ -849,9 +848,10 @@ CARD: Just Sold Postcard
       const cleanUrl = window.location.origin + window.location.pathname + '#campaign-' + slug;
 
       navigator.clipboard.writeText(cleanUrl);
-      alert("Short Shareable Link copied to clipboard! You can send this link or bookmark it to revisit your campaign anytime.");
+      alert("Short Shareable Link copied to clipboard! Send this link to your Realtor—it will hide all builder controls and open straight to their campaign.");
     }
 
+    /* AUTOMATIC VIEW FILTER: HIDES STEPS 1-3 WHEN OPENED VIA AGENT LINK */
     window.addEventListener('DOMContentLoaded', () => {
       const hash = window.location.hash;
       let data = null;
@@ -860,6 +860,11 @@ CARD: Just Sold Postcard
         const slug = hash.replace('#campaign-', '');
         const storedStr = localStorage.getItem('listing_campaign_' + slug) || localStorage.getItem('listing_campaign_latest');
         if (storedStr) data = JSON.parse(storedStr);
+
+        // HIDE CREATOR BUILDER STEPS FOR CLEAN AGENT VIEW
+        document.getElementById('step1Card').style.display = 'none';
+        document.getElementById('step2Card').style.display = 'none';
+        document.getElementById('step3Card').style.display = 'none';
       } else {
         const storedStr = localStorage.getItem('listing_campaign_latest');
         if (storedStr) data = JSON.parse(storedStr);
