@@ -582,7 +582,7 @@
       text-overflow: ellipsis;
     }
 
-    /* SPECIFIC FIX: Move pills down on the bottom two cards so they sit clearly below the black bar */
+    /* Move pills down on the bottom two cards so they sit clearly below the black bar */
     .bestofmonth-card:nth-child(3) .bestofmonth-pill,
     .bestofmonth-card:nth-child(4) .bestofmonth-pill {
       top: 22px;
@@ -1308,7 +1308,7 @@
 <body>
 
   <div class="container">
-    header id="mainHeader">
+    <header id="mainHeader">
       <div class="subtitle">A Marketing Tool</div>
       <h1>The Listing Wing</h1>
       <p>One listing in. A full relationship-first marketing campaign out.</p>
@@ -2230,7 +2230,6 @@ closings</textarea>
       document.documentElement.style.setProperty('--accent', hex);
       document.documentElement.style.setProperty('--gallery-pink', hex);
 
-      // Re-render gallery graphics so all checklist icons, titles, and accents match chosen brand color
       renderScheduleGraphic();
       renderLockscreenGraphic();
       renderNotesGraphic();
@@ -2654,6 +2653,12 @@ Market Snapshot for Zip Code ${zip}:
     }
 
     function previewAgentHub() {
+      // HIDE BUILDER, TOP NAV, AND MAIN HEADER FOR CLEAN AGENT VIEW
+      document.getElementById('mainHeader').style.display = 'none';
+      if(document.querySelector('.main-top-nav')) document.querySelector('.main-top-nav').style.display = 'none';
+      document.getElementById('mainViewBuilder').style.display = 'none';
+      document.getElementById('mainViewGallery').style.display = 'none';
+      
       document.getElementById('hubSection').style.display = 'block';
       document.getElementById('hubSection').scrollIntoView({ behavior: 'smooth' });
     }
@@ -3170,7 +3175,7 @@ Market Snapshot for Zip Code ${zip}:
       });
     }
 
-    /* FETCHES PROPERTY JSON FILE FROM GITHUB "campaigns/" FOLDER */
+    /* FETCHES PROPERTY JSON FILE FROM GITHUB "campaigns/" FOLDER OR SHARED HASH */
     window.addEventListener('DOMContentLoaded', async () => {
       updateBrandColor();
 
@@ -3184,12 +3189,11 @@ Market Snapshot for Zip Code ${zip}:
       }
 
       if (slug) {
-        document.getElementById('mainHeader').style.display = 'none';
-        document.querySelector('.main-top-nav').style.display = 'none';
-        document.getElementById('step1Card').style.display = 'none';
-        document.getElementById('step2Card').style.display = 'none';
-        document.getElementById('step3Card').style.display = 'none';
-        document.getElementById('step4Card').style.display = 'none';
+        // HIDE CREATOR BUILDER AND TOP NAVIGATION FOR CLEAN AGENT VIEW
+        if(document.getElementById('mainHeader')) document.getElementById('mainHeader').style.display = 'none';
+        if(document.querySelector('.main-top-nav')) document.querySelector('.main-top-nav').style.display = 'none';
+        if(document.getElementById('mainViewBuilder')) document.getElementById('mainViewBuilder').style.display = 'none';
+        if(document.getElementById('mainViewGallery')) document.getElementById('mainViewGallery').style.display = 'none';
 
         let data = null;
 
