@@ -6,7 +6,7 @@
   <title>The Listing Wing - Campaign Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <!-- HTML2CANVAS FOR PNG DOWNLOADS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
@@ -20,6 +20,8 @@
       --border: #e2e8f0;
       --navy-banner: #1e293b;
       --radius: 12px;
+      --gallery-bg: #f5f2eb;
+      --gallery-pink: #ec4899;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -105,7 +107,6 @@
     .story-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 1.5rem; }
     .story-col { display: flex; flex-direction: column; gap: 0.75rem; }
 
-    /* STORY CANVAS PREVIEWS */
     .story-card-preview { 
       background: #2b384e; 
       border-radius: 12px; 
@@ -136,7 +137,6 @@
       z-index: 2;
     }
 
-    /* ESTATE STYLE */
     .story-card-preview.style-estate::before {
       content: '';
       position: absolute;
@@ -168,7 +168,6 @@
       font-weight: 500;
     }
 
-    /* MANOR CARD STYLE */
     .story-card-preview.style-manorcard {
       justify-content: center;
       align-items: center;
@@ -233,12 +232,1023 @@
 
     .bottom-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.25rem; }
 
+    /* MONTHLY MARKETING GALLERY STYLES */
+    .gallery-subnav { display: flex; background: #ffffff; border-radius: 30px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 1rem; width: fit-content; margin-left: auto; margin-right: auto; }
+    .gallery-subtab { padding: 0.6rem 1.5rem; font-weight: 600; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; border: none; background: transparent; transition: all 0.2s; }
+    .gallery-subtab.active { background: #1e293b; color: white; border-radius: 30px; }
+
+    .gallery-section-card { background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; }
+    .gallery-sec-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #b45309; margin-bottom: 1rem; }
+
+    .layout-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
+    .layout-card { background: #ffffff; border: 1.5px solid var(--border); border-radius: 10px; padding: 0.85rem; cursor: pointer; transition: all 0.2s; text-align: left; }
+    .layout-card:hover { border-color: #1e293b; transform: translateY(-2px); }
+    .layout-card.active { border-color: #ec4899; box-shadow: 0 0 0 1px #ec4899; }
+    .layout-card h4 { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; color: #0f172a; margin-bottom: 0.2rem; }
+    .layout-card p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.3; }
+
+    .photo-dropzone { border: 2px dashed var(--border); border-radius: 10px; padding: 1.5rem; text-align: center; cursor: pointer; background: #fafafa; transition: background 0.2s; display: block; }
+    .photo-dropzone:hover { background: #f1f5f9; }
+
+    /* PREVIEW CONTAINER */
+    .canvas-preview-wrapper { background: #18181b; border-radius: 12px; padding: 2rem; display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
+    
+    /* LAYOUT 1: SCHEDULE CANVAS */
+    .schedule-canvas {
+      width: 380px;
+      height: 480px;
+      background: #f5f2eb;
+      border-radius: 4px;
+      padding: 1.5rem 1.25rem 1rem 1.25rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .sched-top-tag { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #ec4899; }
+    .sched-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: #0f172a; line-height: 1.15; margin-bottom: 0.85rem; }
+    .sched-body-wrap { display: flex; gap: 0.75rem; flex: 1; position: relative; }
+    .sched-list { flex: 1; display: flex; flex-direction: column; gap: 0.45rem; z-index: 1; }
+    .sched-item { background: #ffffff; border-radius: 6px; padding: 0.4rem 0.6rem; border-left: 3px solid #ec4899; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+    .sched-time { font-size: 0.55rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 0.1rem; }
+    .sched-val { font-size: 0.7rem; font-weight: 600; color: #1e293b; line-height: 1.2; }
+    .sched-photo-frame {
+      width: 140px;
+      height: 190px;
+      background: #ffffff;
+      padding: 6px 6px 20px 6px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      transform: rotate(3deg);
+      position: absolute;
+      right: -10px;
+      top: 15px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .sched-photo-img { width: 100%; height: 140px; background: #e2e8f0; object-fit: cover; }
+    .sched-photo-label { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-top: 6px; text-align: center; }
+    .sched-footer { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-align: center; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 0.5rem; margin-top: 0.5rem; }
+
+    /* LAYOUT 2: LOCK SCREEN CANVAS */
+    .lockscreen-canvas {
+      width: 280px;
+      height: 480px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      padding: 2rem 1rem 1rem 1rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      color: white;
+      text-align: center;
+    }
+    .lockscreen-canvas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.45) 100%);
+      z-index: 1;
+    }
+    .lockscreen-inner { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; justify-content: space-between; }
+    .lock-icon { font-size: 0.8rem; margin-bottom: 0.2rem; opacity: 0.9; }
+    .lock-date { font-size: 0.65rem; font-weight: 500; opacity: 0.9; letter-spacing: 0.02em; }
+    .lock-time { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 3rem; font-weight: 300; line-height: 1; margin-top: 0.1rem; }
+    .lock-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 0.75rem 0.85rem;
+      text-align: left;
+      color: #0f172a;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-bottom: 2rem;
+    }
+    .lock-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; }
+    .lock-card-title { display: flex; align-items: center; gap: 0.4rem; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.05em; color: #0f172a; text-transform: uppercase; }
+    .pink-dot { width: 7px; height: 7px; background: #ec4899; border-radius: 50%; display: inline-block; }
+    .lock-card-time { font-size: 0.55rem; color: #64748b; }
+    .lock-card-msg { font-size: 0.7rem; color: #334155; line-height: 1.35; font-weight: 500; }
+    .lock-footer { font-size: 0.55rem; font-weight: 600; letter-spacing: 0.08em; opacity: 0.85; text-transform: lowercase; margin-bottom: 0.2rem; }
+
+    /* LAYOUT 3: NOTES APP CANVAS */
+    .notes-canvas {
+      width: 320px;
+      height: 480px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      padding: 2rem 1.25rem 1rem 1.25rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .notes-canvas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+      z-index: 1;
+    }
+    .notes-inner { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; justify-content: space-between; }
+    .notes-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+    .notes-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; font-size: 0.65rem; }
+    .notes-back { color: #ec4899; font-weight: 600; }
+    .notes-done { color: #ec4899; font-weight: 700; }
+    .notes-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-bottom: 0.85rem; line-height: 1.25; }
+    .notes-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .notes-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.7rem; color: #334155; font-weight: 500; }
+    .notes-circle { width: 14px; height: 14px; border: 1.5px solid #cbd5e1; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .notes-footer { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.9); text-align: center; }
+
+    /* LAYOUT 4: SELLER DASHBOARD CANVAS */
+    .sellerdash-canvas {
+      width: 320px;
+      height: 480px;
+      background: #f5f2eb;
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sellerdash-hero {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1rem;
+    }
+    .sellerdash-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 80%);
+    }
+    .sellerdash-hero-content { position: relative; z-index: 2; color: white; }
+    .sellerdash-header { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #fde047; margin-bottom: 0.2rem; }
+    .sellerdash-headline { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; line-height: 1.2; }
+    
+    .sellerdash-body { padding: 0.85rem; display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
+    .sellerdash-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-top: -1.75rem; position: relative; z-index: 3; }
+    .sellerdash-stat-box { background: #ffffff; border-radius: 6px; padding: 0.5rem 0.2rem; text-align: center; border-top: 3px solid #ec4899; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
+    .sellerdash-stat-num { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: #0f172a; line-height: 1; }
+    .sellerdash-stat-lbl { font-size: 0.45rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin-top: 0.25rem; }
+
+    .sellerdash-note-wrap { margin-top: 0.75rem; text-align: left; }
+    .sellerdash-note-heading { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #ec4899; margin-bottom: 0.4rem; }
+    .sellerdash-note-list { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+    .sellerdash-note-item { font-size: 0.65rem; color: #334155; display: flex; align-items: flex-start; gap: 0.35rem; line-height: 1.35; font-style: italic; }
+    .sellerdash-note-item::before { content: '•'; color: #0f172a; font-weight: bold; font-style: normal; }
+
+    .sellerdash-footer { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; text-align: center; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 0.4rem; margin-top: 0.5rem; }
+
+    /* LAYOUT 5: MONTHLY RECAP CANVAS */
+    .recap-canvas {
+      width: 380px;
+      height: 480px;
+      background: #f3efe6;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.25rem 1rem 0.75rem 1rem;
+      overflow: hidden;
+    }
+    .recap-stage { position: relative; flex: 1; width: 100%; height: 100%; }
+    .recap-center-badge {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      transform: translate(-50%, -50%);
+      background: #fbcfe8;
+      border: 1.5px solid #f472b6;
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      text-align: center;
+      z-index: 10;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      min-width: 110px;
+    }
+    .recap-center-tab {
+      position: absolute;
+      top: -8px;
+      left: 10px;
+      background: #f472b6;
+      width: 30px;
+      height: 8px;
+      border-radius: 4px 4px 0 0;
+    }
+    .recap-center-heart { font-size: 0.55rem; color: #ec4899; margin-bottom: 0.1rem; }
+    .recap-center-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: #0f172a; line-height: 1.1; }
+
+    .recap-polaroid {
+      position: absolute;
+      background: #ffffff;
+      padding: 4px 4px 14px 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 82px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+    .recap-polaroid-img { width: 100%; height: 70px; background: #e2e8f0; object-fit: cover; }
+    .recap-polaroid-txt { font-family: 'Caveat', cursive; font-size: 0.65rem; font-weight: 600; color: #334155; margin-top: 3px; text-align: center; line-height: 1; }
+    .recap-tape {
+      position: absolute;
+      top: -6px;
+      width: 26px;
+      height: 10px;
+      background: rgba(226, 232, 240, 0.7);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .p-pos-1 { top: 5px; left: 10px; transform: rotate(-6deg); }
+    .p-pos-2 { top: 10px; right: 10px; transform: rotate(5deg); }
+    .p-pos-3 { top: 120px; left: 5px; transform: rotate(4deg); }
+    .p-pos-4 { top: 125px; right: 5px; transform: rotate(-5deg); }
+    .p-pos-5 { bottom: 25px; left: 15px; transform: rotate(-4deg); }
+    .p-pos-6 { bottom: 15px; left: 140px; transform: rotate(2deg); }
+    .p-pos-7 { bottom: 20px; right: 15px; transform: rotate(6deg); }
+
+    .recap-footer { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; text-align: center; padding-top: 0.25rem; border-top: 1px solid rgba(0,0,0,0.06); }
+
+    /* LAYOUT 6: BEST OF THE MONTH CANVAS */
+    .bestofmonth-canvas {
+      width: 320px;
+      height: 480px;
+      background: #f5f2eb;
+      border-radius: 8px;
+      padding: 1.25rem 1rem 0.75rem 1rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .bestofmonth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0.6rem;
+      flex: 1;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+    .bestofmonth-card {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #e2e8f0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .bestofmonth-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bestofmonth-pill {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: #ffffff;
+      padding: 0.2rem 0.55rem;
+      border-radius: 12px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: #0f172a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 2;
+    }
+    .bestofmonth-banner {
+      position: absolute;
+      top: 50%;
+      left: -1rem;
+      right: -1rem;
+      transform: translateY(-50%);
+      background: #18181b;
+      color: #ffffff;
+      padding: 0.55rem 1rem;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      z-index: 5;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .bestofmonth-footer { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; text-align: center; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 0.4rem; }
+
+    /* LAYOUT 7: HOME SEARCH SCREEN CANVAS */
+    .homesearch-canvas {
+      width: 320px;
+      height: 480px;
+      background: #f3efe6;
+      border-radius: 12px;
+      padding: 1.25rem 1rem 0.75rem 1rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .homesearch-searchbar {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 0.45rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.65rem;
+      color: #64748b;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      margin-bottom: 0.5rem;
+    }
+    .homesearch-chips { display: flex; gap: 0.35rem; margin-bottom: 0.75rem; overflow-x: hidden; }
+    .homesearch-chip {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: #334155;
+      white-space: nowrap;
+    }
+    .homesearch-chip.active { border-color: #0f172a; color: #0f172a; }
+
+    .homesearch-card-container {
+      flex: 1;
+      background: #e2e8f0;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-size: cover;
+      background-position: center;
+    }
+    .homesearch-corner-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ec4899;
+      color: #ffffff;
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .homesearch-heart-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #ec4899;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 2;
+    }
+    .homesearch-info-box {
+      background: #ffffff;
+      padding: 0.75rem 0.85rem;
+      text-align: left;
+      z-index: 2;
+    }
+    .homesearch-price { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #0f172a; line-height: 1.1; margin-bottom: 0.15rem; }
+    .homesearch-specs { font-size: 0.6rem; font-weight: 600; color: #475569; margin-bottom: 0.15rem; }
+    .homesearch-address { font-size: 0.55rem; color: #64748b; }
+
+    .homesearch-footer { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #64748b; text-align: center; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 0.4rem; margin-top: 0.5rem; }
+
+    /* LAYOUT 8: LOVE WHERE YOU LIVE CANVAS */
+    .lovewhere-canvas {
+      width: 320px;
+      height: 480px;
+      background: #f5f2eb;
+      border-radius: 12px;
+      padding: 1.5rem 1rem 0.75rem 1rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      text-align: center;
+    }
+    .lovewhere-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+    .lovewhere-title-script {
+      font-family: 'Caveat', cursive;
+      font-size: 1.4rem;
+      color: #ec4899;
+      display: block;
+      font-weight: 700;
+      margin-top: -0.1rem;
+    }
+    .lovewhere-hero-stage {
+      position: relative;
+      width: 100%;
+      height: 190px;
+      margin-bottom: 1rem;
+    }
+    .lovewhere-main-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      background: #cbd5e1;
+    }
+    .lovewhere-circle-frame {
+      position: absolute;
+      bottom: -15px;
+      right: 10px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+      background: #e2e8f0;
+      z-index: 3;
+    }
+    .lovewhere-circle-img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .lovewhere-body-wrap { text-align: left; padding: 0 0.2rem; }
+    .lovewhere-place-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: #0f172a; line-height: 1.25; margin-bottom: 0.35rem; }
+    .lovewhere-quote { font-size: 0.65rem; color: #475569; font-style: italic; line-height: 1.4; margin-bottom: 0.4rem; }
+    .lovewhere-town-tag { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #ec4899; }
+    
+    .lovewhere-footer { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; text-align: center; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 0.4rem; margin-top: 0.5rem; }
+
+    /* LAYOUT 9: OPEN HOUSE INVITE CANVAS */
+    .openhouse-canvas {
+      width: 320px;
+      height: 480px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      padding: 1.5rem 1rem 1rem 1rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .openhouse-canvas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 100%);
+      z-index: 1;
+    }
+    .openhouse-card {
+      position: relative;
+      z-index: 2;
+      background: #f8f6f0;
+      border-radius: 8px;
+      padding: 1.25rem 1rem;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .openhouse-top-tag { font-size: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: #64748b; margin-bottom: 0.2rem; }
+    .openhouse-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #0f172a; line-height: 1.1; margin-bottom: 0.15rem; }
+    .openhouse-time { font-family: 'Caveat', cursive; font-size: 1.3rem; font-weight: 700; color: #ec4899; margin-bottom: 0.25rem; }
+    .openhouse-address { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #334155; margin-bottom: 0.85rem; }
+    .openhouse-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.08); margin-bottom: 0.65rem; }
+    .openhouse-host { font-size: 0.55rem; color: #475569; font-weight: 500; line-height: 1.35; }
+    .openhouse-phone { font-size: 0.5rem; color: #64748b; margin-top: 0.15rem; }
+
+    /* LAYOUT 10: CONTRACT COUNTDOWN CANVAS */
+    .countdown-canvas {
+      width: 320px;
+      height: 480px;
+      background: #f5f2eb;
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .countdown-hero {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
+    .countdown-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 80%);
+    }
+    .countdown-hero-tag {
+      position: relative;
+      z-index: 2;
+      font-size: 0.55rem;
+      font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: #fde047;
+    }
+
+    .countdown-body {
+      padding: 1.25rem 1rem 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+    .countdown-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-bottom: 0.85rem;
+    }
+    .countdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .countdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      color: #334155;
+      font-weight: 500;
+    }
+    .countdown-icon-check {
+      width: 16px;
+      height: 16px;
+      background: #ec4899;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .countdown-icon-next {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .countdown-footer {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #64748b;
+      text-align: center;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      padding-top: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    /* LAYOUT 11: THIS OR THAT CANVAS */
+    .thisorthat-canvas {
+      width: 320px;
+      height: 480px;
+      background: #f5f2eb;
+      border-radius: 12px;
+      padding: 1.5rem 1rem 0.75rem 1rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      text-align: center;
+    }
+    .thisorthat-question {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-bottom: 0.85rem;
+    }
+    .thisorthat-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+    .thisorthat-card {
+      flex: 1;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #cbd5e1;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .thisorthat-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thisorthat-pill {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: #ffffff;
+      padding: 0.2rem 0.55rem;
+      border-radius: 12px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: #0f172a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 2;
+    }
+    .thisorthat-or-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      background: #ec4899;
+      color: #ffffff;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 5;
+    }
+    .thisorthat-footer {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #64748b;
+      text-align: center;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      padding-top: 0.4rem;
+    }
+
+    /* LAYOUT 12: BEFORE & AFTER CANVAS */
+    .beforeafter-canvas {
+      width: 320px;
+      height: 480px;
+      background: #f5f2eb;
+      border-radius: 12px;
+      padding: 1.5rem 1rem 0.75rem 1rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      text-align: center;
+    }
+    .beforeafter-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-bottom: 0.85rem;
+    }
+    .beforeafter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      flex: 1;
+      margin-bottom: 0.5rem;
+    }
+    .beforeafter-col { display: flex; flex-direction: column; height: 100%; }
+    .beforeafter-img-frame {
+      flex: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #cbd5e1;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 0.5rem;
+    }
+    .beforeafter-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .beforeafter-label-left {
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    .beforeafter-label-right {
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ec4899;
+    }
+    .beforeafter-footer {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #64748b;
+      text-align: center;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      padding-top: 0.4rem;
+    }
+
+    /* LAYOUT 13: THE REVEAL SLIDE CANVAS */
+    .reveal-canvas {
+      width: 340px;
+      height: 480px;
+      background: #e8e3d9;
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1rem;
+      overflow: hidden;
+    }
+    .reveal-canvas::before {
+      content: '';
+      position: absolute;
+      top: 38%;
+      left: -20px;
+      right: -20px;
+      height: 25px;
+      background: #f5f2eb;
+      transform: rotate(-4deg);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      z-index: 1;
+    }
+    .reveal-stage { position: relative; flex: 1; width: 100%; z-index: 2; }
+    .reveal-marker-tag {
+      position: absolute;
+      top: 105px;
+      right: 5px;
+      background: #fef08a;
+      color: #854d0e;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem;
+      transform: rotate(3deg);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      z-index: 5;
+    }
+    .reveal-arrow-svg {
+      position: absolute;
+      top: 135px;
+      right: 45px;
+      width: 50px;
+      height: 50px;
+      z-index: 6;
+    }
+    .reveal-photo-left {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 140px;
+      height: 210px;
+      background: #cbd5e1;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+    .reveal-photo-right {
+      position: absolute;
+      bottom: 20px;
+      right: 10px;
+      width: 140px;
+      height: 210px;
+      background: #cbd5e1;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.16);
+    }
+    .reveal-img { width: 100%; height: 100%; object-fit: cover; }
+    .reveal-note-area {
+      position: absolute;
+      bottom: 15px;
+      left: 10px;
+      width: 140px;
+      text-align: left;
+    }
+    .reveal-label-left {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: #0f172a;
+      margin-bottom: 0.4rem;
+    }
+    .reveal-handwriting {
+      font-family: 'Caveat', cursive;
+      font-size: 0.85rem;
+      color: #334155;
+      line-height: 1.25;
+      margin-bottom: 0.2rem;
+    }
+    .reveal-hearts { color: #ec4899; font-size: 0.75rem; }
+    .reveal-label-right {
+      position: absolute;
+      bottom: -5px;
+      right: 45px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: #0f172a;
+    }
+
+    /* LAYOUT 14: A DAY IN THE LIFE CANVAS */
+    .dayinlife-canvas {
+      width: 320px;
+      height: 480px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      padding: 1.25rem 1rem 1rem 1rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .dayinlife-canvas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.65) 100%);
+      z-index: 1;
+    }
+    .dayinlife-stage { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; justify-content: space-between; }
+    
+    .dayinlife-folder-icon {
+      position: relative;
+      width: 44px;
+      height: 32px;
+      background: #ec4899;
+      border-radius: 4px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .dayinlife-folder-tab {
+      position: absolute;
+      top: -5px;
+      left: 0;
+      width: 18px;
+      height: 6px;
+      background: #ec4899;
+      border-radius: 3px 3px 0 0;
+    }
+    .dayinlife-folder-txt {
+      font-family: 'Caveat', cursive;
+      font-size: 0.65rem;
+      color: #ffffff;
+      opacity: 0.9;
+      margin-top: 0.25rem;
+    }
+
+    .dayinlife-title-box { text-align: left; }
+    .dayinlife-headline-1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.05;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .dayinlife-bracket-tag {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.7);
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.15rem 0.5rem;
+      font-size: 0.55rem;
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 4px;
+      margin: 0.3rem 0;
+    }
+    .dayinlife-headline-2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.05;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .dayinlife-right-sticky {
+      position: absolute;
+      right: 0px;
+      top: 190px;
+      background: #ffffff;
+      padding: 0.5rem 0.65rem;
+      border-radius: 6px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+      width: 95px;
+      text-align: left;
+    }
+    .dayinlife-sticky-tape {
+      position: absolute;
+      top: -5px;
+      right: 15px;
+      width: 24px;
+      height: 8px;
+      background: #ec4899;
+      opacity: 0.85;
+    }
+    .dayinlife-sticky-item { font-size: 0.55rem; color: #334155; margin-bottom: 0.2rem; font-weight: 600; display: flex; align-items: center; gap: 0.25rem; }
+    .dayinlife-sticky-item::before { content: '☑'; color: #ec4899; font-size: 0.6rem; }
+
+    .dayinlife-sub-script { font-family: 'Caveat', cursive; font-size: 0.85rem; color: #ffffff; opacity: 0.9; margin-top: 0.4rem; font-style: italic; }
+    
+    .dayinlife-bottom-pill {
+      align-self: center;
+      background: #ffffff;
+      color: #0f172a;
+      padding: 0.45rem 1rem;
+      border-radius: 20px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+    .dayinlife-arrow-circle {
+      width: 16px;
+      height: 16px;
+      background: #0f172a;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+    }
+
     @media print {
       body * { visibility: hidden; }
       #hubSection, #hubSection * { visibility: visible; }
       #hubSection { position: absolute; left: 0; top: 0; width: 100%; }
       .tabs-wrapper, .btn-outline, .copy-btn, .bottom-actions { display: none !important; }
       .tab-content { display: block !important; }
+    }
+
+    @media (max-width: 900px) {
+      .layout-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 768px) {
@@ -397,6 +1407,7 @@
           <button class="tab-btn" onclick="switchTab('Captions')">Captions</button>
           <button class="tab-btn" onclick="switchTab('Stories')">Stories</button>
           <button class="tab-btn" onclick="switchTab('StoryStudio')">Story Studio</button>
+          <button class="tab-btn" onclick="switchTab('MonthlyMarketing')">Monthly Marketing</button>
           <button class="tab-btn" onclick="switchTab('SellerUpdates')">Seller Updates</button>
           <button class="tab-btn" onclick="switchTab('OpenHouse')">Open House</button>
           <button class="tab-btn" onclick="switchTab('DMsTexts')">DMs & Texts</button>
@@ -493,6 +1504,644 @@
           </div>
         </div>
 
+        <!-- MONTHLY MARKETING TAB (GALLERY STUDIO) -->
+        <div id="tab-MonthlyMarketing" class="tab-content">
+          <div class="gallery-subnav">
+            <button class="gallery-subtab active" id="btnStudioSubtab" onclick="switchGallerySubtab('studio')">The Studio — made for you</button>
+            <button class="gallery-subtab" id="btnPromptsSubtab" onclick="switchGallerySubtab('prompts')">The Prompts — made with AI</button>
+          </div>
+
+          <!-- THE STUDIO SUBTAB CONTENT -->
+          <div id="galleryStudioView">
+            <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">Upload a photo, pick a layout, download it. No AI, no Canva, no typos.</p>
+
+            <!-- 1. PICK A LAYOUT -->
+            <div class="gallery-section-card">
+              <div class="gallery-sec-title">1 · PICK A LAYOUT</div>
+              <div class="layout-grid">
+                <div class="layout-card active" id="card-layout-schedule" onclick="selectGalleryLayout('schedule')">
+                  <h4>Today's schedule</h4>
+                  <p>Your day as a calendar screen.</p>
+                </div>
+                <div class="layout-card" id="card-layout-lockscreen" onclick="selectGalleryLayout('lockscreen')">
+                  <h4>Lock screen</h4>
+                  <p>One line that stops the scroll.</p>
+                </div>
+                <div class="layout-card" id="card-layout-notes" onclick="selectGalleryLayout('notes')">
+                  <h4>Notes app</h4>
+                  <p>A checklist people screenshot.</p>
+                </div>
+                <div class="layout-card" id="card-layout-sellerdash" onclick="selectGalleryLayout('sellerdash')">
+                  <h4>Seller dashboard</h4>
+                  <p>Weekly proof for your sellers.</p>
+                </div>
+                <div class="layout-card" id="card-layout-monthlyrecap" onclick="selectGalleryLayout('monthlyrecap')">
+                  <h4>Monthly recap</h4>
+                  <p>Your photo, taped over with the month.</p>
+                </div>
+                <div class="layout-card" id="card-layout-bestofmonth" onclick="selectGalleryLayout('bestofmonth')">
+                  <h4>Best of the month</h4>
+                  <p>Four rooms, one grid.</p>
+                </div>
+                <div class="layout-card" id="card-layout-homesearch" onclick="selectGalleryLayout('homesearch')">
+                  <h4>Home search screen</h4>
+                  <p>Your listing as an app card.</p>
+                </div>
+                <div class="layout-card" id="card-layout-lovewhereyoulive" onclick="selectGalleryLayout('lovewhereyoulive')">
+                  <h4>Love where you live</h4>
+                  <p>A place you love, and the reason why.</p>
+                </div>
+                <div class="layout-card" id="card-layout-openhouseinvite" onclick="selectGalleryLayout('openhouseinvite')">
+                  <h4>Open house invite</h4>
+                  <p>The invitation, not the flyer.</p>
+                </div>
+                <div class="layout-card" id="card-layout-contractcountdown" onclick="selectGalleryLayout('contractcountdown')">
+                  <h4>Contract countdown</h4>
+                  <p>Where the deal actually stands.</p>
+                </div>
+                <div class="layout-card" id="card-layout-thisorthat" onclick="selectGalleryLayout('thisorthat')">
+                  <h4>This or that</h4>
+                  <p>Two photos, one question.</p>
+                </div>
+                <div class="layout-card" id="card-layout-beforeafter" onclick="selectGalleryLayout('beforeafter')">
+                  <h4>Before & after</h4>
+                  <p>The prep, then the payoff.</p>
+                </div>
+                <div class="layout-card" id="card-layout-reveal" onclick="selectGalleryLayout('reveal')">
+                  <h4>The reveal slide</h4>
+                  <p>Your plain photo → the finished graphic.</p>
+                </div>
+                <div class="layout-card" id="card-layout-dayinlife" onclick="selectGalleryLayout('dayinlife')">
+                  <h4>A day in the life</h4>
+                  <p>The bold cover slide.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. ADD YOUR PHOTOS -->
+            <div class="gallery-section-card">
+              <div class="gallery-sec-title">2 · ADD YOUR PHOTOS</div>
+              <label class="photo-dropzone">
+                <span id="galleryPhotoLabelText" style="font-size:0.9rem; font-weight:600; color:var(--text-muted);">Tap to choose photos<br><small style="font-weight:400;" id="photoSublabelText">This layout uses 1 photo.</small></span>
+                <input type="file" id="galleryPhotoInput" accept="image/*" multiple onchange="loadGalleryPhoto(event)" style="display:none;">
+              </label>
+            </div>
+
+            <!-- 3. EDIT THE WORDS (DYNAMICALLY SWITCHED) -->
+            <div class="gallery-section-card">
+              <div class="gallery-sec-title">3 · EDIT THE WORDS</div>
+              
+              <!-- INPUTS FOR TODAY'S SCHEDULE -->
+              <div id="wordsFormSchedule">
+                <div class="form-group">
+                  <label>TITLE</label>
+                  <input type="text" id="galleryScheduleTitle" value="Today's showing schedule" oninput="renderScheduleGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>FIVE TIME BLOCKS (ONE PER LINE: TIME | WHAT)</label>
+                  <textarea id="galleryScheduleBlocks" style="height:110px;" oninput="renderScheduleGraphic()">9:00 AM | Buyer tour
+11:30 AM | Listing appointment
+1:00 PM | Home inspection
+3:30 PM | Closing
+6:00 PM | Open house</textarea>
+                </div>
+              </div>
+
+              <!-- INPUTS FOR LOCK SCREEN -->
+              <div id="wordsFormLockscreen" style="display:none;">
+                <div class="form-group">
+                  <label>TIME</label>
+                  <input type="text" id="lockTime" value="9:41" oninput="renderLockscreenGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>DATE LINE</label>
+                  <input type="text" id="lockDate" value="Sunday, October 12" oninput="renderLockscreenGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>NOTIFICATION HEADER</label>
+                  <input type="text" id="lockHeader" value="NEW LISTING ALERT" oninput="renderLockscreenGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>NOTIFICATION MESSAGE</label>
+                  <textarea id="lockMsg" style="height:80px;" oninput="renderLockscreenGraphic()">Someone on your street just listed. Want to know what it did to your value?</textarea>
+                </div>
+              </div>
+
+              <!-- INPUTS FOR NOTES APP -->
+              <div id="wordsFormNotes" style="display:none;">
+                <div class="form-group">
+                  <label>NOTE TITLE</label>
+                  <input type="text" id="notesTitle" value="What sellers actually want" oninput="renderNotesGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>CHECKLIST (ONE PER LINE, UP TO 7)</label>
+                  <textarea id="notesChecklist" style="height:110px;" oninput="renderNotesGraphic()">Professional photos
+Honest pricing
+Fast communication
+Marketing that gets attention
+An agent who answers the phone</textarea>
+                </div>
+              </div>
+
+              <!-- INPUTS FOR SELLER DASHBOARD -->
+              <div id="wordsFormSellerdash" style="display:none;">
+                <div class="form-group">
+                  <label>HEADER</label>
+                  <input type="text" id="dashHeader" value="WEEKLY SELLER REPORT" oninput="renderSellerdashGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>ADDRESS OR HEADLINE</label>
+                  <input type="text" id="dashHeadline" value="Week 2 on the market" oninput="renderSellerdashGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>THREE STATS (ONE PER LINE: NUMBER | LABEL)</label>
+                  <textarea id="dashStats" style="height:80px;" oninput="renderSellerdashGraphic()">14 | Showings
+1,208 | Online views
+63 | Saves</textarea>
+                </div>
+                <div class="form-group">
+                  <label>NOTE HEADING</label>
+                  <input type="text" id="dashNoteHeading" value="What I am changing this week" oninput="renderSellerdashGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>NOTE LINES (ONE PER LINE, UP TO 2)</label>
+                  <textarea id="dashNoteLines" style="height:70px;" oninput="renderSellerdashGraphic()">New twilight photos going up Thursday
+Refreshing the headline to lead with the yard</textarea>
+                </div>
+              </div>
+
+              <!-- INPUTS FOR MONTHLY RECAP -->
+              <div id="wordsFormMonthlyrecap" style="display:none;">
+                <div class="form-group">
+                  <label>CENTER LABEL (TWO WORDS WORKS BEST)</label>
+                  <input type="text" id="recapCenterLabel" value="Monthly Recap" oninput="renderMonthlyrecapGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>POLAROID CAPTIONS (ONE PER LINE, UP TO 7)</label>
+                  <textarea id="recapCaptions" style="height:120px;" oninput="renderMonthlyrecapGraphic()">New listings
+Closings
+Happy clients
+Moving day
+Open houses
+Celebrations
+Reviews</textarea>
+                </div>
+              </div>
+
+              <!-- INPUTS FOR BEST OF THE MONTH -->
+              <div id="wordsFormBestofmonth" style="display:none;">
+                <div class="form-group">
+                  <label>CENTER BANNER</label>
+                  <input type="text" id="bestBanner" value="BEST OF THIS MONTH" oninput="renderBestofmonthGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>FOUR LABELS (ONE PER LINE)</label>
+                  <textarea id="bestLabels" style="height:90px;" oninput="renderBestofmonthGraphic()">Best kitchen
+Best backyard
+Dream closet
+Favorite front door</textarea>
+                </div>
+              </div>
+
+              <!-- INPUTS FOR HOME SEARCH SCREEN -->
+              <div id="wordsFormHomesearch" style="display:none;">
+                <div class="form-group">
+                  <label>PRICE</label>
+                  <input type="text" id="searchPrice" value="$489,900" oninput="renderHomesearchGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>SPECS LINE</label>
+                  <input type="text" id="searchSpecs" value="4 bd · 3 ba · 2,410 sqft" oninput="renderHomesearchGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>ADDRESS</label>
+                  <input type="text" id="searchAddress" value="123 Maple Street" oninput="renderHomesearchGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>CORNER TAG</label>
+                  <input type="text" id="searchTag" value="JUST LISTED" oninput="renderHomesearchGraphic()">
+                </div>
+              </div>
+
+              <!-- INPUTS FOR LOVE WHERE YOU LIVE -->
+              <div id="wordsFormLovewhereyoulive" style="display:none;">
+                <div class="form-group">
+                  <label>THE PLACE</label>
+                  <input type="text" id="lovePlace" value="The bakery on Second Street" oninput="renderLovewhereyouliveGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>WHAT YOU LOVE THERE</label>
+                  <textarea id="loveReason" style="height:80px;" oninput="renderLovewhereyouliveGraphic()">They know my order. They ask about my kids. On Saturdays the line goes out the door and nobody minds.</textarea>
+                </div>
+                <div class="form-group">
+                  <label>TOWN LABEL</label>
+                  <input type="text" id="loveTown" value="DISCOVERY BAY" oninput="renderLovewhereyouliveGraphic()">
+                </div>
+              </div>
+
+              <!-- INPUTS FOR OPEN HOUSE INVITE -->
+              <div id="wordsFormOpenhouseinvite" style="display:none;">
+                <div class="form-group">
+                  <label>HEADING</label>
+                  <input type="text" id="openhouseHeading" value="Open House" oninput="renderOpenhouseinviteGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>DAY AND TIME</label>
+                  <input type="text" id="openhouseDayTime" value="Sunday, 1–3pm" oninput="renderOpenhouseinviteGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>ADDRESS</label>
+                  <input type="text" id="openhouseAddress" value="123 Maple Street" oninput="renderOpenhouseinviteGraphic()">
+                </div>
+              </div>
+
+              <!-- INPUTS FOR CONTRACT COUNTDOWN -->
+              <div id="wordsFormContractcountdown" style="display:none;">
+                <div class="form-group">
+                  <label>HEADLINE</label>
+                  <input type="text" id="countdownHeadline" value="123 Maple Street" oninput="renderContractcountdownGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>STEPS COMPLETE (ONE PER LINE, UP TO 4)</label>
+                  <textarea id="countdownSteps" style="height:90px;" oninput="renderContractcountdownGraphic()">Offer accepted
+Inspection
+Appraisal
+Clear to close</textarea>
+                </div>
+                <div class="form-group">
+                  <label>WHAT IS NEXT</label>
+                  <input type="text" id="countdownNext" value="Closing day — October 12" oninput="renderContractcountdownGraphic()">
+                </div>
+              </div>
+
+              <!-- INPUTS FOR THIS OR THAT -->
+              <div id="wordsFormThisorthat" style="display:none;">
+                <div class="form-group">
+                  <label>QUESTION</label>
+                  <input type="text" id="thisorthatQuestion" value="Which kitchen would you pick?" oninput="renderThisorthatGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>LABEL ON THE TOP PHOTO</label>
+                  <input type="text" id="thisorthatTopLabel" value="White and warm" oninput="renderThisorthatGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>LABEL ON THE BOTTOM PHOTO</label>
+                  <input type="text" id="thisorthatBottomLabel" value="Moody and dark" oninput="renderThisorthatGraphic()">
+                </div>
+              </div>
+
+              <!-- INPUTS FOR BEFORE & AFTER -->
+              <div id="wordsFormBeforeafter" style="display:none;">
+                <div class="form-group">
+                  <label>TITLE</label>
+                  <input type="text" id="beforeafterTitle" value="Same room. Two weeks apart." oninput="renderBeforeafterGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>LEFT LABEL</label>
+                  <input type="text" id="beforeafterLeftLabel" value="before" oninput="renderBeforeafterGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>RIGHT LABEL</label>
+                  <input type="text" id="beforeafterRightLabel" value="after" oninput="renderBeforeafterGraphic()">
+                </div>
+              </div>
+
+              <!-- INPUTS FOR THE REVEAL SLIDE -->
+              <div id="wordsFormReveal" style="display:none;">
+                <div class="form-group">
+                  <label>MARKER LABEL (TOP RIGHT)</label>
+                  <input type="text" id="revealMarkerLabel" value="TODAY'S SCHEDULE" oninput="renderRevealGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>HANDWRITTEN NOTE (OPTIONAL)</label>
+                  <textarea id="revealHandwrittenNote" style="height:70px;" oninput="renderRevealGraphic()">one photo from my camera roll and about ninety seconds...</textarea>
+                </div>
+                <div class="form-group">
+                  <label>LEFT WORD</label>
+                  <input type="text" id="revealLeftWord" value="before" oninput="renderRevealGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>RIGHT WORD</label>
+                  <input type="text" id="revealRightWord" value="after" oninput="renderRevealGraphic()">
+                </div>
+              </div>
+
+              <!-- INPUTS FOR A DAY IN THE LIFE -->
+              <div id="wordsFormDayinlife" style="display:none;">
+                <div class="form-group">
+                  <label>TITLE LINE 1</label>
+                  <input type="text" id="dayTitle1" value="a day in" oninput="renderDayinlifeGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>TITLE LINE 2</label>
+                  <input type="text" id="dayTitle2" value="my life" oninput="renderDayinlifeGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>BRACKET TAG (UNDER LINE 1)</label>
+                  <input type="text" id="dayBracket1" value="As a Realtor" oninput="renderDayinlifeGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>BRACKET TAG (RIGHT SIDE)</label>
+                  <input type="text" id="dayBracket2" value="& what it really looks like" oninput="renderDayinlifeGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>FOLDER TAB LABEL</label>
+                  <input type="text" id="dayFolderLabel" value="camera roll" oninput="renderDayinlifeGraphic()">
+                </div>
+                <div class="form-group">
+                  <label>STICKY NOTE LIST (UP TO 3)</label>
+                  <textarea id="dayStickyList" style="height:70px;" oninput="renderDayinlifeGraphic()">showings
+listings
+closings</textarea>
+                </div>
+                <div class="form-group">
+                  <label>BOTTOM PILL</label>
+                  <input type="text" id="dayBottomPill" value="My everyday routine" oninput="renderDayinlifeGraphic()">
+                </div>
+              </div>
+            </div>
+
+            <!-- LIVE CANVAS PREVIEW AREA -->
+            <div class="canvas-preview-wrapper">
+              <!-- CANVAS 1: SCHEDULE -->
+              <div class="schedule-canvas" id="exportScheduleCanvas">
+                <div>
+                  <div class="sched-top-tag">TODAY</div>
+                  <div class="sched-title" id="canvasSchedTitle">Today's showing schedule</div>
+                  <div class="sched-body-wrap">
+                    <div class="sched-list" id="canvasSchedList"></div>
+                    <div class="sched-photo-frame">
+                      <img id="canvasSchedImg" class="sched-photo-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23cbd5e1'><rect width='100' height='100'/></svg>">
+                      <div class="sched-photo-label">THE DAY</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sched-footer" id="canvasSchedFooter">KARI CROSS · CORCORAN ICON PROPERTIES</div>
+              </div>
+
+              <!-- CANVAS 2: LOCK SCREEN -->
+              <div class="lockscreen-canvas" id="exportLockscreenCanvas" style="display:none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' fill=\'%2394a3b8\'><rect width=\'100\' height=\'100\'/></svg>');">
+                <div class="lockscreen-inner">
+                  <div>
+                    <div class="lock-icon">🔒</div>
+                    <div class="lock-date" id="canvasLockDate">Sunday, October 12</div>
+                    <div class="lock-time" id="canvasLockTime">9:41</div>
+                  </div>
+
+                  <div class="lock-card">
+                    <div class="lock-card-header">
+                      <div class="lock-card-title"><span class="pink-dot"></span> <span id="canvasLockHeader">NEW LISTING ALERT</span></div>
+                      <div class="lock-card-time">now</div>
+                    </div>
+                    <div class="lock-card-msg" id="canvasLockMsg">Someone on your street just listed. Want to know what it did to your value?</div>
+                  </div>
+
+                  <div class="lock-footer" id="canvasLockFooter">Kari Cross · @thecrossgroup</div>
+                </div>
+              </div>
+
+              <!-- CANVAS 3: NOTES APP -->
+              <div class="notes-canvas" id="exportNotesCanvas" style="display:none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' fill=\'%23a8a29e\'><rect width=\'100\' height=\'100\'/></svg>');">
+                <div class="notes-inner">
+                  <div class="notes-card">
+                    <div class="notes-top-bar">
+                      <span class="notes-back">‹ Back</span>
+                      <span class="notes-done">Done</span>
+                    </div>
+                    <div class="notes-title" id="canvasNotesTitle">What sellers actually want</div>
+                    <div class="notes-list" id="canvasNotesList"></div>
+                  </div>
+                  <div class="notes-footer" id="canvasNotesFooter">KARI CROSS · CORCORAN ICON PROPERTIES</div>
+                </div>
+              </div>
+
+              <!-- CANVAS 4: SELLER DASHBOARD -->
+              <div class="sellerdash-canvas" id="exportSellerdashCanvas" style="display:none;">
+                <div class="sellerdash-hero" id="canvasDashHero" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' fill=\'%2394a3b8\'><rect width=\'100\' height=\'100\'/></svg>');">
+                  <div class="sellerdash-hero-content">
+                    <div class="sellerdash-header" id="canvasDashHeader">WEEKLY SELLER REPORT</div>
+                    <div class="sellerdash-headline" id="canvasDashHeadline">Week 2 on the market</div>
+                  </div>
+                </div>
+                <div class="sellerdash-body">
+                  <div class="sellerdash-stats-grid" id="canvasDashStatsGrid"></div>
+                  <div class="sellerdash-note-wrap">
+                    <div class="sellerdash-note-heading" id="canvasDashNoteHeading">WHAT I AM CHANGING THIS WEEK</div>
+                    <ul class="sellerdash-note-list" id="canvasDashNoteList"></ul>
+                  </div>
+                  <div class="sellerdash-footer" id="canvasDashFooter">KARI CROSS · CORCORAN ICON PROPERTIES</div>
+                </div>
+              </div>
+
+              <!-- CANVAS 5: MONTHLY RECAP -->
+              <div class="recap-canvas" id="exportMonthlyrecapCanvas" style="display:none;">
+                <div class="recap-stage" id="canvasRecapStage">
+                  <div class="recap-center-badge">
+                    <div class="recap-center-tab"></div>
+                    <div class="recap-center-heart">♥</div>
+                    <div class="recap-center-title" id="canvasRecapCenterTitle">Monthly<br>Recap</div>
+                  </div>
+                </div>
+                <div class="recap-footer" id="canvasRecapFooter">KARI CROSS · CORCORAN ICON PROPERTIES</div>
+              </div>
+
+              <!-- CANVAS 6: BEST OF THE MONTH -->
+              <div class="bestofmonth-canvas" id="exportBestofmonthCanvas" style="display:none;">
+                <div style="position:relative; flex:1; display:flex; flex-direction:column;">
+                  <div class="bestofmonth-grid" id="canvasBestGrid"></div>
+                  <div class="bestofmonth-banner" id="canvasBestBanner">BEST OF THIS MONTH</div>
+                </div>
+                <div class="bestofmonth-footer" id="canvasBestFooter">KARI CROSS · CORCORAN ICON PROPERTIES</div>
+              </div>
+
+              <!-- CANVAS 7: HOME SEARCH SCREEN -->
+              <div class="homesearch-canvas" id="exportHomesearchCanvas" style="display:none;">
+                <div>
+                  <div class="homesearch-searchbar">
+                    <span>🔍</span>
+                    <span>Discovery Bay, homes for sale</span>
+                  </div>
+                  <div class="homesearch-chips">
+                    <div class="homesearch-chip active">For sale</div>
+                    <div class="homesearch-chip">Price</div>
+                    <div class="homesearch-chip">Beds</div>
+                    <div class="homesearch-chip">More</div>
+                  </div>
+                </div>
+
+                <div class="homesearch-card-container" id="canvasSearchHero" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' fill=\'%23d1d5db\'><rect width=\'100\' height=\'100\'/></svg>');">
+                  <div class="homesearch-corner-tag" id="canvasSearchTag">JUST LISTED</div>
+                  <div class="homesearch-heart-btn">♥</div>
+                  <div></div>
+                  <div class="homesearch-info-box">
+                    <div class="homesearch-price" id="canvasSearchPrice">$489,900</div>
+                    <div class="homesearch-specs" id="canvasSearchSpecs">4 bd · 3 ba · 2,410 sqft</div>
+                    <div class="homesearch-address" id="canvasSearchAddress">123 Maple Street</div>
+                  </div>
+                </div>
+
+                <div class="homesearch-footer" id="canvasSearchFooter">LISTED BY KARI CROSS · CORCORAN ICON PROPERTIES</div>
+              </div>
+
+              <!-- CANVAS 8: LOVE WHERE YOU LIVE -->
+              <div class="lovewhere-canvas" id="exportLovewhereyouliveCanvas" style="display:none;">
+                <div class="lovewhere-title">
+                  Love where you
+                  <span class="lovewhere-title-script">live</span>
+                </div>
+
+                <div class="lovewhere-hero-stage">
+                  <img id="canvasLoveHeroImg" class="lovewhere-main-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23cbd5e1'><rect width='100' height='100'/></svg>">
+                  <div class="lovewhere-circle-frame">
+                    <img id="canvasLoveCircleImg" class="lovewhere-circle-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%2394a3b8'><rect width='100' height='100'/></svg>">
+                  </div>
+                </div>
+
+                <div class="lovewhere-body-wrap">
+                  <div class="lovewhere-place-name" id="canvasLovePlace">The bakery on Second Street</div>
+                  <div class="lovewhere-quote" id="canvasLoveReason">They know my order. They ask about my kids. On Saturdays the line goes out the door and nobody minds.</div>
+                  <div class="lovewhere-town-tag" id="canvasLoveTown">DISCOVERY BAY</div>
+                </div>
+
+                <div class="lovewhere-footer" id="canvasLoveFooter">KARI CROSS · CORCORAN ICON PROPERTIES</div>
+              </div>
+
+              <!-- CANVAS 9: OPEN HOUSE INVITE -->
+              <div class="openhouse-canvas" id="exportOpenhouseinviteCanvas" style="display:none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' fill=\'%23d1d5db\'><rect width=\'100\' height=\'100\'/></svg>');">
+                <div class="openhouse-card">
+                  <div class="openhouse-top-tag">YOU'RE INVITED TO AN</div>
+                  <div class="openhouse-title" id="canvasOpenHeading">Open House</div>
+                  <div class="openhouse-time" id="canvasOpenDayTime">Sunday, 1–3pm</div>
+                  <div class="openhouse-address" id="canvasOpenAddress">123 MAPLE STREET</div>
+                  <div class="openhouse-divider"></div>
+                  <div class="openhouse-host" id="canvasOpenHost">Hosted by Kari Cross, Corcoran Icon Properties</div>
+                  <div class="openhouse-phone" id="canvasOpenPhone">9255841640</div>
+                </div>
+              </div>
+
+              <!-- CANVAS 10: CONTRACT COUNTDOWN -->
+              <div class="countdown-canvas" id="exportContractcountdownCanvas" style="display:none;">
+                <div class="countdown-hero" id="canvasCountdownHero" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' fill=\'%23d1d5db\'><rect width=\'100\' height=\'100\'/></svg>');">
+                  <div class="countdown-hero-tag">UNDER CONTRACT</div>
+                </div>
+                <div class="countdown-body">
+                  <div>
+                    <div class="countdown-headline" id="canvasCountdownHeadline">123 Maple Street</div>
+                    <div class="countdown-list" id="canvasCountdownList"></div>
+                  </div>
+                  <div class="countdown-footer" id="canvasCountdownFooter">KARI CROSS · CORCORAN ICON PROPERTIES</div>
+                </div>
+              </div>
+
+              <!-- CANVAS 11: THIS OR THAT -->
+              <div class="thisorthat-canvas" id="exportThisorthatCanvas" style="display:none;">
+                <div class="thisorthat-question" id="canvasThisorthatQuestion">Which kitchen would you pick?</div>
+                <div class="thisorthat-grid">
+                  <div class="thisorthat-card">
+                    <div class="thisorthat-pill" id="canvasThisorthatTopLabel">White and warm</div>
+                    <img id="canvasThisorthatTopImg" class="thisorthat-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23cbd5e1'><rect width='100' height='100'/></svg>">
+                  </div>
+                  <div class="thisorthat-or-badge">OR</div>
+                  <div class="thisorthat-card">
+                    <div class="thisorthat-pill" id="canvasThisorthatBottomLabel">Moody and dark</div>
+                    <img id="canvasThisorthatBottomImg" class="thisorthat-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%2394a3b8'><rect width='100' height='100'/></svg>">
+                  </div>
+                </div>
+                <div class="thisorthat-footer" id="canvasThisorthatFooter">KARI CROSS · CORCORAN ICON PROPERTIES</div>
+              </div>
+
+              <!-- CANVAS 12: BEFORE & AFTER -->
+              <div class="beforeafter-canvas" id="exportBeforeafterCanvas" style="display:none;">
+                <div class="beforeafter-title" id="canvasBeforeafterTitle">Same room. Two weeks apart.</div>
+                <div class="beforeafter-grid">
+                  <div class="beforeafter-col">
+                    <div class="beforeafter-img-frame">
+                      <img id="canvasBeforeImg" class="beforeafter-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23cbd5e1'><rect width='100' height='100'/></svg>">
+                    </div>
+                    <div class="beforeafter-label-left" id="canvasBeforeLabel">before</div>
+                  </div>
+                  <div class="beforeafter-col">
+                    <div class="beforeafter-img-frame">
+                      <img id="canvasAfterImg" class="beforeafter-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%2394a3b8'><rect width='100' height='100'/></svg>">
+                    </div>
+                    <div class="beforeafter-label-right" id="canvasAfterLabel">after</div>
+                  </div>
+                </div>
+                <div class="beforeafter-footer" id="canvasBeforeafterFooter">KARI CROSS · CORCORAN ICON PROPERTIES</div>
+              </div>
+
+              <!-- CANVAS 13: THE REVEAL SLIDE -->
+              <div class="reveal-canvas" id="exportRevealCanvas" style="display:none;">
+                <div class="reveal-stage">
+                  <div class="reveal-marker-tag" id="canvasRevealMarker">TODAY'S SCHEDULE</div>
+                  
+                  <svg class="reveal-arrow-svg" viewBox="0 0 50 50">
+                    <path d="M 10,10 Q 40,15 35,40" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+                    <path d="M 28,32 L 35,40 L 42,33" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+
+                  <div class="reveal-photo-left">
+                    <img id="canvasRevealLeftImg" class="reveal-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23cbd5e1'><rect width='100' height='100'/></svg>">
+                  </div>
+
+                  <div class="reveal-photo-right">
+                    <img id="canvasRevealRightImg" class="reveal-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%2394a3b8'><rect width='100' height='100'/></svg>">
+                  </div>
+
+                  <div class="reveal-note-area">
+                    <div class="reveal-label-left" id="canvasRevealLeftWord">before</div>
+                    <div class="reveal-handwriting" id="canvasRevealNote">one photo from my camera roll and about ninety seconds...</div>
+                    <div class="reveal-hearts">♡ ♡</div>
+                  </div>
+
+                  <div class="reveal-label-right" id="canvasRevealRightWord">after</div>
+                </div>
+              </div>
+
+              <!-- CANVAS 14: A DAY IN THE LIFE -->
+              <div class="dayinlife-canvas" id="exportDayinlifeCanvas" style="display:none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' fill=\'%2394a3b8\'><rect width=\'100\' height=\'100\'/></svg>');">
+                <div class="dayinlife-stage">
+                  <div>
+                    <div class="dayinlife-folder-icon">
+                      <div class="dayinlife-folder-tab"></div>
+                    </div>
+                    <div class="dayinlife-folder-txt" id="canvasDayFolderLabel">camera roll</div>
+                  </div>
+
+                  <div class="dayinlife-right-sticky">
+                    <div class="dayinlife-sticky-tape"></div>
+                    <div id="canvasDayStickyList"></div>
+                  </div>
+
+                  <div class="dayinlife-title-box">
+                    <div class="dayinlife-headline-1" id="canvasDayTitle1">a day in</div>
+                    <div class="dayinlife-bracket-tag" id="canvasDayBracket1">[ As a Realtor ]</div>
+                    <div class="dayinlife-headline-2" id="canvasDayTitle2">my life</div>
+                    <div class="dayinlife-sub-script">little moments, big deals</div>
+                    <div class="dayinlife-bracket-tag" id="canvasDayBracket2" style="margin-top:0.2rem;">[ & what it really looks like ]</div>
+                  </div>
+
+                  <div class="dayinlife-bottom-pill">
+                    <span>↑ <span id="canvasDayBottomPill">My everyday routine</span> ↑</span>
+                    <div class="dayinlife-arrow-circle">↑</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button onclick="downloadGalleryGraphic()" style="width:100%; padding:1rem; font-size:1.05rem; background:#18181b;">Download my graphic</button>
+            <p style="text-align:center; font-size:0.75rem; color:var(--text-muted); margin-top:0.5rem;">On an iPhone, if the download doesn't open your photos, press and hold the image above and choose Save to Photos.</p>
+          </div>
+
+          <!-- THE PROMPTS SUBTAB CONTENT -->
+          <div id="galleryPromptsView" style="display:none;">
+            <div class="output-card">
+              <h3>Monthly AI Content Prompts</h3>
+              <p style="font-size:0.9rem; color:var(--text-muted); margin-top:0.4rem;">Select additional AI prompts specifically generated for monthly audience engagement.</p>
+            </div>
+          </div>
+        </div>
+
         <div id="tab-SellerUpdates" class="tab-content"></div>
         <div id="tab-OpenHouse" class="tab-content"></div>
         <div id="tab-DMsTexts" class="tab-content"></div>
@@ -511,6 +2160,8 @@
   <script>
     let generatedPromptText = "";
     let currentStyle = 'estate';
+    let currentGalleryLayout = 'schedule';
+    let galleryUploadedPhotos = [];
 
     function updateBrandColor() {
       const hex = document.getElementById('brandColor').value;
@@ -791,6 +2442,20 @@ Market Snapshot for Zip Code ${zip}:
 
       updateStudioConcept();
       renderMarketStatsTab();
+      renderScheduleGraphic();
+      renderLockscreenGraphic();
+      renderNotesGraphic();
+      renderSellerdashGraphic();
+      renderMonthlyrecapGraphic();
+      renderBestofmonthGraphic();
+      renderHomesearchGraphic();
+      renderLovewhereyouliveGraphic();
+      renderOpenhouseinviteGraphic();
+      renderContractcountdownGraphic();
+      renderThisorthatGraphic();
+      renderBeforeafterGraphic();
+      renderRevealGraphic();
+      renderDayinlifeGraphic();
 
       const tabMap = {
         'description': 'Description',
@@ -880,7 +2545,6 @@ Market Snapshot for Zip Code ${zip}:
 
       commitCard();
 
-      // Show Step 4 (Publish) block and scroll to it
       document.getElementById('step4Card').style.display = 'block';
       document.getElementById('step4Card').scrollIntoView({ behavior: 'smooth' });
 
@@ -953,8 +2617,474 @@ Market Snapshot for Zip Code ${zip}:
       link.click();
     }
 
+    /* MONTHLY MARKETING GALLERY FUNCTIONS */
+    function switchGallerySubtab(sub) {
+      document.getElementById('btnStudioSubtab').classList.toggle('active', sub === 'studio');
+      document.getElementById('btnPromptsSubtab').classList.toggle('active', sub === 'prompts');
+      document.getElementById('galleryStudioView').style.display = sub === 'studio' ? 'block' : 'none';
+      document.getElementById('galleryPromptsView').style.display = sub === 'prompts' ? 'block' : 'none';
+    }
+
+    function selectGalleryLayout(layoutKey) {
+      currentGalleryLayout = layoutKey;
+      document.querySelectorAll('.layout-card').forEach(c => c.classList.remove('active'));
+      const activeCard = document.getElementById('card-layout-' + layoutKey);
+      if (activeCard) activeCard.classList.add('active');
+
+      const photoSubtext = document.getElementById('photoSublabelText');
+      if (photoSubtext) {
+        if (layoutKey === 'monthlyrecap') {
+          photoSubtext.innerText = 'Photo 1 is the center badge. Photos 2–8 fill the polaroids.';
+        } else if (layoutKey === 'bestofmonth') {
+          photoSubtext.innerText = 'This layout uses up to 4 photos. Fewer is fine — they repeat.';
+        } else if (layoutKey === 'lovewhereyoulive') {
+          photoSubtext.innerText = 'Photo 1 is the place. Photo 2 is the thing you love there — the coffee, the sign, the corner table.';
+        } else if (layoutKey === 'thisorthat' || layoutKey === 'beforeafter') {
+          photoSubtext.innerText = 'This layout uses up to 2 photos. Fewer is fine — they repeat.';
+        } else if (layoutKey === 'reveal') {
+          photoSubtext.innerText = 'Photo 1 is your plain phone photo. Photo 2 is the graphic you just made in the studio — download it first, then come back.';
+        } else {
+          photoSubtext.innerText = 'This layout uses 1 photo.';
+        }
+      }
+
+      // Toggle edit form views
+      document.getElementById('wordsFormSchedule').style.display = layoutKey === 'schedule' ? 'block' : 'none';
+      document.getElementById('wordsFormLockscreen').style.display = layoutKey === 'lockscreen' ? 'block' : 'none';
+      document.getElementById('wordsFormNotes').style.display = layoutKey === 'notes' ? 'block' : 'none';
+      document.getElementById('wordsFormSellerdash').style.display = layoutKey === 'sellerdash' ? 'block' : 'none';
+      document.getElementById('wordsFormMonthlyrecap').style.display = layoutKey === 'monthlyrecap' ? 'block' : 'none';
+      document.getElementById('wordsFormBestofmonth').style.display = layoutKey === 'bestofmonth' ? 'block' : 'none';
+      document.getElementById('wordsFormHomesearch').style.display = layoutKey === 'homesearch' ? 'block' : 'none';
+      document.getElementById('wordsFormLovewhereyoulive').style.display = layoutKey === 'lovewhereyoulive' ? 'block' : 'none';
+      document.getElementById('wordsFormOpenhouseinvite').style.display = layoutKey === 'openhouseinvite' ? 'block' : 'none';
+      document.getElementById('wordsFormContractcountdown').style.display = layoutKey === 'contractcountdown' ? 'block' : 'none';
+      document.getElementById('wordsFormThisorthat').style.display = layoutKey === 'thisorthat' ? 'block' : 'none';
+      document.getElementById('wordsFormBeforeafter').style.display = layoutKey === 'beforeafter' ? 'block' : 'none';
+      document.getElementById('wordsFormReveal').style.display = layoutKey === 'reveal' ? 'block' : 'none';
+      document.getElementById('wordsFormDayinlife').style.display = layoutKey === 'dayinlife' ? 'block' : 'none';
+
+      // Toggle canvas preview elements
+      document.getElementById('exportScheduleCanvas').style.display = layoutKey === 'schedule' ? 'flex' : 'none';
+      document.getElementById('exportLockscreenCanvas').style.display = layoutKey === 'lockscreen' ? 'flex' : 'none';
+      document.getElementById('exportNotesCanvas').style.display = layoutKey === 'notes' ? 'flex' : 'none';
+      document.getElementById('exportSellerdashCanvas').style.display = layoutKey === 'sellerdash' ? 'flex' : 'none';
+      document.getElementById('exportMonthlyrecapCanvas').style.display = layoutKey === 'monthlyrecap' ? 'flex' : 'none';
+      document.getElementById('exportBestofmonthCanvas').style.display = layoutKey === 'bestofmonth' ? 'flex' : 'none';
+      document.getElementById('exportHomesearchCanvas').style.display = layoutKey === 'homesearch' ? 'flex' : 'none';
+      document.getElementById('exportLovewhereyouliveCanvas').style.display = layoutKey === 'lovewhereyoulive' ? 'flex' : 'none';
+      document.getElementById('exportOpenhouseinviteCanvas').style.display = layoutKey === 'openhouseinvite' ? 'flex' : 'none';
+      document.getElementById('exportContractcountdownCanvas').style.display = layoutKey === 'contractcountdown' ? 'flex' : 'none';
+      document.getElementById('exportThisorthatCanvas').style.display = layoutKey === 'thisorthat' ? 'flex' : 'none';
+      document.getElementById('exportBeforeafterCanvas').style.display = layoutKey === 'beforeafter' ? 'flex' : 'none';
+      document.getElementById('exportRevealCanvas').style.display = layoutKey === 'reveal' ? 'flex' : 'none';
+      document.getElementById('exportDayinlifeCanvas').style.display = layoutKey === 'dayinlife' ? 'flex' : 'none';
+    }
+
+    function loadGalleryPhoto(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+
+      galleryUploadedPhotos = [];
+      let loadedCount = 0;
+
+      for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          galleryUploadedPhotos.push(e.target.result);
+          loadedCount++;
+
+          if (loadedCount === files.length) {
+            applyGalleryPhotos();
+          }
+        };
+        reader.readAsDataURL(files[i]);
+      }
+    }
+
+    function applyGalleryPhotos() {
+      if (galleryUploadedPhotos.length === 0) return;
+
+      const firstPhoto = galleryUploadedPhotos[0];
+      const secondPhoto = galleryUploadedPhotos[1] || firstPhoto;
+
+      document.getElementById('canvasSchedImg').src = firstPhoto;
+      document.getElementById('exportLockscreenCanvas').style.backgroundImage = `url(${firstPhoto})`;
+      document.getElementById('exportNotesCanvas').style.backgroundImage = `url(${firstPhoto})`;
+      document.getElementById('canvasDashHero').style.backgroundImage = `url(${firstPhoto})`;
+      document.getElementById('canvasSearchHero').style.backgroundImage = `url(${firstPhoto})`;
+
+      document.getElementById('canvasLoveHeroImg').src = firstPhoto;
+      document.getElementById('canvasLoveCircleImg').src = secondPhoto;
+
+      document.getElementById('exportOpenhouseinviteCanvas').style.backgroundImage = `url(${firstPhoto})`;
+      document.getElementById('canvasCountdownHero').style.backgroundImage = `url(${firstPhoto})`;
+
+      document.getElementById('canvasThisorthatTopImg').src = firstPhoto;
+      document.getElementById('canvasThisorthatBottomImg').src = secondPhoto;
+
+      document.getElementById('canvasBeforeImg').src = firstPhoto;
+      document.getElementById('canvasAfterImg').src = secondPhoto;
+
+      document.getElementById('canvasRevealLeftImg').src = firstPhoto;
+      document.getElementById('canvasRevealRightImg').src = secondPhoto;
+
+      document.getElementById('exportDayinlifeCanvas').style.backgroundImage = `url(${firstPhoto})`;
+
+      renderMonthlyrecapGraphic();
+      renderBestofmonthGraphic();
+
+      document.getElementById('galleryPhotoLabelText').innerHTML = 'PHOTOS ADDED ✓<br><small style="font-weight:400;">Tap to change photos.</small>';
+    }
+
+    function renderScheduleGraphic() {
+      const title = document.getElementById('galleryScheduleTitle').value || "Today's showing schedule";
+      const rawBlocks = document.getElementById('galleryScheduleBlocks').value;
+      const agent = (document.getElementById('agentName').value || 'KARI CROSS').toUpperCase() + ' · ' + (document.getElementById('brokerage').value || 'CORCORAN ICON PROPERTIES').toUpperCase();
+
+      document.getElementById('canvasSchedTitle').innerText = title;
+      document.getElementById('canvasSchedFooter').innerText = agent;
+
+      const listContainer = document.getElementById('canvasSchedList');
+      listContainer.innerHTML = '';
+
+      const lines = rawBlocks.split('\n');
+      lines.forEach(line => {
+        if (!line.trim()) return;
+        const parts = line.split('|');
+        const time = parts[0] ? parts[0].trim() : '';
+        const what = parts[1] ? parts[1].trim() : parts[0].trim();
+
+        const itemHtml = `
+          <div class="sched-item">
+            <span class="sched-time">${time}</span>
+            <span class="sched-val">${what}</span>
+          </div>
+        `;
+        listContainer.insertAdjacentHTML('beforeend', itemHtml);
+      });
+    }
+
+    function renderLockscreenGraphic() {
+      const time = document.getElementById('lockTime').value || "9:41";
+      const date = document.getElementById('lockDate').value || "Sunday, October 12";
+      const header = document.getElementById('lockHeader').value || "NEW LISTING ALERT";
+      const msg = document.getElementById('lockMsg').value || "Someone on your street just listed. Want to know what it did to your value?";
+      const agent = (document.getElementById('agentName').value || 'Kari Cross') + ' · @thecrossgroup';
+
+      document.getElementById('canvasLockTime').innerText = time;
+      document.getElementById('canvasLockDate').innerText = date;
+      document.getElementById('canvasLockHeader').innerText = header;
+      document.getElementById('canvasLockMsg').innerText = msg;
+      document.getElementById('canvasLockFooter').innerText = agent;
+    }
+
+    function renderNotesGraphic() {
+      const title = document.getElementById('notesTitle').value || "What sellers actually want";
+      const rawChecklist = document.getElementById('notesChecklist').value;
+      const agent = (document.getElementById('agentName').value || 'KARI CROSS').toUpperCase() + ' · ' + (document.getElementById('brokerage').value || 'CORCORAN ICON PROPERTIES').toUpperCase();
+
+      document.getElementById('canvasNotesTitle').innerText = title;
+      document.getElementById('canvasNotesFooter').innerText = agent;
+
+      const listContainer = document.getElementById('canvasNotesList');
+      listContainer.innerHTML = '';
+
+      const lines = rawChecklist.split('\n');
+      lines.forEach(line => {
+        if (!line.trim()) return;
+        const itemHtml = `
+          <div class="notes-item">
+            <span class="notes-circle"></span>
+            <span>${line.trim()}</span>
+          </div>
+        `;
+        listContainer.insertAdjacentHTML('beforeend', itemHtml);
+      });
+    }
+
+    function renderSellerdashGraphic() {
+      const header = document.getElementById('dashHeader').value || "WEEKLY SELLER REPORT";
+      const headline = document.getElementById('dashHeadline').value || "Week 2 on the market";
+      const rawStats = document.getElementById('dashStats').value;
+      const noteHeading = document.getElementById('dashNoteHeading').value || "WHAT I AM CHANGING THIS WEEK";
+      const rawNotes = document.getElementById('dashNoteLines').value;
+      const agent = (document.getElementById('agentName').value || 'KARI CROSS').toUpperCase() + ' · ' + (document.getElementById('brokerage').value || 'CORCORAN ICON PROPERTIES').toUpperCase();
+
+      document.getElementById('canvasDashHeader').innerText = header;
+      document.getElementById('canvasDashHeadline').innerText = headline;
+      document.getElementById('canvasDashNoteHeading').innerText = noteHeading;
+      document.getElementById('canvasDashFooter').innerText = agent;
+
+      const gridContainer = document.getElementById('canvasDashStatsGrid');
+      gridContainer.innerHTML = '';
+      const statLines = rawStats.split('\n');
+      statLines.forEach(line => {
+        if (!line.trim()) return;
+        const parts = line.split('|');
+        const num = parts[0] ? parts[0].trim() : '';
+        const lbl = parts[1] ? parts[1].trim() : '';
+
+        const statHtml = `
+          <div class="sellerdash-stat-box">
+            <div class="sellerdash-stat-num">${num}</div>
+            <div class="sellerdash-stat-lbl">${lbl}</div>
+          </div>
+        `;
+        gridContainer.insertAdjacentHTML('beforeend', statHtml);
+      });
+
+      const noteContainer = document.getElementById('canvasDashNoteList');
+      noteContainer.innerHTML = '';
+      const noteLines = rawNotes.split('\n');
+      noteLines.forEach(line => {
+        if (!line.trim()) return;
+        const noteHtml = `<li class="sellerdash-note-item">${line.trim()}</li>`;
+        noteContainer.insertAdjacentHTML('beforeend', noteHtml);
+      });
+    }
+
+    function renderMonthlyrecapGraphic() {
+      const rawLabel = document.getElementById('recapCenterLabel').value || "Monthly Recap";
+      const rawCaptions = document.getElementById('recapCaptions').value;
+      const agent = (document.getElementById('agentName').value || 'KARI CROSS').toUpperCase() + ' · ' + (document.getElementById('brokerage').value || 'CORCORAN ICON PROPERTIES').toUpperCase();
+
+      const labelParts = rawLabel.split(' ');
+      const titleHtml = labelParts.length > 1 ? `${labelParts[0]}<br>${labelParts.slice(1).join(' ')}` : rawLabel;
+      document.getElementById('canvasRecapCenterTitle').innerHTML = titleHtml;
+      document.getElementById('canvasRecapFooter').innerText = agent;
+
+      const stage = document.getElementById('canvasRecapStage');
+      
+      const polaroids = stage.querySelectorAll('.recap-polaroid');
+      polaroids.forEach(p => p.remove());
+
+      const captions = rawCaptions.split('\n').filter(c => c.trim() !== '');
+      const positions = ['p-pos-1', 'p-pos-2', 'p-pos-3', 'p-pos-4', 'p-pos-5', 'p-pos-6', 'p-pos-7'];
+
+      for (let i = 0; i < 7; i++) {
+        const captionText = captions[i] || '';
+        const photoSrc = galleryUploadedPhotos[i % (galleryUploadedPhotos.length || 1)] || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23cbd5e1'><rect width='100' height='100'/></svg>";
+
+        const polaroidHtml = `
+          <div class="recap-polaroid ${positions[i]}">
+            <div class="recap-tape"></div>
+            <img class="recap-polaroid-img" src="${photoSrc}">
+            <div class="recap-polaroid-txt">${captionText}</div>
+          </div>
+        `;
+        stage.insertAdjacentHTML('beforeend', polaroidHtml);
+      }
+    }
+
+    function renderBestofmonthGraphic() {
+      const banner = document.getElementById('bestBanner').value || "BEST OF THIS MONTH";
+      const rawLabels = document.getElementById('bestLabels').value;
+      const agent = (document.getElementById('agentName').value || 'KARI CROSS').toUpperCase() + ' · ' + (document.getElementById('brokerage').value || 'CORCORAN ICON PROPERTIES').toUpperCase();
+
+      document.getElementById('canvasBestBanner').innerText = banner;
+      document.getElementById('canvasBestFooter').innerText = agent;
+
+      const gridContainer = document.getElementById('canvasBestGrid');
+      gridContainer.innerHTML = '';
+
+      const labels = rawLabels.split('\n').filter(l => l.trim() !== '');
+
+      for (let i = 0; i < 4; i++) {
+        const lbl = labels[i] || '';
+        const photoSrc = galleryUploadedPhotos[i % (galleryUploadedPhotos.length || 1)] || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23d1d5db'><rect width='100' height='100'/></svg>";
+
+        const cardHtml = `
+          <div class="bestofmonth-card">
+            ${lbl ? `<div class="bestofmonth-pill">${lbl}</div>` : ''}
+            <img class="bestofmonth-img" src="${photoSrc}">
+          </div>
+        `;
+        gridContainer.insertAdjacentHTML('beforeend', cardHtml);
+      }
+    }
+
+    function renderHomesearchGraphic() {
+      const price = document.getElementById('searchPrice').value || "$489,900";
+      const specs = document.getElementById('searchSpecs').value || "4 bd · 3 ba · 2,410 sqft";
+      const address = document.getElementById('searchAddress').value || "123 Maple Street";
+      const tag = document.getElementById('searchTag').value || "JUST LISTED";
+      const agent = (document.getElementById('agentName').value || 'KARI CROSS').toUpperCase() + ' · ' + (document.getElementById('brokerage').value || 'CORCORAN ICON PROPERTIES').toUpperCase();
+
+      document.getElementById('canvasSearchPrice').innerText = price;
+      document.getElementById('canvasSearchSpecs').innerText = specs;
+      document.getElementById('canvasSearchAddress').innerText = address;
+      document.getElementById('canvasSearchTag').innerText = tag;
+      document.getElementById('canvasSearchFooter').innerText = 'LISTED BY ' + agent;
+    }
+
+    function renderLovewhereyouliveGraphic() {
+      const place = document.getElementById('lovePlace').value || "The bakery on Second Street";
+      const reason = document.getElementById('loveReason').value || "They know my order. They ask about my kids. On Saturdays the line goes out the door and nobody minds.";
+      const town = document.getElementById('loveTown').value || "DISCOVERY BAY";
+      const agent = (document.getElementById('agentName').value || 'KARI CROSS').toUpperCase() + ' · ' + (document.getElementById('brokerage').value || 'CORCORAN ICON PROPERTIES').toUpperCase();
+
+      document.getElementById('canvasLovePlace').innerText = place;
+      document.getElementById('canvasLoveReason').innerText = reason;
+      document.getElementById('canvasLoveTown').innerText = town.toUpperCase();
+      document.getElementById('canvasLoveFooter').innerText = agent;
+    }
+
+    function renderOpenhouseinviteGraphic() {
+      const heading = document.getElementById('openhouseHeading').value || "Open House";
+      const dayTime = document.getElementById('openhouseDayTime').value || "Sunday, 1–3pm";
+      const address = document.getElementById('openhouseAddress').value || "123 Maple Street";
+      
+      const agentName = document.getElementById('agentName').value || 'Kari Cross';
+      const brokerage = document.getElementById('brokerage').value || 'Corcoran Icon Properties';
+      const phone = document.getElementById('phone').value || '9255841640';
+
+      document.getElementById('canvasOpenHeading').innerText = heading;
+      document.getElementById('canvasOpenDayTime').innerText = dayTime;
+      document.getElementById('canvasOpenAddress').innerText = address.toUpperCase();
+      document.getElementById('canvasOpenHost').innerText = `Hosted by ${agentName}, ${brokerage}`;
+      document.getElementById('canvasOpenPhone').innerText = phone;
+    }
+
+    function renderContractcountdownGraphic() {
+      const headline = document.getElementById('countdownHeadline').value || "123 Maple Street";
+      const rawSteps = document.getElementById('countdownSteps').value;
+      const nextStep = document.getElementById('countdownNext').value || "Closing day — October 12";
+      const agent = (document.getElementById('agentName').value || 'KARI CROSS').toUpperCase() + ' · ' + (document.getElementById('brokerage').value || 'CORCORAN ICON PROPERTIES').toUpperCase();
+
+      document.getElementById('canvasCountdownHeadline').innerText = headline;
+      document.getElementById('canvasCountdownFooter').innerText = agent;
+
+      const listContainer = document.getElementById('canvasCountdownList');
+      listContainer.innerHTML = '';
+
+      const steps = rawSteps.split('\n');
+      steps.forEach(step => {
+        if (!step.trim()) return;
+        const itemHtml = `
+          <div class="countdown-item">
+            <div class="countdown-icon-check">✓</div>
+            <span>${step.trim()}</span>
+          </div>
+        `;
+        listContainer.insertAdjacentHTML('beforeend', itemHtml);
+      });
+
+      if (nextStep.trim()) {
+        const nextHtml = `
+          <div class="countdown-item">
+            <div class="countdown-icon-next"></div>
+            <span>${nextStep.trim()}</span>
+          </div>
+        `;
+        listContainer.insertAdjacentHTML('beforeend', nextHtml);
+      }
+    }
+
+    function renderThisorthatGraphic() {
+      const question = document.getElementById('thisorthatQuestion').value || "Which kitchen would you pick?";
+      const topLabel = document.getElementById('thisorthatTopLabel').value || "White and warm";
+      const bottomLabel = document.getElementById('thisorthatBottomLabel').value || "Moody and dark";
+      const agent = (document.getElementById('agentName').value || 'KARI CROSS').toUpperCase() + ' · ' + (document.getElementById('brokerage').value || 'CORCORAN ICON PROPERTIES').toUpperCase();
+
+      document.getElementById('canvasThisorthatQuestion').innerText = question;
+      document.getElementById('canvasThisorthatTopLabel').innerText = topLabel;
+      document.getElementById('canvasThisorthatBottomLabel').innerText = bottomLabel;
+      document.getElementById('canvasThisorthatFooter').innerText = agent;
+    }
+
+    function renderBeforeafterGraphic() {
+      const title = document.getElementById('beforeafterTitle').value || "Same room. Two weeks apart.";
+      const leftLabel = document.getElementById('beforeafterLeftLabel').value || "before";
+      const rightLabel = document.getElementById('beforeafterRightLabel').value || "after";
+      const agent = (document.getElementById('agentName').value || 'KARI CROSS').toUpperCase() + ' · ' + (document.getElementById('brokerage').value || 'CORCORAN ICON PROPERTIES').toUpperCase();
+
+      document.getElementById('canvasBeforeafterTitle').innerText = title;
+      document.getElementById('canvasBeforeLabel').innerText = leftLabel;
+      document.getElementById('canvasAfterLabel').innerText = rightLabel;
+      document.getElementById('canvasBeforeafterFooter').innerText = agent;
+    }
+
+    function renderRevealGraphic() {
+      const marker = document.getElementById('revealMarkerLabel').value || "TODAY'S SCHEDULE";
+      const note = document.getElementById('revealHandwrittenNote').value || "one photo from my camera roll and about ninety seconds...";
+      const leftWord = document.getElementById('revealLeftWord').value || "before";
+      const rightWord = document.getElementById('revealRightWord').value || "after";
+
+      document.getElementById('canvasRevealMarker').innerText = marker.toUpperCase();
+      document.getElementById('canvasRevealNote').innerText = note;
+      document.getElementById('canvasRevealLeftWord').innerText = leftWord;
+      document.getElementById('canvasRevealRightWord').innerText = rightWord;
+    }
+
+    function renderDayinlifeGraphic() {
+      const title1 = document.getElementById('dayTitle1').value || "a day in";
+      const title2 = document.getElementById('dayTitle2').value || "my life";
+      const bracket1 = document.getElementById('dayBracket1').value || "As a Realtor";
+      const bracket2 = document.getElementById('dayBracket2').value || "& what it really looks like";
+      const folderLabel = document.getElementById('dayFolderLabel').value || "camera roll";
+      const rawSticky = document.getElementById('dayStickyList').value;
+      const bottomPill = document.getElementById('dayBottomPill').value || "My everyday routine";
+
+      document.getElementById('canvasDayTitle1').innerText = title1;
+      document.getElementById('canvasDayTitle2').innerText = title2;
+      document.getElementById('canvasDayBracket1').innerText = `[ ${bracket1} ]`;
+      document.getElementById('canvasDayBracket2').innerText = `[ ${bracket2} ]`;
+      document.getElementById('canvasDayFolderLabel').innerText = folderLabel;
+      document.getElementById('canvasDayBottomPill').innerText = bottomPill;
+
+      const stickyContainer = document.getElementById('canvasDayStickyList');
+      stickyContainer.innerHTML = '';
+      const stickyLines = rawSticky.split('\n');
+      stickyLines.forEach(line => {
+        if (!line.trim()) return;
+        const itemHtml = `<div class="dayinlife-sticky-item">${line.trim()}</div>`;
+        stickyContainer.insertAdjacentHTML('beforeend', itemHtml);
+      });
+    }
+
+    function downloadGalleryGraphic() {
+      let targetId = 'exportScheduleCanvas';
+      if (currentGalleryLayout === 'lockscreen') targetId = 'exportLockscreenCanvas';
+      if (currentGalleryLayout === 'notes') targetId = 'exportNotesCanvas';
+      if (currentGalleryLayout === 'sellerdash') targetId = 'exportSellerdashCanvas';
+      if (currentGalleryLayout === 'monthlyrecap') targetId = 'exportMonthlyrecapCanvas';
+      if (currentGalleryLayout === 'bestofmonth') targetId = 'exportBestofmonthCanvas';
+      if (currentGalleryLayout === 'homesearch') targetId = 'exportHomesearchCanvas';
+      if (currentGalleryLayout === 'lovewhereyoulive') targetId = 'exportLovewhereyouliveCanvas';
+      if (currentGalleryLayout === 'openhouseinvite') targetId = 'exportOpenhouseinviteCanvas';
+      if (currentGalleryLayout === 'contractcountdown') targetId = 'exportContractcountdownCanvas';
+      if (currentGalleryLayout === 'thisorthat') targetId = 'exportThisorthatCanvas';
+      if (currentGalleryLayout === 'beforeafter') targetId = 'exportBeforeafterCanvas';
+      if (currentGalleryLayout === 'reveal') targetId = 'exportRevealCanvas';
+      if (currentGalleryLayout === 'dayinlife') targetId = 'exportDayinlifeCanvas';
+
+      const element = document.getElementById(targetId);
+      html2canvas(element, { scale: 3 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `${currentGalleryLayout}_graphic.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+
     /* FETCHES PROPERTY JSON FILE FROM GITHUB "campaigns/" FOLDER */
     window.addEventListener('DOMContentLoaded', async () => {
+      renderScheduleGraphic();
+      renderLockscreenGraphic();
+      renderNotesGraphic();
+      renderSellerdashGraphic();
+      renderMonthlyrecapGraphic();
+      renderBestofmonthGraphic();
+      renderHomesearchGraphic();
+      renderLovewhereyouliveGraphic();
+      renderOpenhouseinviteGraphic();
+      renderContractcountdownGraphic();
+      renderThisorthatGraphic();
+      renderBeforeafterGraphic();
+      renderRevealGraphic();
+      renderDayinlifeGraphic();
+
       const hash = window.location.hash;
       let slug = "";
 
@@ -965,7 +3095,6 @@ Market Snapshot for Zip Code ${zip}:
       }
 
       if (slug) {
-        // Hide main header and builder steps for clean agent view
         document.getElementById('mainHeader').style.display = 'none';
         document.getElementById('step1Card').style.display = 'none';
         document.getElementById('step2Card').style.display = 'none';
@@ -974,17 +3103,13 @@ Market Snapshot for Zip Code ${zip}:
 
         let data = null;
 
-        // Try pulling JSON directly from GitHub campaigns folder
         try {
           const res = await fetch(`campaigns/${slug}.json`);
-          if (res.ok) {
-            data = await res.json();
-          }
+          if (res.ok) data = await res.json();
         } catch (e) {
           console.log("Not found on server, trying local cache...");
         }
 
-        // Fallback to local storage
         if (!data) {
           const storedStr = localStorage.getItem('listing_campaign_' + slug) || localStorage.getItem('listing_campaign_latest');
           if (storedStr) data = JSON.parse(storedStr);
@@ -1012,7 +3137,6 @@ Market Snapshot for Zip Code ${zip}:
           if(data.aiResponse) {
             document.getElementById('aiResponse').value = data.aiResponse;
             parseAndRender();
-            // Automatically reveal the hub for clean agent links
             document.getElementById('hubSection').style.display = 'block';
             document.getElementById('step4Card').style.display = 'none';
           }
