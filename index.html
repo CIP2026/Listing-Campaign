@@ -21,7 +21,7 @@
       --navy-banner: #1e293b;
       --radius: 12px;
       --gallery-bg: #f5f2eb;
-      --gallery-pink: #ec4899;
+      --gallery-pink: var(--accent); /* DYNAMIC ACCENT FOR GALLERY GRAPHICS */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -277,7 +277,7 @@
     .layout-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
     .layout-card { background: #ffffff; border: 1.5px solid var(--border); border-radius: 10px; padding: 0.85rem; cursor: pointer; transition: all 0.2s; text-align: left; }
     .layout-card:hover { border-color: #1e293b; transform: translateY(-2px); }
-    .layout-card.active { border-color: #ec4899; box-shadow: 0 0 0 1px #ec4899; }
+    .layout-card.active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
     .layout-card h4 { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; color: #0f172a; margin-bottom: 0.2rem; }
     .layout-card p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.3; }
 
@@ -301,11 +301,11 @@
       justify-content: space-between;
       overflow: hidden;
     }
-    .sched-top-tag { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #ec4899; }
+    .sched-top-tag { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); }
     .sched-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: #0f172a; line-height: 1.15; margin-bottom: 0.85rem; }
     .sched-body-wrap { display: flex; gap: 0.75rem; flex: 1; position: relative; }
     .sched-list { flex: 1; display: flex; flex-direction: column; gap: 0.45rem; z-index: 1; }
-    .sched-item { background: #ffffff; border-radius: 6px; padding: 0.4rem 0.6rem; border-left: 3px solid #ec4899; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+    .sched-item { background: #ffffff; border-radius: 6px; padding: 0.4rem 0.6rem; border-left: 3px solid var(--accent); box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
     .sched-time { font-size: 0.55rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 0.1rem; }
     .sched-val { font-size: 0.7rem; font-weight: 600; color: #1e293b; line-height: 1.2; }
     .sched-photo-frame {
@@ -367,7 +367,7 @@
     }
     .lock-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; }
     .lock-card-title { display: flex; align-items: center; gap: 0.4rem; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.05em; color: #0f172a; text-transform: uppercase; }
-    .pink-dot { width: 7px; height: 7px; background: #ec4899; border-radius: 50%; display: inline-block; }
+    .pink-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; display: inline-block; }
     .lock-card-time { font-size: 0.55rem; color: #64748b; }
     .lock-card-msg { font-size: 0.7rem; color: #334155; line-height: 1.35; font-weight: 500; }
     .lock-footer { font-size: 0.55rem; font-weight: 600; letter-spacing: 0.08em; opacity: 0.85; text-transform: lowercase; margin-bottom: 0.2rem; }
@@ -402,8 +402,8 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.18);
     }
     .notes-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; font-size: 0.65rem; }
-    .notes-back { color: #ec4899; font-weight: 600; }
-    .notes-done { color: #ec4899; font-weight: 700; }
+    .notes-back { color: var(--accent); font-weight: 600; }
+    .notes-done { color: var(--accent); font-weight: 700; }
     .notes-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-bottom: 0.85rem; line-height: 1.25; }
     .notes-list { display: flex; flex-direction: column; gap: 0.5rem; }
     .notes-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.7rem; color: #334155; font-weight: 500; }
@@ -444,12 +444,12 @@
     
     .sellerdash-body { padding: 0.85rem; display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
     .sellerdash-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-top: -1.75rem; position: relative; z-index: 3; }
-    .sellerdash-stat-box { background: #ffffff; border-radius: 6px; padding: 0.5rem 0.2rem; text-align: center; border-top: 3px solid #ec4899; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
+    .sellerdash-stat-box { background: #ffffff; border-radius: 6px; padding: 0.5rem 0.2rem; text-align: center; border-top: 3px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
     .sellerdash-stat-num { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: #0f172a; line-height: 1; }
     .sellerdash-stat-lbl { font-size: 0.45rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin-top: 0.25rem; }
 
     .sellerdash-note-wrap { margin-top: 0.75rem; text-align: left; }
-    .sellerdash-note-heading { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #ec4899; margin-bottom: 0.4rem; }
+    .sellerdash-note-heading { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.4rem; }
     .sellerdash-note-list { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
     .sellerdash-note-item { font-size: 0.65rem; color: #334155; display: flex; align-items: flex-start; gap: 0.35rem; line-height: 1.35; font-style: italic; }
     .sellerdash-note-item::before { content: '•'; color: #0f172a; font-weight: bold; font-style: normal; }
@@ -476,8 +476,8 @@
       left: 50%;
       top: 48%;
       transform: translate(-50%, -50%);
-      background: #fbcfe8;
-      border: 1.5px solid #f472b6;
+      background: #ffffff;
+      border: 1.5px solid var(--accent);
       border-radius: 8px;
       padding: 0.6rem 1rem;
       text-align: center;
@@ -489,12 +489,12 @@
       position: absolute;
       top: -8px;
       left: 10px;
-      background: #f472b6;
+      background: var(--accent);
       width: 30px;
       height: 8px;
       border-radius: 4px 4px 0 0;
     }
-    .recap-center-heart { font-size: 0.55rem; color: #ec4899; margin-bottom: 0.1rem; }
+    .recap-center-heart { font-size: 0.55rem; color: var(--accent); margin-bottom: 0.1rem; }
     .recap-center-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: #0f172a; line-height: 1.1; }
 
     .recap-polaroid {
@@ -530,13 +530,13 @@
 
     .recap-footer { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; text-align: center; padding-top: 0.25rem; border-top: 1px solid rgba(0,0,0,0.06); }
 
-    /* LAYOUT 6: BEST OF THE MONTH CANVAS */
+    /* LAYOUT 6: BEST OF THE MONTH CANVAS (FIXED CLIPPING & ACCENT COLOR) */
     .bestofmonth-canvas {
       width: 320px;
       height: 480px;
       background: #f5f2eb;
       border-radius: 8px;
-      padding: 1.25rem 1rem 0.75rem 1rem;
+      padding: 1rem;
       position: relative;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       display: flex;
@@ -548,7 +548,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
-      gap: 0.6rem;
+      gap: 0.5rem;
       flex: 1;
       position: relative;
       margin-bottom: 0.5rem;
@@ -559,20 +559,26 @@
       overflow: hidden;
       background: #e2e8f0;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
     }
     .bestofmonth-img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .bestofmonth-pill {
       position: absolute;
-      top: 8px;
-      left: 8px;
+      top: 6px;
+      left: 6px;
       background: #ffffff;
-      padding: 0.2rem 0.55rem;
+      padding: 0.2rem 0.5rem;
       border-radius: 12px;
-      font-size: 0.55rem;
+      font-size: 0.5rem;
       font-weight: 600;
       color: #0f172a;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      z-index: 2;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      z-index: 10; /* RAISED Z-INDEX SO WORDS NEVER CUT OFF */
+      max-width: 90%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .bestofmonth-banner {
       position: absolute;
@@ -582,12 +588,12 @@
       transform: translateY(-50%);
       background: #18181b;
       color: #ffffff;
-      padding: 0.55rem 1rem;
+      padding: 0.45rem 1rem;
       text-align: center;
       font-family: 'Playfair Display', serif;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       z-index: 5;
       box-shadow: 0 4px 12px rgba(0,0,0,0.25);
@@ -650,7 +656,7 @@
       position: absolute;
       top: 10px;
       left: 10px;
-      background: #ec4899;
+      background: var(--accent);
       color: #ffffff;
       font-size: 0.55rem;
       font-weight: 700;
@@ -672,7 +678,7 @@
       align-items: center;
       justify-content: center;
       font-size: 0.7rem;
-      color: #ec4899;
+      color: var(--accent);
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       z-index: 2;
     }
@@ -714,7 +720,7 @@
     .lovewhere-title-script {
       font-family: 'Caveat', cursive;
       font-size: 1.4rem;
-      color: #ec4899;
+      color: var(--accent);
       display: block;
       font-weight: 700;
       margin-top: -0.1rem;
@@ -751,7 +757,7 @@
     .lovewhere-body-wrap { text-align: left; padding: 0 0.2rem; }
     .lovewhere-place-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: #0f172a; line-height: 1.25; margin-bottom: 0.35rem; }
     .lovewhere-quote { font-size: 0.65rem; color: #475569; font-style: italic; line-height: 1.4; margin-bottom: 0.4rem; }
-    .lovewhere-town-tag { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #ec4899; }
+    .lovewhere-town-tag { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); }
     
     .lovewhere-footer { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; text-align: center; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 0.4rem; margin-top: 0.5rem; }
 
@@ -789,7 +795,7 @@
     }
     .openhouse-top-tag { font-size: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: #64748b; margin-bottom: 0.2rem; }
     .openhouse-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #0f172a; line-height: 1.1; margin-bottom: 0.15rem; }
-    .openhouse-time { font-family: 'Caveat', cursive; font-size: 1.3rem; font-weight: 700; color: #ec4899; margin-bottom: 0.25rem; }
+    .openhouse-time { font-family: 'Caveat', cursive; font-size: 1.3rem; font-weight: 700; color: var(--accent); margin-bottom: 0.25rem; }
     .openhouse-address { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #334155; margin-bottom: 0.85rem; }
     .openhouse-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.08); margin-bottom: 0.65rem; }
     .openhouse-host { font-size: 0.55rem; color: #475569; font-weight: 500; line-height: 1.35; }
@@ -862,7 +868,7 @@
     .countdown-icon-check {
       width: 16px;
       height: 16px;
-      background: #ec4899;
+      background: var(--accent);
       color: #ffffff;
       border-radius: 50%;
       display: flex;
@@ -953,7 +959,7 @@
       transform: translate(-50%, -50%);
       width: 30px;
       height: 30px;
-      background: #ec4899;
+      background: var(--accent);
       color: #ffffff;
       border-radius: 50%;
       border: 2px solid #ffffff;
@@ -1027,7 +1033,7 @@
       font-family: 'Caveat', cursive;
       font-size: 1.3rem;
       font-weight: 700;
-      color: #ec4899;
+      color: var(--accent);
     }
     .beforeafter-footer {
       font-size: 0.5rem;
@@ -1133,7 +1139,7 @@
       line-height: 1.25;
       margin-bottom: 0.2rem;
     }
-    .reveal-hearts { color: #ec4899; font-size: 0.75rem; }
+    .reveal-hearts { color: var(--accent); font-size: 0.75rem; }
     .reveal-label-right {
       position: absolute;
       bottom: -5px;
@@ -1172,7 +1178,7 @@
       position: relative;
       width: 44px;
       height: 32px;
-      background: #ec4899;
+      background: var(--accent);
       border-radius: 4px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
@@ -1182,7 +1188,7 @@
       left: 0;
       width: 18px;
       height: 6px;
-      background: #ec4899;
+      background: var(--accent);
       border-radius: 3px 3px 0 0;
     }
     .dayinlife-folder-txt {
@@ -1240,11 +1246,11 @@
       right: 15px;
       width: 24px;
       height: 8px;
-      background: #ec4899;
+      background: var(--accent);
       opacity: 0.85;
     }
     .dayinlife-sticky-item { font-size: 0.55rem; color: #334155; margin-bottom: 0.2rem; font-weight: 600; display: flex; align-items: center; gap: 0.25rem; }
-    .dayinlife-sticky-item::before { content: '☑'; color: #ec4899; font-size: 0.6rem; }
+    .dayinlife-sticky-item::before { content: '☑'; color: var(--accent); font-size: 0.6rem; }
 
     .dayinlife-sub-script { font-family: 'Caveat', cursive; font-size: 0.85rem; color: #ffffff; opacity: 0.9; margin-top: 0.4rem; font-style: italic; }
     
@@ -2209,10 +2215,28 @@ closings</textarea>
     let currentGalleryLayout = 'schedule';
     let galleryUploadedPhotos = [];
 
+    /* UPDATE ACCENT COLOR ACROSS ALL UI AND GALLERY GRAPHICS */
     function updateBrandColor() {
       const hex = document.getElementById('brandColor').value;
       document.getElementById('colorHexCode').innerText = hex;
       document.documentElement.style.setProperty('--accent', hex);
+      document.documentElement.style.setProperty('--gallery-pink', hex);
+
+      // Re-render gallery graphics so all checklist icons, titles, and accents match chosen brand color
+      renderScheduleGraphic();
+      renderLockscreenGraphic();
+      renderNotesGraphic();
+      renderSellerdashGraphic();
+      renderMonthlyrecapGraphic();
+      renderBestofmonthGraphic();
+      renderHomesearchGraphic();
+      renderLovewhereyouliveGraphic();
+      renderOpenhouseinviteGraphic();
+      renderContractcountdownGraphic();
+      renderThisorthatGraphic();
+      renderBeforeafterGraphic();
+      renderRevealGraphic();
+      renderDayinlifeGraphic();
     }
 
     function getSlug() {
@@ -2234,14 +2258,12 @@ closings</textarea>
         builderView.style.display = 'none';
         document.getElementById('hubSection').style.display = 'none';
         
-        // Move gallery container to standalone view and display it
         galleryView.appendChild(galleryContainer);
         galleryView.style.display = 'block';
       } else {
         galleryView.style.display = 'none';
         builderView.style.display = 'block';
         
-        // Put gallery back into campaign hub tab
         tabMonthly.appendChild(galleryContainer);
       }
     }
@@ -3142,20 +3164,7 @@ Market Snapshot for Zip Code ${zip}:
 
     /* FETCHES PROPERTY JSON FILE FROM GITHUB "campaigns/" FOLDER */
     window.addEventListener('DOMContentLoaded', async () => {
-      renderScheduleGraphic();
-      renderLockscreenGraphic();
-      renderNotesGraphic();
-      renderSellerdashGraphic();
-      renderMonthlyrecapGraphic();
-      renderBestofmonthGraphic();
-      renderHomesearchGraphic();
-      renderLovewhereyouliveGraphic();
-      renderOpenhouseinviteGraphic();
-      renderContractcountdownGraphic();
-      renderThisorthatGraphic();
-      renderBeforeafterGraphic();
-      renderRevealGraphic();
-      renderDayinlifeGraphic();
+      updateBrandColor();
 
       const hash = window.location.hash;
       let slug = "";
