@@ -530,7 +530,7 @@
 
     .recap-footer { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; text-align: center; padding-top: 0.25rem; border-top: 1px solid rgba(0,0,0,0.06); }
 
-    /* LAYOUT 6: BEST OF THE MONTH CANVAS (FIXED CLIPPING & ACCENT COLOR) */
+    /* LAYOUT 6: BEST OF THE MONTH CANVAS (FIXED OVERLAP & OFFSET) */
     .bestofmonth-canvas {
       width: 320px;
       height: 480px;
@@ -548,7 +548,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
-      gap: 0.5rem;
+      gap: 0.6rem;
       flex: 1;
       position: relative;
       margin-bottom: 0.5rem;
@@ -563,23 +563,31 @@
       flex-direction: column;
     }
     .bestofmonth-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    
     .bestofmonth-pill {
       position: absolute;
-      top: 6px;
-      left: 6px;
+      top: 8px;
+      left: 8px;
       background: #ffffff;
-      padding: 0.2rem 0.5rem;
+      padding: 0.2rem 0.55rem;
       border-radius: 12px;
-      font-size: 0.5rem;
+      font-size: 0.55rem;
       font-weight: 600;
       color: #0f172a;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      z-index: 10; /* RAISED Z-INDEX SO WORDS NEVER CUT OFF */
-      max-width: 90%;
+      z-index: 10;
+      max-width: 85%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    /* SPECIFIC FIX: Move pills down on the bottom two cards so they sit clearly below the black bar */
+    .bestofmonth-card:nth-child(3) .bestofmonth-pill,
+    .bestofmonth-card:nth-child(4) .bestofmonth-pill {
+      top: 22px;
+    }
+
     .bestofmonth-banner {
       position: absolute;
       top: 50%;
@@ -1300,7 +1308,7 @@
 <body>
 
   <div class="container">
-    <header id="mainHeader">
+    header id="mainHeader">
       <div class="subtitle">A Marketing Tool</div>
       <h1>The Listing Wing</h1>
       <p>One listing in. A full relationship-first marketing campaign out.</p>
