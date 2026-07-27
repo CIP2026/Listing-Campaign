@@ -29,10 +29,44 @@
     
     .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1rem; }
 
-    header { text-align: center; margin-bottom: 2rem; }
+    header { text-align: center; margin-bottom: 1.5rem; }
     header .subtitle { text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
     header h1 { font-family: 'Outfit', sans-serif; font-size: 2.5rem; margin: 0.2rem 0; color: #1e293b; }
     header p { color: var(--text-muted); font-size: 1.05rem; }
+
+    /* MAIN TOP NAV TABS */
+    .main-top-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      background: #ffffff;
+      padding: 0.4rem;
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .main-nav-btn {
+      background: transparent;
+      border: none;
+      padding: 0.65rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .main-nav-btn:hover { color: var(--text); }
+    .main-nav-btn.active {
+      background: #1e293b;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
 
     .step-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
     .step-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
@@ -1243,7 +1277,7 @@
       body * { visibility: hidden; }
       #hubSection, #hubSection * { visibility: visible; }
       #hubSection { position: absolute; left: 0; top: 0; width: 100%; }
-      .tabs-wrapper, .btn-outline, .copy-btn, .bottom-actions { display: none !important; }
+      .tabs-wrapper, .btn-outline, .copy-btn, .bottom-actions, .main-top-nav { display: none !important; }
       .tab-content { display: block !important; }
     }
 
@@ -1266,131 +1300,143 @@
       <p>One listing in. A full relationship-first marketing campaign out.</p>
     </header>
 
-    <!-- STEP 1 -->
-    <section class="step-card" id="step1Card">
-      <div class="step-header">
-        <div class="step-number">1</div>
-        <h2 class="step-title">Set up your listing details</h2>
-      </div>
-      
-      <div class="grid-2">
-        <div class="form-group">
-          <label>Agent Name</label>
-          <input type="text" id="agentName" placeholder="e.g. Kari Cross">
+    <!-- MAIN TOP LEVEL NAVIGATION -->
+    <div class="main-top-nav">
+      <button class="main-nav-btn active" id="mainNavBuilderBtn" onclick="switchMainView('builder')">🚀 Campaign Builder</button>
+      <button class="main-nav-btn" id="mainNavGalleryBtn" onclick="switchMainView('gallery')">✨ Monthly Marketing</button>
+    </div>
+
+    <!-- MAIN VIEW 1: CAMPAIGN BUILDER (STEPS 1-4) -->
+    <div id="mainViewBuilder">
+      <!-- STEP 1 -->
+      <section class="step-card" id="step1Card">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <h2 class="step-title">Set up your listing details</h2>
         </div>
-        <div class="form-group">
-          <label>Brokerage</label>
-          <input type="text" id="brokerage" placeholder="e.g. Corcoran Icon Properties">
-        </div>
-        <div class="form-group">
-          <label>Phone</label>
-          <input type="text" id="phone" placeholder="e.g. 9255841640">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="email" placeholder="e.g. kcross@crossgrouphomes.com">
-        </div>
-        <div class="form-group">
-          <label>Brand Color</label>
-          <div class="color-picker-wrapper">
-            <input type="color" id="brandColor" value="#657e2a" onchange="updateBrandColor()">
-            <span id="colorHexCode" style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">#657e2a</span>
+        
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Agent Name</label>
+            <input type="text" id="agentName" placeholder="e.g. Kari Cross">
+          </div>
+          <div class="form-group">
+            <label>Brokerage</label>
+            <input type="text" id="brokerage" placeholder="e.g. Corcoran Icon Properties">
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" id="phone" placeholder="e.g. 9255841640">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="e.g. kcross@crossgrouphomes.com">
+          </div>
+          <div class="form-group">
+            <label>Brand Color</label>
+            <div class="color-picker-wrapper">
+              <input type="color" id="brandColor" value="#657e2a" onchange="updateBrandColor()">
+              <span id="colorHexCode" style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">#657e2a</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Voice / Tone</label>
+            <select id="tone">
+              <option value="Warm & Neighborly">Warm & neighborly</option>
+              <option value="Polished & Luxurious">Polished & luxe</option>
+              <option value="Fun & Playful">Fun & playful</option>
+              <option value="Calm & Reassuring">Calm & reassuring</option>
+            </select>
+          </div>
+
+          <div class="form-group full" style="border-top:1px dashed var(--border); padding-top:1rem; margin-top:0.5rem;">
+            <h3 style="font-family:'Outfit', sans-serif; font-size:1.1rem; margin-bottom:0.75rem;">The Listing</h3>
+          </div>
+
+          <div class="form-group">
+            <label>Property Address</label>
+            <input type="text" id="address" placeholder="e.g. 2147 Saint Andrews Ct.">
+          </div>
+          <div class="form-group">
+            <label>Home Zip Code</label>
+            <input type="text" id="zipCode" placeholder="e.g. 94505">
+          </div>
+          <div class="form-group">
+            <label>List Price</label>
+            <input type="text" id="price" placeholder="e.g. 899000">
+          </div>
+          <div class="form-group">
+            <label>Beds / Baths / Sq Ft</label>
+            <input type="text" id="specs" placeholder="e.g. 4 bed / 3 bath / 2,585">
+          </div>
+
+          <div class="form-group full">
+            <label>Standout Features — <span style="text-transform:none; font-weight:normal;">what would you point at during a showing?</span></label>
+            <textarea id="features" placeholder="Paradise with a pool and palm trees overlooking the golf course, covered patio, Large primary suite with fireplace and balcony, 3 car garage, updates throughout the house."></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Neighborhood & Lifestyle — <span style="text-transform:none; font-weight:normal;">schools, parks, coffee, commute, community feel</span></label>
+            <textarea id="neighborhood" placeholder="On the Discovery Bay Golf Course gated community"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Seller First Name(s) <span style="text-transform:none; font-weight:normal; opacity:0.7;">optional</span></label>
+            <input type="text" id="sellerName" placeholder="e.g. Ernie">
+          </div>
+          <div class="form-group">
+            <label>Open House Date & Time <span style="text-transform:none; font-weight:normal; opacity:0.7;">optional</span></label>
+            <input type="text" id="openHouseTime" placeholder="e.g. Saturday, July 25th from 1:00 PM to 4:00 PM">
           </div>
         </div>
-        <div class="form-group">
-          <label>Voice / Tone</label>
-          <select id="tone">
-            <option value="Warm & Neighborly">Warm & neighborly</option>
-            <option value="Polished & Luxurious">Polished & luxe</option>
-            <option value="Fun & Playful">Fun & playful</option>
-            <option value="Calm & Reassuring">Calm & reassuring</option>
-          </select>
-        </div>
 
-        <div class="form-group full" style="border-top:1px dashed var(--border); padding-top:1rem; margin-top:0.5rem;">
-          <h3 style="font-family:'Outfit', sans-serif; font-size:1.1rem; margin-bottom:0.75rem;">The Listing</h3>
-        </div>
+        <button onclick="generatePrompt()" style="margin-top:1rem;">Write my Gemini prompt</button>
+      </section>
 
-        <div class="form-group">
-          <label>Property Address</label>
-          <input type="text" id="address" placeholder="e.g. 2147 Saint Andrews Ct.">
+      <!-- STEP 2 -->
+      <section class="step-card" id="step2Card">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <h2 class="step-title">Take it to Gemini / ChatGPT</h2>
         </div>
-        <div class="form-group">
-          <label>Home Zip Code</label>
-          <input type="text" id="zipCode" placeholder="e.g. 94505">
+        <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">Copy the prompt below, paste it into Gemini, and copy Gemini's full reply.</p>
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+          <button class="btn-secondary" onclick="copyPrompt()">Copy Prompt</button>
+          <a href="https://gemini.google.com" target="_blank" class="btn">Open Gemini ↗</a>
         </div>
-        <div class="form-group">
-          <label>List Price</label>
-          <input type="text" id="price" placeholder="e.g. 899000">
+        <pre id="promptOutput">Fill out Step 1 above to generate your custom prompt here...</pre>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step-card" id="step3Card">
+        <div class="step-header">
+          <div class="step-number">3</div>
+          <h2 class="step-title">Bring it home</h2>
         </div>
         <div class="form-group">
-          <label>Beds / Baths / Sq Ft</label>
-          <input type="text" id="specs" placeholder="e.g. 4 bed / 3 bath / 2,585">
+          <label>Paste AI Response Here</label>
+          <textarea id="aiResponse" style="min-height: 120px;" placeholder="Paste the entire reply from Gemini here..."></textarea>
         </div>
+        <button onclick="parseAndRender()">Process Campaign Data</button>
+      </section>
 
-        <div class="form-group full">
-          <label>Standout Features — <span style="text-transform:none; font-weight:normal;">what would you point at during a showing?</span></label>
-          <textarea id="features" placeholder="Paradise with a pool and palm trees overlooking the golf course, covered patio, Large primary suite with fireplace and balcony, 3 car garage, updates throughout the house."></textarea>
+      <!-- STEP 4: CREATOR PUBLISH CONTROLS -->
+      <section class="step-card" id="step4Card" style="display: none;">
+        <div class="step-header">
+          <div class="step-number">4</div>
+          <h2 class="step-title">Publish & Share</h2>
         </div>
-
-        <div class="form-group full">
-          <label>Neighborhood & Lifestyle — <span style="text-transform:none; font-weight:normal;">schools, parks, coffee, commute, community feel</span></label>
-          <textarea id="neighborhood" placeholder="On the Discovery Bay Golf Course gated community"></textarea>
+        <p style="margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.9rem;">1. Download the JSON file and upload it to your GitHub <code style="background:#f1f5f9; padding:0.15rem 0.4rem; border-radius:4px;">campaigns/</code> folder.<br>2. Copy the agent link to text or email your realtor.<br>3. Click <strong>Preview Agent View</strong> to see the exact hub your agent will see!</p>
+        <div style="display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center;">
+          <button onclick="downloadCampaignJSON()">💾 Download JSON File</button>
+          <button class="btn-secondary" onclick="copyShareableLink()">🔗 Copy Agent Link</button>
+          <button class="btn-secondary" onclick="previewAgentHub()">👁️ Preview Agent View</button>
         </div>
+      </section>
+    </div>
 
-        <div class="form-group">
-          <label>Seller First Name(s) <span style="text-transform:none; font-weight:normal; opacity:0.7;">optional</span></label>
-          <input type="text" id="sellerName" placeholder="e.g. Ernie">
-        </div>
-        <div class="form-group">
-          <label>Open House Date & Time <span style="text-transform:none; font-weight:normal; opacity:0.7;">optional</span></label>
-          <input type="text" id="openHouseTime" placeholder="e.g. Saturday, July 25th from 1:00 PM to 4:00 PM">
-        </div>
-      </div>
-
-      <button onclick="generatePrompt()" style="margin-top:1rem;">Write my Gemini prompt</button>
-    </section>
-
-    <!-- STEP 2 -->
-    <section class="step-card" id="step2Card">
-      <div class="step-header">
-        <div class="step-number">2</div>
-        <h2 class="step-title">Take it to Gemini / ChatGPT</h2>
-      </div>
-      <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">Copy the prompt below, paste it into Gemini, and copy Gemini's full reply.</p>
-      <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-        <button class="btn-secondary" onclick="copyPrompt()">Copy Prompt</button>
-        <a href="https://gemini.google.com" target="_blank" class="btn">Open Gemini ↗</a>
-      </div>
-      <pre id="promptOutput">Fill out Step 1 above to generate your custom prompt here...</pre>
-    </section>
-
-    <!-- STEP 3 -->
-    <section class="step-card" id="step3Card">
-      <div class="step-header">
-        <div class="step-number">3</div>
-        <h2 class="step-title">Bring it home</h2>
-      </div>
-      <div class="form-group">
-        <label>Paste AI Response Here</label>
-        <textarea id="aiResponse" style="min-height: 120px;" placeholder="Paste the entire reply from Gemini here..."></textarea>
-      </div>
-      <button onclick="parseAndRender()">Process Campaign Data</button>
-    </section>
-
-    <!-- STEP 4: CREATOR PUBLISH CONTROLS -->
-    <section class="step-card" id="step4Card" style="display: none;">
-      <div class="step-header">
-        <div class="step-number">4</div>
-        <h2 class="step-title">Publish & Share</h2>
-      </div>
-      <p style="margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.9rem;">1. Download the JSON file and upload it to your GitHub <code style="background:#f1f5f9; padding:0.15rem 0.4rem; border-radius:4px;">campaigns/</code> folder.<br>2. Copy the agent link to text or email your realtor.<br>3. Click <strong>Preview Agent View</strong> to see the exact hub your agent will see!</p>
-      <div style="display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center;">
-        <button onclick="downloadCampaignJSON()">💾 Download JSON File</button>
-        <button class="btn-secondary" onclick="copyShareableLink()">🔗 Copy Agent Link</button>
-        <button class="btn-secondary" onclick="previewAgentHub()">👁️ Preview Agent View</button>
-      </div>
-    </section>
+    <!-- MAIN VIEW 2: STANDALONE MONTHLY MARKETING GALLERY (DIRECT ACCESS) -->
+    <div id="mainViewGallery" style="display:none;"></div>
 
     <!-- AGENT CAMPAIGN HUB (CLEAN AGENT VIEW ONLY) -->
     <section id="hubSection" style="display: none;">
@@ -1511,8 +1557,8 @@
             <button class="gallery-subtab" id="btnPromptsSubtab" onclick="switchGallerySubtab('prompts')">The Prompts — made with AI</button>
           </div>
 
-          <!-- THE STUDIO SUBTAB CONTENT -->
-          <div id="galleryStudioView">
+          <!-- THE STUDIO SUBTAB CONTENT CONTAINER -->
+          <div id="galleryStudioContainer">
             <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">Upload a photo, pick a layout, download it. No AI, no Canva, no typos.</p>
 
             <!-- 1. PICK A LAYOUT -->
@@ -2174,6 +2220,32 @@ closings</textarea>
       return addr.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
     }
 
+    /* TOP MAIN VIEW SWITCHER (BUILDER vs MONTHLY MARKETING GALLERY) */
+    function switchMainView(view) {
+      document.getElementById('mainNavBuilderBtn').classList.toggle('active', view === 'builder');
+      document.getElementById('mainNavGalleryBtn').classList.toggle('active', view === 'gallery');
+
+      const builderView = document.getElementById('mainViewBuilder');
+      const galleryView = document.getElementById('mainViewGallery');
+      const galleryContainer = document.getElementById('galleryStudioContainer');
+      const tabMonthly = document.getElementById('tab-MonthlyMarketing');
+
+      if (view === 'gallery') {
+        builderView.style.display = 'none';
+        document.getElementById('hubSection').style.display = 'none';
+        
+        // Move gallery container to standalone view and display it
+        galleryView.appendChild(galleryContainer);
+        galleryView.style.display = 'block';
+      } else {
+        galleryView.style.display = 'none';
+        builderView.style.display = 'block';
+        
+        // Put gallery back into campaign hub tab
+        tabMonthly.appendChild(galleryContainer);
+      }
+    }
+
     function generatePrompt() {
       const name = document.getElementById('agentName').value || 'Kari Cross';
       const brokerage = document.getElementById('brokerage').value || 'Corcoran Icon Properties';
@@ -2621,7 +2693,7 @@ Market Snapshot for Zip Code ${zip}:
     function switchGallerySubtab(sub) {
       document.getElementById('btnStudioSubtab').classList.toggle('active', sub === 'studio');
       document.getElementById('btnPromptsSubtab').classList.toggle('active', sub === 'prompts');
-      document.getElementById('galleryStudioView').style.display = sub === 'studio' ? 'block' : 'none';
+      document.getElementById('galleryStudioContainer').style.display = sub === 'studio' ? 'block' : 'none';
       document.getElementById('galleryPromptsView').style.display = sub === 'prompts' ? 'block' : 'none';
     }
 
@@ -3096,6 +3168,7 @@ Market Snapshot for Zip Code ${zip}:
 
       if (slug) {
         document.getElementById('mainHeader').style.display = 'none';
+        document.querySelector('.main-top-nav').style.display = 'none';
         document.getElementById('step1Card').style.display = 'none';
         document.getElementById('step2Card').style.display = 'none';
         document.getElementById('step3Card').style.display = 'none';
